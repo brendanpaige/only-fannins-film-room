@@ -245,7 +245,6 @@ svg .brk { stroke: var(--axis); stroke-width: 1.5; fill: none; }
 .duel-side.a .duel-top { flex-direction: row-reverse; text-align: right; }
 .duel-name { overflow-wrap: anywhere; min-width: 0; }
 .duel-name small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); letter-spacing: 0.04em; margin-left: 4px; white-space: nowrap; }
-.duel-side.a .duel-name small { margin: 0 4px 0 0; }
 .duel-pts { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
 .duel-pts.proj { color: var(--muted); font-weight: 500; }
 .duel-side.lost .duel-name { color: var(--ink-2); }
@@ -921,12 +920,13 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     const rows = [...M.matchups].sort((a, b) => Math.abs(a.margin) - Math.abs(b.margin));
     const nameFont = "600 12px 'Schibsted Grotesk', system-ui, sans-serif";
     const nameW = d3.max(M.sides, s => textW(s.team.name, nameFont)) || 100;
+    const gutter = 78;
     let pad = nameW + 22;
-    const narrow = W - pad * 2 < 180;
+    const narrow = W - pad * 2 - gutter < 180;
     if (narrow) pad = 12;
     const rowH = narrow ? 78 : 56, top = 24, bottom = 26;
     const H = top + rows.length * rowH + bottom;
-    const x = d3.scaleLinear().domain(d3.extent(M.sides, s => s.pts)).nice().range([pad, W - pad]);
+    const x = d3.scaleLinear().domain(d3.extent(M.sides, s => s.pts)).nice().range([pad, W - pad - (narrow ? 0 : gutter)]);
     const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`)
       .attr("role", "img").attr("aria-label", rows.map(mk => `${mk.a.team.name} ${f2(mk.a.pts)}, ${mk.b.team.name} ${f2(mk.b.pts)}`).join("; "));
 
@@ -937,6 +937,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     const xm = x(M.median);
     svg.append("line").attr("x1", xm).attr("x2", xm).attr("y1", top - 4).attr("y2", H - bottom).style("stroke", "var(--ink-2)").style("stroke-width", 1);
     svg.append("text").attr("class", "ax").attr("x", xm).attr("y", 11).attr("text-anchor", "middle").text(`LEAGUE MEDIAN ${f1(M.median)}`);
+    if (!narrow) svg.append("text").attr("class", "ax").attr("x", W).attr("y", 11).attr("text-anchor", "end").text("MARGIN");
 
     rows.forEach((mk, i) => {
       const y0 = top + i * rowH;
@@ -964,9 +965,8 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
         const rt = g.append("text").attr("text-anchor", "start");
         rt.append("tspan").attr("class", "lbl").attr("x", x(hi.pts) + 12).attr("y", cy - 4).text(hi.team.name);
         rt.append("tspan").attr("class", "num").attr("x", x(hi.pts) + 12).attr("y", cy + 14).style("font-size", "17px").text(f2(hi.pts));
-        const span = x(hi.pts) - x(lo.pts);
-        const mw = textW(marginText, "500 10px 'Azeret Mono', monospace");
-        g.append("text").attr("class", "ax").attr("x", (x(lo.pts) + x(hi.pts)) / 2).attr("y", span > mw + 20 ? cy - 8 : cy + 20).attr("text-anchor", "middle").text(marginText);
+        g.append("text").attr("class", "lbl").attr("x", W).attr("y", cy - 3).attr("text-anchor", "end").style("font-variant-numeric", "tabular-nums").text(`+${f2(Math.abs(mk.margin))}`);
+        g.append("text").attr("class", "ax").attr("x", W).attr("y", cy + 13).attr("text-anchor", "end").text(pending ? `${pending} TO PLAY` : "FINAL");
       }
       const hit = g.append("rect").attr("x", 0).attr("y", y0).attr("width", W).attr("height", rowH).style("fill", "transparent").attr("tabindex", 0).attr("aria-label", `${hi.team.name} ${f2(hi.pts)}, ${lo.team.name} ${f2(lo.pts)}`);
       const show = e => tip(e, mk.settled ? "Final" : "In progress", [
