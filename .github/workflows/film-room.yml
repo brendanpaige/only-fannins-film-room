@@ -1,0 +1,52 @@
+name: Film Room
+
+on:
+  schedule:
+    # Tuesdays 13:00 UTC: 9 AM Eastern during daylight time, 8 AM in winter.
+    - cron: "0 13 * * 2"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Pull the season from Sleeper and ESPN
+        run: python3 league_insights.py
+
+      - name: Assemble the site
+        run: |
+          mkdir -p _site
+          cp league/film_room.html _site/index.html
+          cp league/league_data.js _site/league_data.js
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

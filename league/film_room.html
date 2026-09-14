@@ -1,0 +1,1621 @@
+<title>Only Fannin's Film Room</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Big+Shoulders+Display:wght@600;800&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --ground: #EDF1ED;
+  --surface: #FAFBF9;
+  --surface-2: #F1F4F1;
+  --ink: #12231C;
+  --ink-2: #44544C;
+  --muted: #6B7972;
+  --hair: #DAE1DB;
+  --axis: #B5C0B9;
+  --dot: #A5B1AA;
+  --bar: #3F6B57;
+  --flag: #F2B200;
+  --flag-ink: #1C1600;
+  --side-a: #2a78d6;
+  --side-b: #eb6834;
+  --over: #1b7fa3;
+  --under: #d0453f;
+  --seq-lo: #E6EFE8;
+  --seq-hi: #1D6B45;
+  --seq-ink-hi: #FFFFFF;
+  --chyron: #12231C;
+  --chyron-ink: #EEF3EF;
+  --chyron-2: #9DB0A6;
+  --shadow: 0 8px 28px rgb(18 35 28 / 0.14);
+  --f-display: "Big Shoulders Display", "Arial Narrow", "Roboto Condensed", Impact, sans-serif;
+  --f-body: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "Azeret Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #0A110E;
+    --surface: #111B17;
+    --surface-2: #17231E;
+    --ink: #E3EBE6;
+    --ink-2: #A3B1AA;
+    --muted: #7C8A84;
+    --hair: #22302A;
+    --axis: #3A4A42;
+    --dot: #52625A;
+    --bar: #72AD90;
+    --flag: #F2B200;
+    --flag-ink: #1C1600;
+    --side-a: #3987e5;
+    --side-b: #d95926;
+    --over: #2f9fc6;
+    --under: #e0605a;
+    --seq-lo: #16231D;
+    --seq-hi: #5CC28E;
+    --seq-ink-hi: #0A110E;
+    --chyron: #16221D;
+    --chyron-ink: #E3EBE6;
+    --chyron-2: #8FA398;
+    --shadow: 0 8px 28px rgb(0 0 0 / 0.5);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #0A110E;
+  --surface: #111B17;
+  --surface-2: #17231E;
+  --ink: #E3EBE6;
+  --ink-2: #A3B1AA;
+  --muted: #7C8A84;
+  --hair: #22302A;
+  --axis: #3A4A42;
+  --dot: #52625A;
+  --bar: #72AD90;
+  --flag: #F2B200;
+  --flag-ink: #1C1600;
+  --side-a: #3987e5;
+  --side-b: #d95926;
+  --over: #2f9fc6;
+  --under: #e0605a;
+  --seq-lo: #16231D;
+  --seq-hi: #5CC28E;
+  --seq-ink-hi: #0A110E;
+  --chyron: #16221D;
+  --chyron-ink: #E3EBE6;
+  --chyron-2: #8FA398;
+  --shadow: 0 8px 28px rgb(0 0 0 / 0.5);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 15px/1.5 var(--f-body);
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1320px; margin-inline: auto; padding-inline: clamp(16px, 3vw, 32px); }
+button, select { font: inherit; color: inherit; }
+:where(button, select, [tabindex]):focus-visible { outline: 2px solid var(--flag); outline-offset: 2px; }
+
+/* ---------- chyron (the first-down line is the yellow rule) ---------- */
+.chyron {
+  background: var(--chyron);
+  color: var(--chyron-ink);
+  border-bottom: 3px solid var(--flag);
+  position: sticky; top: 0; z-index: 30;
+}
+@media (max-width: 760px) { .chyron { position: static; } }
+.chyron-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; padding-block: 10px; }
+.brand { display: flex; align-items: baseline; gap: 12px; }
+.brand-mark { font: 800 30px/1 var(--f-display); text-transform: uppercase; letter-spacing: 0.02em; }
+.brand-league { font: 500 11px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--chyron-2); }
+.status { margin: 0 auto 0 0; font: 500 11.5px/1.45 var(--f-mono); color: var(--chyron-2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.st-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--flag); flex: none; }
+.st-dot.done { background: var(--chyron-2); }
+.controls { display: flex; gap: 12px; flex-wrap: wrap; }
+.ctl { display: flex; align-items: center; gap: 8px; font: 500 10.5px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--chyron-2); }
+.ctl select {
+  appearance: none;
+  font: 600 14px/1.2 var(--f-body);
+  color: var(--chyron-ink);
+  background-color: transparent;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: right 12px center, right 7px center;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  border: 1px solid color-mix(in oklab, var(--chyron-ink) 28%, transparent);
+  border-radius: 4px;
+  padding: 7px 28px 7px 10px;
+  max-width: 220px;
+  cursor: pointer;
+}
+.ctl select option { background: var(--surface); color: var(--ink); }
+
+/* ---------- page + sections ---------- */
+.page { display: grid; gap: 64px; padding-block: 32px 56px; }
+section { display: grid; gap: 18px; min-width: 0; scroll-margin-top: 90px; }
+.sec-head { display: grid; gap: 4px; }
+.eyebrow { margin: 0; font: 500 11px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); }
+h2 { margin: 0; font: 800 clamp(36px, 5.2vw, 56px)/0.9 var(--f-display); text-transform: uppercase; letter-spacing: 0.005em; text-wrap: balance; }
+.dek { margin: 6px 0 0; color: var(--ink-2); max-width: 66ch; text-wrap: pretty; }
+h3 { margin: 0; font: 600 15px/1.3 var(--f-body); }
+.sub { margin: 2px 0 0; font-size: 13px; color: var(--muted); max-width: 60ch; }
+.panel { background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; padding: 18px clamp(14px, 2vw, 22px); min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 18px; margin-bottom: 14px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; font: 500 10.5px/1.5 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.note { margin: 12px 0 0; font-size: 12px; color: var(--muted); max-width: 78ch; text-wrap: pretty; }
+
+.k { display: inline-block; flex: none; }
+.k-dot, .k-ink, .k-flag, .k-ring, .k-miss, .k-hollow { width: 9px; height: 9px; border-radius: 50%; }
+.k-dot { background: var(--dot); }
+.k-ink { background: var(--ink); }
+.k-flag { background: var(--flag); }
+.k-ring { background: var(--surface); border: 2px solid var(--ink); }
+.k-miss { background: var(--surface); border: 2px solid var(--under); }
+.k-hollow { border: 1.5px dashed var(--muted); }
+.k-line, .k-a, .k-b, .k-dash { width: 14px; height: 0; border-top: 2px solid var(--axis); }
+.k-a { border-top-color: var(--side-a); }
+.k-b { border-top-color: var(--side-b); }
+.k-dash { border-top: 2px dashed var(--muted); }
+.k-over, .k-under, .k-bar { width: 10px; height: 10px; border-radius: 2px; }
+.k-over { background: var(--over); }
+.k-under { background: var(--under); }
+.k-bar { background: var(--bar); }
+.k-tick { width: 2px; height: 11px; background: var(--ink); }
+.k-none { width: 0; }
+
+/* ---------- flags ---------- */
+.flags { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px 28px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.flags[data-count="6"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.flags[data-count="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.flags[data-count="1"] { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 1040px) { .flags, .flags[data-count] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .flags, .flags[data-count] { grid-template-columns: minmax(0, 1fr); } }
+.flag { display: grid; align-content: start; gap: 6px; padding-block: 14px 10px; border-top: 1px solid var(--axis); min-width: 0; }
+.flag p { margin: 0; }
+.flag-kind { display: flex; align-items: center; gap: 8px; font: 500 10.5px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.flag-kind::before { content: ""; width: 12px; height: 11px; background: var(--flag); clip-path: polygon(0 0, 100% 0, 72% 50%, 100% 100%, 0 100%); flex: none; }
+.flag-stat { font: 800 46px/0.95 var(--f-display); letter-spacing: 0.005em; }
+.flag-stat span { font: 500 11px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-left: 8px; }
+.flag-head { font-size: 15.5px; line-height: 1.35; text-wrap: pretty; overflow-wrap: anywhere; }
+.flag-head strong { font-weight: 700; }
+.flag-detail { font-size: 13px; color: var(--ink-2); text-wrap: pretty; overflow-wrap: anywhere; }
+
+/* ---------- layouts ---------- */
+.split-7-5 { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; align-items: start; }
+.split-8-4 { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: 20px; align-items: start; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: start; }
+@media (max-width: 1100px) { .three { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 980px) { .split-7-5, .split-8-4 { grid-template-columns: minmax(0, 1fr); } }
+
+.chart { min-height: 40px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--f-body); }
+svg .ax { font: 500 10px var(--f-mono); fill: var(--muted); }
+svg .grid { stroke: var(--hair); stroke-width: 1; }
+svg .base { stroke: var(--axis); stroke-width: 1; }
+svg .lbl { font: 600 12px var(--f-body); fill: var(--ink); }
+svg .lbl-2 { font: 500 12px var(--f-body); fill: var(--ink-2); }
+svg .num { font-family: var(--f-display); font-weight: 800; fill: var(--ink); }
+svg .halo { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+svg .cross { stroke: var(--ink-2); stroke-width: 1; }
+svg .brk { stroke: var(--axis); stroke-width: 1.5; fill: none; }
+
+/* ---------- momentum ---------- */
+.mm-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+@media (max-width: 1180px) { .mm-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .mm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.mm {
+  text-align: left; background: var(--surface); border: 1px solid var(--hair); border-radius: 6px;
+  padding: 10px 12px 9px; cursor: pointer; display: grid; gap: 4px; min-width: 0;
+}
+.mm:hover { border-color: var(--axis); }
+.mm[aria-pressed="true"] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+.mm-team { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: baseline; gap: 6px; font-size: 12px; font-weight: 600; line-height: 1.25; }
+.mm-team .k { transform: translateY(-3px); }
+.mm-team span { overflow-wrap: anywhere; }
+.mm-team b { font: 800 17px/1 var(--f-display); }
+.mm-team.lost { color: var(--ink-2); font-weight: 500; }
+.mm-chart { height: 50px; }
+.mm-foot { margin: 2px 0 0; font: 500 10px/1.3 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.mm-foot.me::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--flag); margin-right: 6px; }
+
+.fh { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px 24px; margin-bottom: 8px; }
+.fh-team { display: grid; gap: 2px; min-width: 0; }
+.fh-team.b { text-align: right; justify-items: end; }
+.fh-name { display: flex; align-items: center; gap: 8px; font-weight: 600; overflow-wrap: anywhere; }
+.fh-team.b .fh-name { flex-direction: row-reverse; }
+.fh-score { font: 800 clamp(36px, 4.5vw, 52px)/0.95 var(--f-display); }
+.fh-owner { font: 500 11px/1.4 var(--f-mono); color: var(--muted); }
+.fh-stats { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 26px; margin: 4px 0 0; padding-top: 10px; border-top: 1px solid var(--hair); }
+.fh-stats div { display: flex; align-items: baseline; gap: 8px; }
+.fh-stats dt { font: 500 10.5px/1 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.fh-stats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.duel { display: grid; }
+.duel-row { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); align-items: center; padding-block: 7px; border-bottom: 1px solid var(--hair); }
+.duel-row:last-child { border-bottom: 0; }
+.duel-slot { text-align: center; font: 500 10px/1 var(--f-mono); color: var(--muted); letter-spacing: 0.06em; }
+.duel-side { display: grid; gap: 5px; min-width: 0; border-radius: 3px; }
+.duel-top { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; font-size: 12.5px; line-height: 1.25; }
+.duel-side.a .duel-top { flex-direction: row-reverse; text-align: right; }
+.duel-name { overflow-wrap: anywhere; min-width: 0; }
+.duel-name small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); letter-spacing: 0.04em; margin-left: 4px; white-space: nowrap; }
+.duel-side.a .duel-name small { margin: 0 4px 0 0; }
+.duel-pts { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.duel-pts.proj { color: var(--muted); font-weight: 500; }
+.duel-side.lost .duel-name { color: var(--ink-2); }
+.duel-side.won .duel-name { font-weight: 600; }
+.duel-track { height: 8px; display: flex; }
+.duel-side.a .duel-track { justify-content: flex-end; }
+.duel-track i { display: block; height: 100%; }
+.duel-side.a .duel-track i { background: var(--side-a); border-radius: 4px 0 0 4px; }
+.duel-side.b .duel-track i { background: var(--side-b); border-radius: 0 4px 4px 0; }
+.duel-track i.proj { background: transparent !important; border: 1.5px dashed var(--side-a); }
+.duel-side.b .duel-track i.proj { border-color: var(--side-b); }
+
+/* ---------- row charts ---------- */
+.rc { display: grid; }
+.rc-row { display: grid; grid-template-columns: minmax(88px, 36%) minmax(0, 1fr) 50px; gap: 10px; align-items: center; min-height: 32px; padding: 3px 4px; border-radius: 3px; }
+.rc-row[tabindex]:hover, .rc-row:focus-visible { background: var(--surface-2); }
+.rc-row.me { background: color-mix(in oklab, var(--flag) 16%, transparent); }
+.rc-row.me .rc-name { font-weight: 700; }
+.rc-name { font-size: 12.5px; line-height: 1.25; overflow-wrap: anywhere; min-width: 0; }
+.rc-name small { display: block; font: 500 9.5px/1.4 var(--f-mono); color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+.rc-val { font: 600 12.5px/1 var(--f-body); font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+.rc-track { position: relative; height: 22px; }
+.rc-axis { min-height: 18px; }
+.rc-axis .rc-track { height: 12px; }
+.rc-tick { position: absolute; top: 0; transform: translateX(-50%); font: 500 9.5px/1 var(--f-mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rc-grid { position: absolute; top: -5px; bottom: -5px; width: 1px; background: var(--hair); }
+.rc-grid.zero { background: var(--axis); }
+.rc-bar { position: absolute; top: 5px; height: 12px; }
+.rc-bar.pos { border-radius: 0 4px 4px 0; }
+.rc-bar.neg { border-radius: 4px 0 0 4px; }
+.rc-bar.over { background: var(--over); }
+.rc-bar.under { background: var(--under); }
+.rc-bar.fill { background: var(--bar); }
+.rc-bar.proj { background: transparent; border: 1.5px dashed var(--bar); }
+.rc-dot, .rc-ring { position: absolute; top: 50%; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; }
+.rc-dot { background: var(--ink); box-shadow: 0 0 0 2px var(--surface); }
+.rc-ring { background: var(--surface); border: 2px solid var(--ink); }
+.rc-link { position: absolute; top: 50%; height: 2px; margin-top: -1px; background: var(--axis); }
+.chip { display: inline-block; font: 600 9.5px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 5px; border-radius: 3px; background: var(--flag); color: var(--flag-ink); margin-left: 6px; vertical-align: 1px; white-space: nowrap; }
+.chip.quiet { background: transparent; color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--axis); }
+.chip.w { background: var(--ink); color: var(--surface); }
+.chip.l { background: transparent; color: var(--ink-2); box-shadow: inset 0 0 0 1px var(--axis); }
+.rc-name .chip { margin-left: 0; margin-right: 6px; }
+
+/* ---------- team sheet ---------- */
+.sheet-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px 32px; padding-bottom: 16px; margin-bottom: 18px; border-bottom: 1px solid var(--hair); }
+.sheet-id { display: grid; gap: 4px; min-width: 0; }
+.sheet-name { margin: 0; font: 800 clamp(34px, 4.6vw, 52px)/0.92 var(--f-display); text-transform: uppercase; text-wrap: balance; overflow-wrap: anywhere; }
+.sheet-owner { margin: 0; font: 500 11.5px/1.4 var(--f-mono); color: var(--muted); }
+.statline { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; }
+.statline div { display: grid; gap: 3px; }
+.statline dt { font: 500 10px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.statline dd { margin: 0; font: 800 28px/1 var(--f-display); white-space: nowrap; }
+.statline dd small { font: 500 11px/1 var(--f-body); color: var(--ink-2); margin-left: 4px; }
+.sheet-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; }
+@media (max-width: 980px) { .sheet-grid { grid-template-columns: minmax(0, 1fr); } }
+.sheet-grid h4 { margin: 0 0 10px; font: 500 10.5px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.ln-row { display: grid; grid-template-columns: 40px minmax(0, 1.25fr) minmax(0, 1fr) 46px; gap: 10px; align-items: center; padding: 5px 4px; border-bottom: 1px solid var(--hair); border-radius: 2px; }
+.ln-row:hover, .ln-row:focus-visible { background: var(--surface-2); }
+.ln-row.first-bench { border-top: 1px solid var(--axis); margin-top: 8px; }
+.ln-slot { font: 500 10px/1 var(--f-mono); color: var(--muted); letter-spacing: 0.05em; }
+.ln-name { font-size: 13px; line-height: 1.3; overflow-wrap: anywhere; min-width: 0; }
+.ln-name small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); margin-left: 6px; white-space: nowrap; }
+.ln-row.is-bench .ln-name { color: var(--ink-2); }
+.ln-track { position: relative; height: 16px; }
+.ln-bar { position: absolute; left: 0; top: 3px; height: 10px; background: var(--bar); border-radius: 0 4px 4px 0; }
+.ln-bar.bench { background: var(--dot); }
+.ln-bar.proj { background: transparent; border: 1.5px dashed var(--bar); }
+.ln-tick { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--ink); }
+.ln-val { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; font-size: 13px; }
+.ln-row.is-bench .ln-val { color: var(--ink-2); font-weight: 500; }
+.ln-row .chip { margin-left: 6px; }
+
+.dc { display: grid; gap: 3px; height: 150px; align-items: end; border-bottom: 1px solid var(--axis); }
+.dc-col { height: 100%; display: flex; align-items: flex-end; border-radius: 2px; }
+.dc-col:hover, .dc-col:focus-visible { background: var(--surface-2); }
+.dc-bar { display: block; width: 100%; max-width: 22px; margin-inline: auto; background: var(--bar); border-radius: 4px 4px 0 0; }
+.dc-bar.best { background: var(--flag); }
+.dc-bar.proj { background: transparent; border: 1.5px dashed var(--bar); border-bottom: 0; }
+.dc-labels { display: grid; gap: 3px; margin-top: 5px; font: 500 9.5px/1 var(--f-mono); color: var(--muted); text-align: center; }
+.dc-notes { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 13px; color: var(--ink-2); }
+.dc-notes strong { color: var(--ink); font-weight: 600; }
+.moves { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 13px; }
+.moves li { display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; }
+.moves .mv { font: 500 10px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+.moves .pts { font-variant-numeric: tabular-nums; color: var(--ink-2); }
+.side-block + .side-block { margin-top: 26px; }
+
+/* ---------- tables ---------- */
+.table-scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; font-variant-numeric: tabular-nums; }
+th { font: 500 10px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--axis); white-space: nowrap; vertical-align: bottom; }
+th:first-child, td:first-child, th.l, td.l { text-align: left; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--hair); text-align: right; white-space: nowrap; }
+td.team { white-space: normal; min-width: 170px; font-weight: 600; }
+td.team small { display: block; font: 500 10px/1.4 var(--f-mono); color: var(--muted); font-weight: 500; }
+tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
+.heat td.cell { padding: 0; border: 2px solid var(--surface); }
+.heat td.cell span { display: block; padding: 9px 10px; min-width: 54px; cursor: default; }
+.heat td.cell.hi { color: var(--seq-ink-hi); }
+.heat td.cell:hover span, .heat td.cell span:focus-visible { box-shadow: inset 0 0 0 2px var(--ink); }
+.heat td.team { padding-left: 0; border-bottom: 1px solid var(--hair); }
+.heat td.total { font-weight: 700; }
+.muted { color: var(--muted); }
+.rank { color: var(--muted); font-family: var(--f-mono); font-size: 11px; }
+.scale { display: flex; align-items: center; gap: 8px; }
+.scale i { display: inline-block; width: 90px; height: 8px; border-radius: 2px; background: linear-gradient(90deg, var(--seq-lo), var(--seq-hi)); }
+
+/* ---------- tooltip ---------- */
+.tip { position: fixed; z-index: 60; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; font-size: 12.5px; line-height: 1.4; box-shadow: var(--shadow); max-width: 280px; }
+.tip-title { font: 500 10px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 5px; }
+.tip-row { display: grid; grid-template-columns: 14px auto minmax(0, 1fr); gap: 7px; align-items: center; }
+.tip-row b { font-variant-numeric: tabular-nums; font-weight: 700; }
+.tip-row span { color: var(--ink-2); overflow-wrap: anywhere; }
+.tip-note { color: var(--ink-2); margin-top: 5px; padding-top: 5px; border-top: 1px solid var(--hair); }
+
+footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 20px; justify-content: space-between; }
+@media (prefers-reduced-motion: no-preference) {
+  .mm, .rc-row, .ln-row { transition: background-color 120ms ease, border-color 120ms ease; }
+}
+</style>
+
+<header class="chyron">
+  <div class="wrap chyron-in">
+    <div class="brand">
+      <span class="brand-mark">Film Room</span>
+      <span class="brand-league" id="brand-league">Only Fannin's</span>
+    </div>
+    <p class="status" id="status"></p>
+    <div class="controls">
+      <label class="ctl" for="week"><span>Week</span><select id="week"></select></label>
+      <label class="ctl" for="follow"><span>Follow</span><select id="follow"><option value="">No team</option></select></label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap page" id="page">
+  <section aria-labelledby="h-flags">
+    <div class="sec-head">
+      <p class="eyebrow">League · <span data-week>Week 1</span></p>
+      <h2 id="h-flags">Flags on the play</h2>
+      <p class="dek">What stood out this week, pulled from every lineup, the draft board, the waiver wire, and the NFL box scores.</p>
+    </div>
+    <ol class="flags" id="flags"></ol>
+  </section>
+
+  <section aria-labelledby="h-board">
+    <div class="sec-head">
+      <p class="eyebrow">League · <span data-week>Week 1</span></p>
+      <h2 id="h-board">Scoreboard</h2>
+    </div>
+    <div class="split-7-5">
+      <div class="panel">
+        <div class="panel-head">
+          <div><h3>Every matchup, closest first</h3><p class="sub">Each line joins the two scores in a matchup. Scores right of the median beat most of the league.</p></div>
+          <p class="legend"><span class="key"><i class="k k-ink"></i>Won or leading</span><span class="key"><i class="k k-ring"></i>Lost or trailing</span></p>
+        </div>
+        <div class="chart" id="scoreboard"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <div><h3>The games that paid</h3><p class="sub">Points each NFL game put into this league's starting lineups</p></div>
+          <p class="legend"><span class="key"><i class="k k-bar"></i>Scored</span><span class="key"><i class="k k-hollow"></i>Projected, not played yet</span></p>
+        </div>
+        <div id="nfl-games"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-momentum">
+    <div class="sec-head">
+      <p class="eyebrow">Matchups · <span data-week>Week 1</span></p>
+      <h2 id="h-momentum">Momentum</h2>
+      <p class="dek">How each matchup swung across the week's TV windows. Pick a matchup to replay it and see who won each lineup slot.</p>
+    </div>
+    <div class="mm-grid" id="mm-grid" role="group" aria-label="Choose a matchup"></div>
+    <div class="split-8-4">
+      <div class="panel">
+        <div id="feature-head"></div>
+        <div class="chart" id="race"></div>
+        <p class="note">Sleeper doesn't publish play-by-play, so each player's points are spread evenly across their game's broadcast window. Lead changes are counted at that resolution. Dashed lines project starters who haven't played yet.</p>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>Slot by slot</h3><p class="sub" id="duel-sub"></p></div></div>
+        <div class="duel" id="duel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-team">
+    <div class="sec-head">
+      <p class="eyebrow">Team · <span data-week>Week 1</span></p>
+      <h2 id="h-team">Team sheet</h2>
+    </div>
+    <div class="panel" id="team-sheet"></div>
+    <div class="panel">
+      <div class="panel-head">
+        <div><h3>Where each lineup scored</h3><p class="sub">Starter points by lineup slot. Shading compares each team against the league at that slot.</p></div>
+        <p class="legend"><span class="scale">Low <i></i> High</span></p>
+      </div>
+      <div class="table-scroll"><table class="heat" id="heatmap"></table></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-draft">
+    <div class="sec-head">
+      <p class="eyebrow">Draft · <span id="draft-eyebrow">Snake</span></p>
+      <h2 id="h-draft">Draft returns</h2>
+      <p class="dek">Every pick, placed by where it went in the draft and what it scored this week, against what a typical pick from the same stretch of the draft scored.</p>
+    </div>
+    <div class="split-8-4">
+      <div class="panel">
+        <div class="panel-head"><h3>All picks</h3><p class="legend" id="draft-legend"></p></div>
+        <div class="chart" id="draft-scatter"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>Draft class return</h3><p class="sub">Points above or below the typical score for each pick's slot, summed by the team that drafted them</p></div></div>
+        <div id="draft-return"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-film">
+    <div class="sec-head">
+      <p class="eyebrow">Managers · <span data-week>Week 1</span></p>
+      <h2 id="h-film">Lineup calls</h2>
+      <p class="dek">Lineup decisions, projections, and schedule luck.</p>
+    </div>
+    <div class="three">
+      <div class="panel">
+        <div class="panel-head"><div><h3>Points left on the bench</h3><p class="sub">Lineup started versus the best lineup the roster allowed</p></div>
+          <p class="legend"><span class="key"><i class="k k-ink"></i>Started</span><span class="key"><i class="k k-ring"></i>Best possible</span></p></div>
+        <div id="bench"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>Versus projection</h3><p class="sub">Starters' points minus Sleeper's projection for those starters</p></div>
+          <p class="legend"><span class="key"><i class="k k-over"></i>Beat it</span><span class="key"><i class="k k-under"></i>Fell short</span></p></div>
+        <div id="proj"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>All-play record</h3><p class="sub">How many teams each score would have beaten if everyone played everyone</p></div></div>
+        <div id="allplay"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-standings">
+    <div class="sec-head">
+      <p class="eyebrow">League · Season through <span data-week>Week 1</span></p>
+      <h2 id="h-standings">Standings</h2>
+    </div>
+    <div class="panel" id="arc-panel" hidden>
+      <div class="panel-head"><div><h3>Season arc</h3><p class="sub">Cumulative points for, week by week</p></div></div>
+      <div class="chart" id="arc"></div>
+    </div>
+    <div class="panel">
+      <div class="table-scroll"><table id="standings"></table></div>
+      <p class="note">All-play is the record a team would have against every other team, every week. Luck is actual wins minus all-play expected wins, counting finished matchups only. Bench lost is what the best possible lineup would have added. Players still to play count at their projection.</p>
+    </div>
+  </section>
+
+  <footer>
+    <span id="foot-league">Only Fannin's</span>
+    <span id="foot-time"></span>
+  </footer>
+</main>
+
+<div class="tip" id="tip" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="league_data.js"></script>
+<script>
+(function () {
+  "use strict";
+  const D = window.LEAGUE_DATA;
+  const $ = (s, r = document) => r.querySelector(s);
+
+  if (!D || !D.weeks || !D.weeks.length || !window.d3) {
+    $("#status").textContent = !window.d3 ? "Chart library failed to load." : "No weeks with games yet. Re-run league_insights.py once the season starts.";
+    return;
+  }
+
+  // ------------------------------------------------------------ helpers
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    if (props) for (const [k, v] of Object.entries(props)) {
+      if (v == null || v === false) continue;
+      if (k === "class") el.className = v;
+      else if (k === "style") Object.assign(el.style, v);
+      else if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const kid of kids.flat()) {
+      if (kid == null || kid === false) continue;
+      el.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
+    }
+    return el;
+  }
+  const rich = str => str.split("**").map((part, i) => (i % 2 ? h("strong", null, part) : document.createTextNode(part)));
+  const f1 = d3.format(",.1f"), f2 = d3.format(",.2f"), fg = d3.format("~g");
+  const sgn = (v, f = f1) => (v >= 0.05 ? "+" : v <= -0.05 ? "−" : "") + f(Math.abs(v));
+  const clamp01 = v => (v < 0 ? 0 : v > 1 ? 1 : v);
+  const ord = n => { const s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); };
+  const TEAM = new Map(D.teams.map(t => [t.rid, t]));
+  const PL = D.players;
+  const pn = pid => (PL[pid] && PL[pid].n) || pid;
+  const ppos = pid => (PL[pid] && PL[pid].p) || "";
+  const pnfl = pid => (PL[pid] && PL[pid].t) || "";
+  const SLOTS = D.league.slots;
+  const FLEX = { FLEX: ["RB", "WR", "TE"], WRRB_FLEX: ["RB", "WR"], REC_FLEX: ["WR", "TE"], SUPER_FLEX: ["QB", "RB", "WR", "TE"] };
+  const slotShort = s => ({ SUPER_FLEX: "SFLX", WRRB_FLEX: "W/R", REC_FLEX: "W/T" }[s] || s);
+  const DUR = 195 * 60e3;
+  const ET = "America/New_York";
+
+  const measure = document.createElement("canvas").getContext("2d");
+  const textW = (str, font) => { measure.font = font; return measure.measureText(str).width; };
+
+  const parts = (t, opts) => Object.fromEntries(new Intl.DateTimeFormat("en-US", Object.assign({ timeZone: ET }, opts)).formatToParts(new Date(t)).map(p => [p.type, p.value]));
+  const clock = t => { const p = parts(t, { weekday: "short", hour: "numeric", minute: "2-digit" }); return `${p.weekday} ${p.hour}:${p.minute} ${p.dayPeriod}`; };
+  const stamp = t => { const p = parts(t, { weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }); return `${p.weekday}, ${p.month} ${p.day} · ${p.hour}:${p.minute} ${p.dayPeriod} ET`; };
+  function slotName(t) {
+    const p = parts(t, { weekday: "short", hour: "numeric", minute: "2-digit" });
+    const h23 = +parts(t, { hour: "numeric", hourCycle: "h23" }).hour;
+    const day = p.weekday.toUpperCase();
+    if (h23 >= 19 && day === "SUN") return "SNF";
+    if (h23 >= 19 && day === "MON") return "MNF";
+    if (h23 >= 19 && day === "THU") return "TNF";
+    return `${day} ${p.hour}${p.minute === "00" ? "" : ":" + p.minute}${p.dayPeriod[0]}`;
+  }
+  const gameLine = g => g.state === "pre" ? `${g.away} @ ${g.home} · ${clock(g.t0)} ET`
+    : `${g.away} ${g.as} @ ${g.home} ${g.hs} · ${g.state === "post" ? "Final" : g.detail}`;
+
+  // tooltip
+  const tipEl = $("#tip");
+  function tip(evt, title, rows, note) {
+    tipEl.textContent = "";
+    if (title) tipEl.append(h("div", { class: "tip-title" }, title));
+    (rows || []).forEach(r => tipEl.append(h("div", { class: "tip-row" }, h("i", { class: `k ${r.key || "k-none"}` }), h("b", null, r.value), h("span", null, r.label))));
+    if (note) tipEl.append(h("div", { class: "tip-note" }, note));
+    tipEl.hidden = false;
+    let x, y;
+    if (evt && evt.type && evt.type.startsWith("pointer")) { x = evt.clientX; y = evt.clientY; }
+    else { const r = (evt.currentTarget || evt.target).getBoundingClientRect(); x = r.left + Math.min(r.width / 2, 160); y = r.bottom - 4; }
+    const tw = tipEl.offsetWidth, th = tipEl.offsetHeight;
+    let left = x + 14, top = y + 14;
+    if (left + tw > innerWidth - 8) left = x - tw - 14;
+    if (top + th > innerHeight - 8) top = y - th - 14;
+    tipEl.style.left = Math.max(8, left) + "px";
+    tipEl.style.top = Math.max(8, top) + "px";
+  }
+  const hideTip = () => { tipEl.hidden = true; };
+  function tipOn(el, fn) {
+    el.addEventListener("pointermove", fn);
+    el.addEventListener("pointerleave", hideTip);
+    el.addEventListener("focus", fn);
+    el.addEventListener("blur", hideTip);
+  }
+  addEventListener("scroll", hideTip, { passive: true });
+
+  function bestLineup(pids, val) {
+    const ranked = [...pids].sort((x, y) => val(y) - val(x));
+    const used = new Set();
+    let total = 0;
+    const order = [...SLOTS].sort((x, y) => (FLEX[x] || [x]).length - (FLEX[y] || [y]).length);
+    for (const slot of order) {
+      const ok = FLEX[slot] || [slot];
+      const p = ranked.find(q => !used.has(q) && ok.includes(ppos(q)));
+      if (p) { used.add(p); total += val(p); }
+    }
+    return { total, lineup: used };
+  }
+
+  function timeScale(windows, x0, x1, gap) {
+    const total = d3.sum(windows, w => w.end - w.start);
+    const usable = Math.max(10, x1 - x0 - gap * (windows.length - 1));
+    let acc = x0;
+    const segs = windows.map(w => { const width = usable * (w.end - w.start) / total; const s = { w, x: acc, width }; acc += width + gap; return s; });
+    const f = t => {
+      for (let i = 0; i < segs.length; i++) {
+        const s = segs[i];
+        if (t < s.w.start) return i === 0 ? s.x : segs[i - 1].x + segs[i - 1].width;
+        if (t <= s.w.end) return s.x + s.width * (t - s.w.start) / (s.w.end - s.w.start);
+      }
+      const l = segs[segs.length - 1];
+      return l.x + l.width;
+    };
+    f.segs = segs;
+    return f;
+  }
+
+  // ------------------------------------------------------------ week model
+  const models = new Map();
+  function model(wk) {
+    if (models.has(wk)) return models.get(wk);
+    const W = D.weeks.find(w => w.week === wk);
+    const gen = +new Date(D.generated_at);
+    const games = W.games.map(g => Object.assign({}, g, { t0: +new Date(g.kickoff) }));
+    const gameBy = new Map(games.map(g => [g.key, g]));
+    const final = games.every(g => g.state === "post");
+    const pts = pid => (W.players[pid] ? W.players[pid][0] : 0);
+    const proj = pid => (W.players[pid] ? W.players[pid][1] : 0);
+    const game = pid => (W.players[pid] ? gameBy.get(W.players[pid][2]) : undefined);
+    const pre = pid => { const g = game(pid); return !!g && g.state === "pre"; };
+    const live = pid => { const g = game(pid); return !!g && g.state === "in"; };
+    const val = pid => (pre(pid) ? proj(pid) : pts(pid));
+
+    const windows = [];
+    for (const g of games) {
+      const last = windows[windows.length - 1];
+      if (last && g.t0 <= last.end) { last.end = Math.max(last.end, g.t0 + DUR); last.games.push(g); }
+      else windows.push({ start: g.t0, end: g.t0 + DUR, games: [g] });
+    }
+    windows.forEach(w => { w.name = slotName(w.start); });
+    const windowAt = t => windows.find(w => t >= w.start && t <= w.end) || [...windows].reverse().find(w => t > w.end) || windows[0];
+    const firstStart = windows[0].start;
+
+    const accrued = (pid, t) => {
+      const p = pts(pid);
+      if (!p) return 0;
+      const g = game(pid);
+      if (!g) return t >= firstStart ? p : 0;
+      if (g.state === "pre") return 0;
+      const span = g.state === "post" ? DUR : Math.max(60e3, gen - g.t0);
+      return p * clamp01((t - g.t0) / span);
+    };
+    const projAccrued = (pid, t) => { const g = game(pid); return g && g.state === "pre" ? proj(pid) * clamp01((t - g.t0) / DUR) : 0; };
+
+    const sides = [], matchups = [];
+    for (const m of W.matchups) {
+      const ss = m.sides.map(s => {
+        const starters = s.starters.map(([pid, slot]) => ({ pid, slot, empty: !pid || pid === "0" }));
+        const real = starters.filter(x => !x.empty).map(x => x.pid);
+        const best = bestLineup(real.concat(s.bench), val);
+        const expected = d3.sum(real, val);
+        return {
+          rid: s.rid, team: TEAM.get(s.rid) || { name: `Team ${s.rid}`, owner: "" },
+          pts: s.pts, starters, real, bench: s.bench,
+          proj: d3.sum(real, proj), expected,
+          best: Math.max(best.total, expected), bestLineup: best.lineup,
+          benchLost: Math.max(0, best.total - expected),
+          pending: real.filter(pre), pendingProj: d3.sum(real.filter(pre), proj),
+          liveCount: real.filter(live).length,
+        };
+      });
+      ss.forEach(s => sides.push(s));
+      if (m.mid != null && ss.length === 2) {
+        const [a, b] = ss;
+        a.opp = b; b.opp = a;
+        const mk = { mid: m.mid, a, b };
+        a.m = mk; b.m = mk;
+        matchups.push(mk);
+      }
+    }
+    sides.forEach(s => {
+      s.allPlay = d3.sum(sides, o => (o === s ? 0 : s.pts > o.pts ? 1 : s.pts === o.pts ? 0.5 : 0));
+      s.result = !s.opp ? null : s.pts > s.opp.pts ? "W" : s.pts < s.opp.pts ? "L" : "T";
+      s.settled = !s.opp || (!s.pending.length && !s.liveCount && !s.opp.pending.length && !s.opp.liveCount);
+    });
+    const ranked = [...sides].sort((x, y) => y.pts - x.pts);
+    ranked.forEach((s, i) => { s.rank = i + 1; });
+    const bySide = new Map(sides.map(s => [s.rid, s]));
+
+    // momentum
+    const tNow = final ? Infinity : gen;
+    const ts = [];
+    windows.forEach(w => { for (let i = 0; i <= 36; i++) ts.push(w.start + (w.end - w.start) * i / 36); });
+    const lastEnd = windows[windows.length - 1].end;
+    matchups.forEach(mk => {
+      const A = mk.a.real, B = mk.b.real;
+      const at = t => ({ t, a: d3.sum(A, p => accrued(p, t)), b: d3.sum(B, p => accrued(p, t)) });
+      const actual = ts.filter(t => t <= tNow).map(at);
+      if (!final) { const tn = Math.min(gen, lastEnd); if (!actual.length || actual[actual.length - 1].t < tn) actual.push(at(tn)); }
+      const last = actual[actual.length - 1];
+      const hasFuture = !final && (mk.a.pending.length + mk.b.pending.length) > 0;
+      const future = hasFuture ? [last].concat(ts.filter(t => t > last.t).map(t => ({ t, a: last.a + d3.sum(A, p => projAccrued(p, t)), b: last.b + d3.sum(B, p => projAccrued(p, t)) }))) : [];
+      let changes = 0, sign = 0, maxA = 0, maxB = 0, tA = null, tB = null;
+      for (const d of actual) {
+        const mg = d.a - d.b;
+        if (mg > maxA) { maxA = mg; tA = d.t; }
+        if (-mg > maxB) { maxB = -mg; tB = d.t; }
+        const s = mg > 0.05 ? 1 : mg < -0.05 ? -1 : 0;
+        if (s && sign && s !== sign) changes++;
+        if (s) sign = s;
+      }
+      const leader = mk.a.pts >= mk.b.pts ? "a" : "b";
+      Object.assign(mk, {
+        actual, future, changes, maxA, maxB, leader,
+        deficit: leader === "a" ? maxB : maxA,
+        deficitTime: leader === "a" ? tB : tA,
+        margin: mk.a.pts - mk.b.pts,
+        settled: mk.a.settled,
+      });
+    });
+
+    const gameRows = games.map(g => {
+      const starters = [];
+      sides.forEach(s => s.real.forEach(pid => { if (W.players[pid] && W.players[pid][2] === g.key) starters.push({ pid, s }); }));
+      return { g, starters, pts: d3.sum(starters, x => pts(x.pid)), proj: d3.sum(starters, x => proj(x.pid)) };
+    });
+
+    const picks = D.draft.map(([no, round, rid, pid]) => ({ no, round, rid, pid, pts: pts(pid), proj: proj(pid), pre: pre(pid), hasGame: !!game(pid) }));
+    const played = picks.filter(p => !p.pre);
+    picks.forEach(p => {
+      const near = played.filter(q => Math.abs(q.no - p.no) <= 12).map(q => q.pts);
+      p.expected = near.length ? d3.median(near) : 0;
+      p.residual = p.pre ? null : p.pts - p.expected;
+    });
+
+    const holder = pid => {
+      for (const s of sides) {
+        if (s.real.includes(pid)) return { s, started: true };
+        if (s.bench.includes(pid)) return { s, started: false };
+      }
+      return null;
+    };
+
+    const M = { week: wk, W, gen, games, final, pts, proj, pre, live, game, val, windows, windowAt, sides, matchups, ranked, bySide, gameRows, picks, holder, median: d3.median(sides, s => s.pts) };
+    models.set(wk, M);
+    return M;
+  }
+
+  // ------------------------------------------------------------ state
+  const S = { week: D.weeks[D.weeks.length - 1].week, follow: null, featured: null };
+  try { const f = localStorage.getItem("filmroom.follow"); if (f && TEAM.has(+f)) S.follow = +f; } catch (e) { /* storage unavailable */ }
+  const isMe = rid => S.follow != null && rid === S.follow;
+
+  // ------------------------------------------------------------ chyron
+  function initControls() {
+    const wk = $("#week");
+    D.weeks.forEach(w => wk.append(h("option", { value: w.week }, `Week ${w.week}${w.games.every(g => g.state === "post") ? "" : " (live)"}`)));
+    wk.value = S.week;
+    wk.addEventListener("change", () => { S.week = +wk.value; S.featured = null; renderAll(); });
+    const fo = $("#follow");
+    [...D.teams].sort((a, b) => a.name.localeCompare(b.name)).forEach(t => fo.append(h("option", { value: t.rid }, t.name)));
+    fo.value = S.follow == null ? "" : String(S.follow);
+    fo.addEventListener("change", () => {
+      S.follow = fo.value ? +fo.value : null;
+      try { localStorage.setItem("filmroom.follow", fo.value); } catch (e) { /* storage unavailable */ }
+      S.featured = null;
+      renderAll();
+    });
+    const lg = `${D.league.name} · ${D.league.season}`;
+    $("#brand-league").textContent = lg;
+    $("#foot-league").textContent = `${lg} · data from Sleeper and ESPN's public scoreboard`;
+    $("#foot-time").textContent = `Snapshot pulled ${stamp(D.generated_at)}`;
+    const rounds = d3.max(D.draft, d => d[1]) || 0;
+    $("#draft-eyebrow").textContent = `${rounds} rounds · ${D.draft.length} picks`;
+  }
+
+  function drawStatus(M) {
+    const el = $("#status");
+    el.textContent = "";
+    const n = M.games.length, done = M.games.filter(g => g.state === "post").length;
+    const bits = [];
+    if (done === n) bits.push(`Week ${M.week} · all ${n} games final`);
+    else {
+      bits.push(`Week ${M.week} · ${done} of ${n} games final`);
+      M.games.filter(g => g.state !== "post").forEach(g => bits.push(g.state === "in" ? `${g.away} ${g.as}–${g.hs} ${g.home}, ${g.detail}` : `${g.away} @ ${g.home} ${clock(g.t0)} ET`));
+    }
+    el.append(h("span", { class: `st-dot${done === n ? " done" : ""}`, "aria-hidden": "true" }), h("span", null, bits.join(" · ")));
+    document.querySelectorAll("[data-week]").forEach(n => { n.textContent = `Week ${M.week}`; });
+  }
+
+  // ------------------------------------------------------------ flags
+  function buildFlags(M) {
+    const out = [];
+    const others = M.sides.length - 1;
+
+    const r1 = M.picks.filter(p => p.round === 1 && !p.pre);
+    const r1med = d3.median(r1, p => p.pts) || 0;
+    const likeFirst = M.picks.filter(p => !p.pre && p.round > 1 && p.pts >= r1med).sort((a, b) => b.no - a.no)[0];
+    const steal = likeFirst || M.picks.filter(p => !p.pre && p.round >= 8).sort((a, b) => b.pts - a.pts)[0];
+    if (steal) {
+      const beat = r1.filter(p => p.pts < steal.pts).length;
+      const drafter = TEAM.get(steal.rid);
+      const hold = M.holder(steal.pid);
+      let tail = "";
+      if (!hold) tail = " Now unrostered.";
+      else if (hold.s.rid !== steal.rid) tail = ` Now on ${hold.s.team.name}${hold.started ? "" : "'s bench"}.`;
+      else if (!hold.started) tail = ` Sat on ${hold.s.team.name}'s bench.`;
+      out.push({
+        kind: "Steal of the draft",
+        stat: f1(steal.pts), unit: "pts",
+        head: likeFirst ? `Pick ${steal.no}, **${pn(steal.pid)}**, scored like a first-rounder` : `**${pn(steal.pid)}** was the best pick after round 7`,
+        detail: `${drafter ? drafter.name : "Taken"} in round ${steal.round}. Outscored ${beat} of ${r1.length} first-round picks.${tail}`,
+      });
+    }
+
+    const cb = [...M.matchups].sort((a, b) => b.deficit - a.deficit)[0];
+    if (cb && cb.deficit >= 8) {
+      const lead = cb[cb.leader], trail = cb[cb.leader === "a" ? "b" : "a"];
+      const w = cb.deficitTime != null ? M.windowAt(cb.deficitTime) : null;
+      out.push({
+        kind: cb.settled ? "Comeback" : "Comeback in progress",
+        stat: f1(cb.deficit), unit: "pt hole",
+        head: `**${lead.team.name}** trailed ${trail.team.name} by ${f1(cb.deficit)}${w ? ` in the ${w.name} window` : ""}`,
+        detail: cb.settled ? `Came back to win by ${f2(Math.abs(cb.margin))}.` : `Now leads by ${f2(Math.abs(cb.margin))} with ${lead.pending.length + trail.pending.length} starters still to play.`,
+      });
+    }
+
+    const hb = M.sides.filter(s => s.result === "L").sort((a, b) => b.pts - a.pts)[0];
+    if (hb) {
+      out.push({
+        kind: hb.settled ? "Tough beat" : "Tough beat, so far",
+        stat: `${fg(hb.allPlay)}–${fg(others - hb.allPlay)}`, unit: "all-play",
+        head: `**${hb.team.name}** scored ${f2(hb.pts)}, ${ord(hb.rank)}-most in the league, and ${hb.settled ? "lost" : "trails"}`,
+        detail: `That score beats ${fg(hb.allPlay)} of ${others} teams. ${hb.opp.team.name} put up ${f2(hb.opp.pts)}.`,
+      });
+    }
+
+    const bb = [...M.sides].sort((a, b) => b.benchLost - a.benchLost)[0];
+    if (bb && bb.benchLost >= 3) {
+      const ins = [...bb.bestLineup].filter(p => !bb.real.includes(p)).sort((x, y) => M.val(y) - M.val(x));
+      const outs = bb.real.filter(p => !bb.bestLineup.has(p)).sort((x, y) => M.val(x) - M.val(y));
+      let detail = ins.length && outs.length ? `Biggest miss: ${pn(ins[0])} (${f1(M.val(ins[0]))}) sat while ${pn(outs[0])} started (${f1(M.val(outs[0]))}).` : "";
+      if (bb.opp && bb.result === "L" && bb.best > bb.opp.pts) detail += ` The best lineup would have beaten ${bb.opp.team.name}.`;
+      out.push({ kind: "Bench blunder", stat: f1(bb.benchLost), unit: "pts sat", head: `**${bb.team.name}** left ${f1(bb.benchLost)} points on the bench`, detail });
+    }
+
+    const starts = M.sides.flatMap(s => s.real.filter(p => !M.pre(p) && M.game(p)).map(pid => ({ pid, s, d: M.pts(pid) - M.proj(pid) })));
+    const boom = [...starts].sort((a, b) => b.d - a.d)[0];
+    if (boom && boom.d > 0) {
+      out.push({ kind: "Boom", stat: sgn(boom.d), unit: "vs proj", head: `**${pn(boom.pid)}** beat the projection by ${f1(boom.d)}`, detail: `${f1(M.pts(boom.pid))} points on a ${f1(M.proj(boom.pid))} projection, started by ${boom.s.team.name}.` });
+    }
+
+    const bust = M.picks.filter(p => p.round <= 2 && !p.pre && p.hasGame).sort((a, b) => (a.pts - a.proj) - (b.pts - b.proj))[0];
+    if (bust && bust.pts < bust.proj) {
+      const hold = M.holder(bust.pid);
+      out.push({
+        kind: "Early-round dud", stat: sgn(bust.pts - bust.proj), unit: "vs proj",
+        head: `**${pn(bust.pid)}**, pick ${bust.no}, managed ${f1(bust.pts)}`,
+        detail: `Projected for ${f1(bust.proj)}.${hold ? ` ${hold.started ? "Started" : "Benched"} by ${hold.s.team.name}.` : ""}`,
+      });
+    }
+
+    const fa = (M.W.free_agents || []).filter(p => !M.pre(p))[0];
+    if (fa && M.pts(fa) > 0) {
+      const outscored = starts.filter(x => M.pts(x.pid) < M.pts(fa)).length;
+      out.push({ kind: "On the waiver wire", stat: f1(M.pts(fa)), unit: "pts", head: `Nobody rosters **${pn(fa)}**`, detail: `${ppos(fa)}, ${pnfl(fa)}. Outscored ${outscored} of the ${starts.length} players in starting lineups.` });
+    }
+
+    const gm = M.gameRows.filter(r => r.g.state !== "pre" && r.starters.length).sort((a, b) => b.pts - a.pts)[0];
+    if (gm) {
+      const top = [...gm.starters].sort((a, b) => M.pts(b.pid) - M.pts(a.pid))[0];
+      out.push({
+        kind: "Game of the week", stat: f1(gm.pts), unit: "pts",
+        head: `**${gm.g.away} ${gm.g.as} @ ${gm.g.home} ${gm.g.hs}** paid out the most`,
+        detail: `${gm.starters.length} starters across ${new Set(gm.starters.map(x => x.s.rid)).size} teams. Top scorer: ${pn(top.pid)}, ${f1(M.pts(top.pid))}.`,
+      });
+    }
+    return out;
+  }
+
+  function drawFlags(M) {
+    const list = $("#flags");
+    list.textContent = "";
+    let fl = buildFlags(M);
+    const n = fl.length >= 8 ? 8 : fl.length >= 6 ? 6 : fl.length >= 4 ? 4 : fl.length;
+    fl = fl.slice(0, n);
+    list.dataset.count = n;
+    fl.forEach(f => list.append(h("li", { class: "flag" },
+      h("p", { class: "flag-kind" }, f.kind),
+      h("p", { class: "flag-stat" }, f.stat, h("span", null, f.unit)),
+      h("p", { class: "flag-head" }, rich(f.head)),
+      f.detail ? h("p", { class: "flag-detail" }, f.detail) : null)));
+  }
+
+  // ------------------------------------------------------------ scoreboard
+  function drawScoreboard(M) {
+    const el = $("#scoreboard");
+    el.textContent = "";
+    const W = Math.max(280, el.clientWidth);
+    const rows = [...M.matchups].sort((a, b) => Math.abs(a.margin) - Math.abs(b.margin));
+    const nameFont = "600 12px 'Schibsted Grotesk', system-ui, sans-serif";
+    const nameW = d3.max(M.sides, s => textW(s.team.name, nameFont)) || 100;
+    let pad = nameW + 22;
+    const narrow = W - pad * 2 < 180;
+    if (narrow) pad = 12;
+    const rowH = narrow ? 78 : 56, top = 24, bottom = 26;
+    const H = top + rows.length * rowH + bottom;
+    const x = d3.scaleLinear().domain(d3.extent(M.sides, s => s.pts)).nice().range([pad, W - pad]);
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`)
+      .attr("role", "img").attr("aria-label", rows.map(mk => `${mk.a.team.name} ${f2(mk.a.pts)}, ${mk.b.team.name} ${f2(mk.b.pts)}`).join("; "));
+
+    x.ticks(5).forEach(v => {
+      svg.append("line").attr("class", "grid").attr("x1", x(v)).attr("x2", x(v)).attr("y1", top - 4).attr("y2", H - bottom);
+      svg.append("text").attr("class", "ax").attr("x", x(v)).attr("y", H - 8).attr("text-anchor", "middle").text(v);
+    });
+    const xm = x(M.median);
+    svg.append("line").attr("x1", xm).attr("x2", xm).attr("y1", top - 4).attr("y2", H - bottom).style("stroke", "var(--ink-2)").style("stroke-width", 1);
+    svg.append("text").attr("class", "ax").attr("x", xm).attr("y", 11).attr("text-anchor", "middle").text(`LEAGUE MEDIAN ${f1(M.median)}`);
+
+    rows.forEach((mk, i) => {
+      const y0 = top + i * rowH;
+      const hi = mk.a.pts >= mk.b.pts ? mk.a : mk.b, lo = hi === mk.a ? mk.b : mk.a;
+      const cy = narrow ? y0 + 52 : y0 + rowH / 2;
+      const g = svg.append("g");
+      g.append("line").attr("x1", x(lo.pts)).attr("x2", x(hi.pts)).attr("y1", cy).attr("y2", cy).style("stroke", "var(--axis)").style("stroke-width", 2);
+      [lo, hi].forEach(s => { if (isMe(s.rid)) g.append("circle").attr("cx", x(s.pts)).attr("cy", cy).attr("r", 11).style("fill", "var(--flag)"); });
+      g.append("circle").attr("cx", x(lo.pts)).attr("cy", cy).attr("r", 5).style("fill", "var(--surface)").style("stroke", "var(--ink)").style("stroke-width", 2);
+      g.append("circle").attr("cx", x(hi.pts)).attr("cy", cy).attr("r", 6).style("fill", "var(--ink)").style("stroke", "var(--surface)").style("stroke-width", 2);
+      const pending = mk.a.pending.length + mk.b.pending.length + mk.a.liveCount + mk.b.liveCount;
+      const marginText = `+${f2(Math.abs(mk.margin))}${pending ? ` · ${pending} to play` : ""}`;
+      if (narrow) {
+        const t1 = g.append("text").attr("x", 0).attr("y", y0 + 16);
+        t1.append("tspan").attr("class", "lbl").text(hi.team.name + " ");
+        t1.append("tspan").attr("class", "num").style("font-size", "16px").text(f2(hi.pts));
+        const t2 = g.append("text").attr("x", 0).attr("y", y0 + 34);
+        t2.append("tspan").attr("class", "lbl-2").text(lo.team.name + " ");
+        t2.append("tspan").attr("class", "num").style("font-size", "16px").style("fill", "var(--ink-2)").text(f2(lo.pts));
+        g.append("text").attr("class", "ax").attr("x", W).attr("y", y0 + 16).attr("text-anchor", "end").text(marginText);
+      } else {
+        const lt = g.append("text").attr("text-anchor", "end");
+        lt.append("tspan").attr("class", "lbl-2").attr("x", x(lo.pts) - 12).attr("y", cy - 4).text(lo.team.name);
+        lt.append("tspan").attr("class", "num").attr("x", x(lo.pts) - 12).attr("y", cy + 14).style("font-size", "17px").style("fill", "var(--ink-2)").text(f2(lo.pts));
+        const rt = g.append("text").attr("text-anchor", "start");
+        rt.append("tspan").attr("class", "lbl").attr("x", x(hi.pts) + 12).attr("y", cy - 4).text(hi.team.name);
+        rt.append("tspan").attr("class", "num").attr("x", x(hi.pts) + 12).attr("y", cy + 14).style("font-size", "17px").text(f2(hi.pts));
+        const span = x(hi.pts) - x(lo.pts);
+        const mw = textW(marginText, "500 10px 'Azeret Mono', monospace");
+        g.append("text").attr("class", "ax").attr("x", (x(lo.pts) + x(hi.pts)) / 2).attr("y", span > mw + 20 ? cy - 8 : cy + 20).attr("text-anchor", "middle").text(marginText);
+      }
+      const hit = g.append("rect").attr("x", 0).attr("y", y0).attr("width", W).attr("height", rowH).style("fill", "transparent").attr("tabindex", 0).attr("aria-label", `${hi.team.name} ${f2(hi.pts)}, ${lo.team.name} ${f2(lo.pts)}`);
+      const show = e => tip(e, mk.settled ? "Final" : "In progress", [
+        { value: f2(hi.pts), label: `${hi.team.name} · ${ord(hi.rank)} in league`, key: "k-ink" },
+        { value: f2(lo.pts), label: `${lo.team.name} · ${ord(lo.rank)} in league`, key: "k-ring" },
+      ], pending ? `${pending} starters still to play · projected ${f1(mk.a.expected)} to ${f1(mk.b.expected)}` : `Margin ${f2(Math.abs(mk.margin))}`);
+      hit.on("pointermove", show).on("pointerleave", hideTip).on("focus", show).on("blur", hideTip)
+        .on("click", () => { S.featured = mk.mid; renderMomentum(); $("#h-momentum").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); });
+      hit.style("cursor", "pointer");
+    });
+  }
+
+  // ------------------------------------------------------------ row charts
+  function rowChart(el, domain, ticks, tickFmt) {
+    const x = d3.scaleLinear(domain, [0, 100]).clamp(true);
+    const wrap = h("div", { class: "rc" });
+    const fmt = tickFmt || (v => fg(v));
+    wrap.append(h("div", { class: "rc-row rc-axis", "aria-hidden": "true" }, h("span"), h("div", { class: "rc-track" }, ticks.map(v => h("span", { class: "rc-tick", style: { left: x(v) + "%" } }, fmt(v)))), h("span")));
+    el.append(wrap);
+    return {
+      x,
+      bar: (v0, v1, cls) => h("span", { class: `rc-bar ${v1 >= v0 ? "pos" : "neg"} ${cls}`, style: { left: Math.min(x(v0), x(v1)) + "%", width: Math.max(0.8, Math.abs(x(v1) - x(v0))) + "%" } }),
+      dot: (v, cls) => h("span", { class: cls || "rc-dot", style: { left: x(v) + "%" } }),
+      link: (v0, v1) => h("span", { class: "rc-link", style: { left: x(Math.min(v0, v1)) + "%", width: Math.abs(x(v1) - x(v0)) + "%" } }),
+      add(name, sub, marks, value, opts) {
+        opts = opts || {};
+        const track = h("div", { class: "rc-track" }, ticks.map(v => h("span", { class: `rc-grid${v === 0 ? " zero" : ""}`, style: { left: x(v) + "%" } })), marks);
+        const row = h("div", { class: `rc-row${opts.me ? " me" : ""}`, tabindex: opts.tip ? "0" : null }, h("span", { class: "rc-name" }, name, sub ? h("small", null, sub) : null), track, h("span", { class: "rc-val" }, value));
+        if (opts.tip) tipOn(row, opts.tip);
+        wrap.append(row);
+        return row;
+      },
+    };
+  }
+  const symTicks = m => [-m, -m / 2, 0, m / 2, m];
+  const niceMax = (v, step) => Math.max(step, Math.ceil(v / step) * step);
+
+  function drawGames(M) {
+    const el = $("#nfl-games");
+    el.textContent = "";
+    const rows = [...M.gameRows].sort((a, b) => (a.g.state === "pre") - (b.g.state === "pre") || (b.g.state === "pre" ? a.g.t0 - b.g.t0 : b.pts - a.pts));
+    const max = niceMax(d3.max(rows, r => Math.max(r.pts, r.proj)) || 1, 25);
+    const rc = rowChart(el, [0, max], d3.ticks(0, max, 4));
+    rows.forEach(r => {
+      const g = r.g, pre = g.state === "pre";
+      const name = pre ? `${g.away} @ ${g.home}` : `${g.away} ${g.as} @ ${g.home} ${g.hs}`;
+      const sub = `${pre ? clock(g.t0) : g.state === "in" ? g.detail : slotName(g.t0)} · ${r.starters.length} starters`;
+      const top = [...r.starters].sort((a, b) => M.val(b.pid) - M.val(a.pid)).slice(0, 4);
+      rc.add(name, sub, r.starters.length ? [rc.bar(0, pre ? r.proj : r.pts, pre ? "proj" : "fill")] : [], pre ? `${f1(r.proj)}p` : f1(r.pts), {
+        tip: e => tip(e, gameLine(g), top.map(x => ({ value: pre ? `${f1(M.proj(x.pid))}p` : f1(M.pts(x.pid)), label: `${pn(x.pid)} · ${x.s.team.name}`, key: "k-none" })), r.starters.length > 4 ? `+${r.starters.length - 4} more starters` : (r.starters.length ? null : "No league starters in this game")),
+      });
+    });
+  }
+
+  // ------------------------------------------------------------ momentum
+  function defaultFeatured(M) {
+    if (S.follow != null) { const s = M.bySide.get(S.follow); if (s && s.m) return s.m.mid; }
+    const best = [...M.matchups].sort((a, b) => b.changes - a.changes || Math.abs(a.margin) - Math.abs(b.margin))[0];
+    return best ? best.mid : null;
+  }
+
+  function renderMomentum() {
+    const M = model(S.week);
+    if (!M.matchups.length) return;
+    if (S.featured == null || !M.matchups.some(m => m.mid === S.featured)) S.featured = defaultFeatured(M);
+    drawMomentumGrid(M);
+    const mk = M.matchups.find(m => m.mid === S.featured);
+    drawFeatureHead(M, mk);
+    drawRace(M, mk);
+    drawDuel(M, mk);
+  }
+
+  function drawMomentumGrid(M) {
+    const grid = $("#mm-grid");
+    grid.textContent = "";
+    const maxAbs = d3.max(M.matchups, mk => d3.max(mk.actual.concat(mk.future), d => Math.abs(d.a - d.b))) || 1;
+    M.matchups.forEach(mk => {
+      const teamRow = (s, k) => h("span", { class: `mm-team${s.pts < s.opp.pts ? " lost" : ""}` }, h("i", { class: `k k-${k}` }), h("span", null, s.team.name), h("b", null, f1(s.pts)));
+      const me = isMe(mk.a.rid) || isMe(mk.b.rid);
+      const foot = mk.changes === 0 ? "No lead changes" : `${mk.changes} lead change${mk.changes === 1 ? "" : "s"}`;
+      const chart = h("div", { class: "mm-chart" });
+      const btn = h("button", {
+        class: "mm", type: "button", "aria-pressed": String(mk.mid === S.featured),
+        "aria-label": `${mk.a.team.name} ${f2(mk.a.pts)} versus ${mk.b.team.name} ${f2(mk.b.pts)}, ${foot}`,
+        onclick: () => {
+          S.featured = mk.mid;
+          grid.querySelectorAll(".mm").forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+          drawFeatureHead(M, mk); drawRace(M, mk); drawDuel(M, mk);
+        },
+      }, teamRow(mk.a, "a"), chart, teamRow(mk.b, "b"), h("p", { class: `mm-foot${me ? " me" : ""}` }, `${foot} · max lead ${f1(Math.max(mk.maxA, mk.maxB))}`));
+      grid.append(btn);
+      drawMini(chart, M, mk, maxAbs);
+    });
+  }
+
+  function drawMini(el, M, mk, maxAbs) {
+    const W = Math.max(120, el.clientWidth), H = 50;
+    const tx = timeScale(M.windows, 0, W, 3);
+    const y = d3.scaleLinear([-maxAbs, maxAbs], [H - 2, 2]);
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("aria-hidden", "true");
+    const mg = mk.actual.map(d => ({ t: d.t, m: d.a - d.b }));
+    svg.append("path").attr("d", d3.area().x(d => tx(d.t)).y0(y(0)).y1(d => y(Math.max(0, d.m)))(mg)).style("fill", "var(--side-a)").style("opacity", 0.22);
+    svg.append("path").attr("d", d3.area().x(d => tx(d.t)).y0(y(0)).y1(d => y(Math.min(0, d.m)))(mg)).style("fill", "var(--side-b)").style("opacity", 0.22);
+    svg.append("line").attr("x1", 0).attr("x2", W).attr("y1", y(0)).attr("y2", y(0)).attr("class", "base");
+    svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => y(d.m))(mg)).style("fill", "none").style("stroke", "var(--ink-2)").style("stroke-width", 1.5).style("stroke-linejoin", "round");
+    if (mk.future.length) svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => y(d.a - d.b))(mk.future)).style("fill", "none").style("stroke", "var(--muted)").style("stroke-width", 1.5).style("stroke-dasharray", "3 3");
+  }
+
+  function drawFeatureHead(M, mk) {
+    const el = $("#feature-head");
+    el.textContent = "";
+    const block = (s, k) => h("div", { class: `fh-team ${k}` },
+      h("span", { class: "fh-name" }, h("i", { class: `k k-${k}` }), s.team.name, isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
+      h("span", { class: "fh-score" }, f2(s.pts)),
+      h("span", { class: "fh-owner" }, `@${s.team.owner}${s.pending.length ? ` · ${s.pending.length} to play, ${f1(s.pendingProj)} projected` : ""}`));
+    const stat = (label, v) => h("div", null, h("dt", null, label), h("dd", null, v));
+    const lw = M.windowAt(mk.deficitTime || M.windows[0].start);
+    el.append(h("div", { class: "fh" }, block(mk.a, "a"), block(mk.b, "b"),
+      h("dl", { class: "fh-stats" },
+        stat("Lead changes", mk.changes),
+        stat(`Biggest ${mk.a.team.name} lead`, f1(mk.maxA)),
+        stat(`Biggest ${mk.b.team.name} lead`, f1(mk.maxB)),
+        mk.deficit >= 1 ? stat("Leader's deepest hole", `${f1(mk.deficit)} · ${lw.name}`) : stat("Led", "Wire to wire"))));
+  }
+
+  function drawRace(M, mk) {
+    const el = $("#race");
+    el.textContent = "";
+    const W = Math.max(300, el.clientWidth);
+    const m = { l: 38, r: 62, t: 14 };
+    const raceH = W < 520 ? 190 : 240, gap = 22, marH = 78;
+    const segMin = W / M.windows.length;
+    const stagger = segMin < 70;
+    const axisH = stagger ? 44 : 30;
+    const H = m.t + raceH + gap + marH + axisH;
+    const tx = timeScale(M.windows, m.l, W - m.r, 12);
+    const series = mk.actual.concat(mk.future.slice(1));
+    const yMax = d3.max(series, d => Math.max(d.a, d.b)) || 1;
+    const y = d3.scaleLinear([0, yMax], [m.t + raceH, m.t]).nice();
+    const mAbs = d3.max(series, d => Math.abs(d.a - d.b)) || 1;
+    const mTop = m.t + raceH + gap, mBot = mTop + marH;
+    const ym = d3.scaleLinear([-mAbs, mAbs], [mBot, mTop]);
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("tabindex", 0)
+      .attr("role", "img").attr("aria-label", `${mk.a.team.name} ${f2(mk.a.pts)} versus ${mk.b.team.name} ${f2(mk.b.pts)}. ${mk.changes} lead changes. Use arrow keys to step through the week.`);
+
+    y.ticks(4).forEach(v => {
+      svg.append("line").attr("class", "grid").attr("x1", m.l).attr("x2", W - m.r).attr("y1", y(v)).attr("y2", y(v));
+      svg.append("text").attr("class", "ax").attr("x", m.l - 8).attr("y", y(v)).attr("dy", "0.32em").attr("text-anchor", "end").text(v);
+    });
+    svg.append("text").attr("class", "ax").attr("x", m.l - 8).attr("y", m.t - 4).attr("text-anchor", "end").text("PTS");
+
+    tx.segs.forEach((s, i) => {
+      if (i) {
+        const gx = s.x - 6;
+        svg.append("line").attr("class", "grid").attr("x1", gx).attr("x2", gx).attr("y1", m.t).attr("y2", mBot);
+        svg.append("path").attr("class", "brk").attr("d", `M${gx - 4},${mBot + 5} l3,-8 M${gx + 1},${mBot + 5} l3,-8`);
+      }
+      const row = stagger && i % 2 ? 1 : 0;
+      svg.append("text").attr("class", "ax").attr("x", s.x + s.width / 2).attr("y", mBot + 18 + row * 14).attr("text-anchor", "middle").text(s.w.name);
+    });
+
+    // margin strip
+    const mg = mk.actual.map(d => ({ t: d.t, m: d.a - d.b }));
+    svg.append("path").attr("d", d3.area().x(d => tx(d.t)).y0(ym(0)).y1(d => ym(Math.max(0, d.m)))(mg)).style("fill", "var(--side-a)").style("opacity", 0.16);
+    svg.append("path").attr("d", d3.area().x(d => tx(d.t)).y0(ym(0)).y1(d => ym(Math.min(0, d.m)))(mg)).style("fill", "var(--side-b)").style("opacity", 0.16);
+    svg.append("line").attr("class", "base").attr("x1", m.l).attr("x2", W - m.r).attr("y1", ym(0)).attr("y2", ym(0));
+    svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => ym(d.m))(mg)).style("fill", "none").style("stroke", "var(--ink-2)").style("stroke-width", 1.5).style("stroke-linejoin", "round");
+    if (mk.future.length) svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => ym(d.a - d.b))(mk.future)).style("fill", "none").style("stroke", "var(--muted)").style("stroke-width", 1.5).style("stroke-dasharray", "4 4");
+    svg.append("text").attr("class", "ax").attr("x", m.l + 4).attr("y", mTop + 10).text(`${mk.a.team.name.toUpperCase()} AHEAD`);
+    svg.append("text").attr("class", "ax").attr("x", m.l + 4).attr("y", mBot - 4).text(`${mk.b.team.name.toUpperCase()} AHEAD`);
+    svg.append("text").attr("class", "ax").attr("x", m.l - 8).attr("y", ym(0)).attr("dy", "0.32em").attr("text-anchor", "end").text("TIED");
+
+    // race lines
+    [["a", "var(--side-a)"], ["b", "var(--side-b)"]].forEach(([k, c]) => {
+      svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => y(d[k])).curve(d3.curveMonotoneX)(mk.actual)).style("fill", "none").style("stroke", c).style("stroke-width", 2).style("stroke-linejoin", "round").style("stroke-linecap", "round");
+      if (mk.future.length) {
+        svg.append("path").attr("d", d3.line().x(d => tx(d.t)).y(d => y(d[k]))(mk.future)).style("fill", "none").style("stroke", c).style("stroke-width", 2).style("stroke-dasharray", "4 4");
+        const f = mk.future[mk.future.length - 1];
+        svg.append("circle").attr("cx", tx(f.t)).attr("cy", y(f[k])).attr("r", 4).style("fill", "var(--surface)").style("stroke", c).style("stroke-width", 2);
+      }
+    });
+    const last = mk.actual[mk.actual.length - 1];
+    let ya = y(last.a), yb = y(last.b);
+    const lx = tx(last.t);
+    [["a", ya], ["b", yb]].forEach(([k, yy]) => svg.append("circle").attr("cx", lx).attr("cy", yy).attr("r", 4.5).style("fill", `var(--side-${k})`).style("stroke", "var(--surface)").style("stroke-width", 2));
+    if (Math.abs(ya - yb) < 16) { const mid = (ya + yb) / 2, up = ya <= yb; ya = mid + (up ? -8 : 8); yb = mid + (up ? 8 : -8); }
+    const labelX = mk.future.length ? lx - 8 : lx + 8;
+    const anchor = mk.future.length ? "end" : "start";
+    svg.append("text").attr("class", "lbl halo").attr("x", labelX).attr("y", ya - (mk.future.length ? 10 : 0)).attr("dy", "0.32em").attr("text-anchor", anchor).text(f1(last.a));
+    svg.append("text").attr("class", "lbl halo").attr("x", labelX).attr("y", yb + (mk.future.length ? 10 : 0)).attr("dy", "0.32em").attr("text-anchor", anchor).text(f1(last.b));
+    if (!M.final) {
+      svg.append("line").attr("x1", lx).attr("x2", lx).attr("y1", m.t).attr("y2", mBot).style("stroke", "var(--flag)").style("stroke-width", 2);
+      svg.append("text").attr("class", "ax").attr("x", lx).attr("y", m.t - 4).attr("text-anchor", "middle").text("NOW");
+    }
+
+    // crosshair
+    const xs = series.map(d => tx(d.t));
+    const cross = svg.append("line").attr("class", "cross").attr("y1", m.t).attr("y2", mBot).style("display", "none");
+    const ca = svg.append("circle").attr("r", 4).style("fill", "var(--side-a)").style("stroke", "var(--surface)").style("stroke-width", 2).style("display", "none");
+    const cbd = svg.append("circle").attr("r", 4).style("fill", "var(--side-b)").style("stroke", "var(--surface)").style("stroke-width", 2).style("display", "none");
+    let idx = series.length - 1;
+    const show = (i, evt) => {
+      idx = Math.max(0, Math.min(series.length - 1, i));
+      const d = series[idx], X = xs[idx], proj = idx >= mk.actual.length;
+      cross.attr("x1", X).attr("x2", X).style("display", null);
+      ca.attr("cx", X).attr("cy", y(d.a)).style("display", null);
+      cbd.attr("cx", X).attr("cy", y(d.b)).style("display", null);
+      const mgv = d.a - d.b;
+      tip(evt, `${M.windowAt(d.t).name} · ${clock(d.t)} ET${proj ? " · projected" : ""}`, [
+        { value: f1(d.a), label: mk.a.team.name, key: "k-a" },
+        { value: f1(d.b), label: mk.b.team.name, key: "k-b" },
+      ], Math.abs(mgv) < 0.05 ? "Tied" : `${mgv > 0 ? mk.a.team.name : mk.b.team.name} by ${f1(Math.abs(mgv))}`);
+    };
+    const hide = () => { cross.style("display", "none"); ca.style("display", "none"); cbd.style("display", "none"); hideTip(); };
+    svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", Math.max(0, W - m.l - m.r)).attr("height", raceH + gap + marH).style("fill", "transparent").style("cursor", "crosshair")
+      .on("pointermove", e => { const [px] = d3.pointer(e, svg.node()); show(d3.bisectCenter(xs, px), e); })
+      .on("pointerleave", hide);
+    svg.on("keydown", e => {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.preventDefault();
+      show(idx + (e.key === "ArrowRight" ? 3 : -3), e);
+    }).on("focus", e => show(idx, e)).on("blur", hide);
+  }
+
+  function drawDuel(M, mk) {
+    const el = $("#duel");
+    el.textContent = "";
+    const all = [];
+    SLOTS.forEach((_, i) => [mk.a.starters[i], mk.b.starters[i]].forEach(st => { if (st && !st.empty) all.push(M.pre(st.pid) ? M.proj(st.pid) : M.pts(st.pid)); }));
+    const max = d3.max(all) || 1;
+    let wa = 0, wb = 0, open = 0;
+    const side = (st, k, win, slot) => {
+      if (!st || st.empty) return h("div", { class: `duel-side ${k} lost` }, h("div", { class: "duel-top" }, h("span", { class: "duel-name" }, "Empty slot"), h("span", { class: "duel-pts" }, "0.0")), h("div", { class: "duel-track" }));
+      const pending = M.pre(st.pid);
+      const v = pending ? M.proj(st.pid) : M.pts(st.pid);
+      const g = M.game(st.pid);
+      const node = h("div", { class: `duel-side ${k} ${win ? "won" : "lost"}`, tabindex: "0" },
+        h("div", { class: "duel-top" },
+          h("span", { class: "duel-name" }, pn(st.pid), h("small", null, `${ppos(st.pid)} ${pnfl(st.pid)}`)),
+          h("span", { class: `duel-pts${pending ? " proj" : ""}` }, pending ? `${f1(v)}p` : f1(v))),
+        h("div", { class: "duel-track" }, h("i", { class: pending ? "proj" : null, style: { width: `${Math.max(1.5, v / max * 100)}%` } })));
+      tipOn(node, e => tip(e, `${slotShort(slot)} · ${pn(st.pid)}`, [
+        { value: pending ? "—" : f2(M.pts(st.pid)), label: "points", key: `k-${k}` },
+        { value: f1(M.proj(st.pid)), label: "projected", key: "k-none" },
+      ], g ? gameLine(g) : "No game this week"));
+      return node;
+    };
+    SLOTS.forEach((slot, i) => {
+      const sa = mk.a.starters[i], sb = mk.b.starters[i];
+      const va = sa && !sa.empty ? M.pts(sa.pid) : 0, vb = sb && !sb.empty ? M.pts(sb.pid) : 0;
+      const pend = (sa && !sa.empty && M.pre(sa.pid)) || (sb && !sb.empty && M.pre(sb.pid));
+      const winA = !pend && va > vb, winB = !pend && vb > va;
+      if (pend) open++; else if (winA) wa++; else if (winB) wb++;
+      el.append(h("div", { class: "duel-row" }, side(sa, "a", winA, slot), h("div", { class: "duel-slot" }, slotShort(slot)), side(sb, "b", winB, slot)));
+    });
+    $("#duel-sub").textContent = `${mk.a.team.name} won ${wa} slot${wa === 1 ? "" : "s"}, ${mk.b.team.name} won ${wb}${open ? `, ${open} still open` : ""}. Values ending in p are projections.`;
+  }
+
+  // ------------------------------------------------------------ team sheet
+  function drawTeam(M) {
+    const el = $("#team-sheet");
+    el.textContent = "";
+    const s = (S.follow != null && M.bySide.get(S.follow)) || M.ranked[0];
+    const followed = isMe(s.rid);
+    const others = M.sides.length - 1;
+    const stat = (label, v, small) => h("div", null, h("dt", null, label), h("dd", null, v, small ? h("small", null, small) : null));
+    const resultWord = !s.opp ? "Bye" : s.settled ? (s.result === "W" ? "Won" : s.result === "L" ? "Lost" : "Tied") : (s.result === "W" ? "Leading" : s.result === "L" ? "Trailing" : "Tied");
+    el.append(h("div", { class: "sheet-head" },
+      h("div", { class: "sheet-id" },
+        h("h3", { class: "sheet-name" }, s.team.name),
+        h("p", { class: "sheet-owner" }, `@${s.team.owner}${followed ? "" : " · This week's top scorer. Choose a team under Follow to open theirs."}`)),
+      h("dl", { class: "statline" },
+        stat("Points", f2(s.pts)),
+        stat("League rank", ord(s.rank), `of ${M.sides.length}`),
+        s.opp ? stat(resultWord, sgn(s.pts - s.opp.pts), `vs ${s.opp.team.name}`) : null,
+        stat("All-play", `${fg(s.allPlay)}–${fg(others - s.allPlay)}`),
+        stat("Vs projection", sgn(s.expected - s.proj)),
+        stat("Bench lost", f1(s.benchLost)))));
+
+    const grid = h("div", { class: "sheet-grid" });
+    el.append(grid);
+
+    // lineup
+    const left = h("div");
+    grid.append(left);
+    left.append(h("h4", null, h("span", null, "Lineup"), h("span", { class: "legend" }, h("span", { class: "key" }, h("i", { class: "k k-bar" }), "Points"), h("span", { class: "key" }, h("i", { class: "k k-tick" }), "Projection"))));
+    const roster = s.real.concat(s.bench);
+    const max = d3.max(roster, pid => Math.max(M.pts(pid), M.proj(pid))) || 1;
+    const lx = v => Math.min(100, Math.max(0, v / max * 100));
+    const row = (slot, pid, isBench, firstBench) => {
+      const pending = M.pre(pid), p = M.pts(pid), pj = M.proj(pid), g = M.game(pid);
+      const shouldStart = isBench && s.bestLineup.has(pid) && M.val(pid) > 0;
+      const r = h("div", { class: `ln-row${isBench ? " is-bench" : ""}${firstBench ? " first-bench" : ""}`, tabindex: "0" },
+        h("span", { class: "ln-slot" }, slotShort(slot)),
+        h("span", { class: "ln-name" }, pn(pid), h("small", null, `${ppos(pid)} · ${pnfl(pid)}`),
+          shouldStart ? h("span", { class: "chip" }, "Best lineup") : null,
+          pending && g ? h("span", { class: "chip quiet" }, slotName(g.t0)) : null,
+          !g ? h("span", { class: "chip quiet" }, "Bye") : null),
+        h("div", { class: "ln-track" },
+          h("span", { class: `ln-bar${pending ? " proj" : ""}${isBench ? " bench" : ""}`, style: { width: lx(pending ? pj : p) + "%" } }),
+          pj ? h("span", { class: "ln-tick", style: { left: lx(pj) + "%" } }) : null),
+        h("span", { class: "ln-val" }, pending ? `${f1(pj)}p` : f1(p)));
+      tipOn(r, e => tip(e, `${slotShort(slot)} · ${pn(pid)}`, [
+        { value: pending ? "—" : f2(p), label: "points", key: "k-bar" },
+        { value: f1(pj), label: "projected", key: "k-tick" },
+      ], g ? gameLine(g) : "No game this week"));
+      return r;
+    };
+    s.starters.forEach(st => { if (!st.empty) left.append(row(st.slot, st.pid, false, false)); });
+    [...s.bench].sort((a, b) => M.val(b) - M.val(a)).forEach((pid, i) => left.append(row("BN", pid, true, i === 0)));
+
+    // draft class + moves
+    const right = h("div");
+    grid.append(right);
+    const mine = M.picks.filter(p => p.rid === s.rid).sort((a, b) => a.no - b.no);
+    if (mine.length) {
+      const vv = p => (p.pre ? p.proj : p.pts);
+      const dmax = d3.max(M.picks, vv) || 1;
+      const scored = mine.filter(p => p.residual != null);
+      const best = [...scored].sort((a, b) => b.residual - a.residual)[0];
+      const worst = [...scored].sort((a, b) => a.residual - b.residual)[0];
+      const cols = `repeat(${mine.length}, minmax(0, 1fr))`;
+      const block = h("div", { class: "side-block" },
+        h("h4", null, h("span", null, "Draft class, by round"), h("span", null, `Return ${sgn(d3.sum(scored, p => p.residual))}`)),
+        h("div", { class: "dc", style: { gridTemplateColumns: cols } }, mine.map(p => {
+          const c = h("div", { class: "dc-col", tabindex: "0" }, h("span", { class: `dc-bar${p.pre ? " proj" : ""}${p === best ? " best" : ""}`, style: { height: Math.max(1.5, vv(p) / dmax * 100) + "%" } }));
+          const hold = M.holder(p.pid);
+          tipOn(c, e => tip(e, `Round ${p.round} · pick ${p.no}`, [
+            { value: p.pre ? `${f1(p.proj)}p` : f1(p.pts), label: pn(p.pid), key: "k-bar" },
+            { value: f1(p.expected), label: "typical for this slot", key: "k-none" },
+          ], !hold ? "Not on a roster now" : hold.s.rid !== s.rid ? `Now on ${hold.s.team.name}` : hold.started ? "Started this week" : "On the bench this week"));
+          return c;
+        })),
+        h("div", { class: "dc-labels", style: { gridTemplateColumns: cols } }, mine.map(p => h("span", null, p.round))),
+        h("ul", { class: "dc-notes" },
+          best ? h("li", null, "Best value: ", h("strong", null, pn(best.pid)), `, round ${best.round}. ${f1(best.pts)} points, ${sgn(best.residual)} versus the slot.`) : null,
+          worst && worst !== best ? h("li", null, "Least return: ", h("strong", null, pn(worst.pid)), `, round ${worst.round}. ${f1(worst.pts)} points, ${sgn(worst.residual)} versus the slot.`) : null));
+      right.append(block);
+    }
+    const txs = (M.W.transactions || []).filter(t => Object.values(t.adds).includes(s.rid) || Object.values(t.drops).includes(s.rid));
+    const moves = h("ul", { class: "moves" });
+    txs.forEach(t => {
+      Object.entries(t.adds).filter(([, rid]) => rid === s.rid).forEach(([pid]) => moves.append(h("li", null, h("span", { class: "mv" }, "Added"), h("span", null, pn(pid)), h("span", { class: "pts" }, M.pre(pid) ? "to play" : `${f1(M.pts(pid))} pts`))));
+      Object.entries(t.drops).filter(([, rid]) => rid === s.rid).forEach(([pid]) => moves.append(h("li", null, h("span", { class: "mv" }, "Dropped"), h("span", null, pn(pid)), h("span", { class: "pts" }, M.pre(pid) ? "to play" : `${f1(M.pts(pid))} pts`))));
+    });
+    right.append(h("div", { class: "side-block" }, h("h4", null, h("span", null, "Moves this week")), txs.length ? moves : h("p", { class: "sub" }, "No adds or drops this week.")));
+  }
+
+  function drawHeat(M) {
+    const tbl = $("#heatmap");
+    tbl.textContent = "";
+    const groups = [...new Set(SLOTS)];
+    const counts = d3.rollup(SLOTS, v => v.length, d => d);
+    const rows = M.sides.map(s => {
+      const g = {};
+      groups.forEach(k => { g[k] = { v: 0, players: [], pending: false }; });
+      s.starters.forEach(st => {
+        if (st.empty || !g[st.slot]) return;
+        g[st.slot].v += M.pts(st.pid);
+        g[st.slot].players.push(st.pid);
+        if (M.pre(st.pid)) g[st.slot].pending = true;
+      });
+      return { s, g };
+    }).sort((a, b) => b.s.pts - a.s.pts);
+    const ext = Object.fromEntries(groups.map(k => [k, d3.extent(rows, r => r.g[k].v)]));
+    tbl.append(h("thead", null, h("tr", null, h("th", { class: "l" }, "Team"), groups.map(k => h("th", null, counts.get(k) > 1 ? `${slotShort(k)} ×${counts.get(k)}` : slotShort(k))), h("th", null, "Total"))));
+    const body = h("tbody");
+    let anyPending = false;
+    rows.forEach(r => {
+      const tr = h("tr", { class: isMe(r.s.rid) ? "me" : null }, h("td", { class: "team" }, r.s.team.name, h("small", null, `${ord(r.s.rank)} · @${r.s.team.owner}`)));
+      groups.forEach(k => {
+        const c = r.g[k];
+        const [lo, hi] = ext[k];
+        const pct = hi > lo ? (c.v - lo) / (hi - lo) : 0.5;
+        const mix = Math.round(6 + pct * 94);
+        if (c.pending) anyPending = true;
+        const span = h("span", { tabindex: "0" }, f1(c.v) + (c.pending ? "*" : ""));
+        const td = h("td", { class: `cell${mix > 55 ? " hi" : ""}` }, span);
+        td.style.background = `color-mix(in oklab, var(--seq-hi) ${mix}%, var(--seq-lo))`;
+        tipOn(span, e => tip(e, `${r.s.team.name} · ${slotShort(k)}`, c.players.map(pid => ({ value: M.pre(pid) ? `${f1(M.proj(pid))}p` : f1(M.pts(pid)), label: pn(pid), key: "k-none" })), `${ord(rows.filter(o => o.g[k].v > c.v).length + 1)} of ${rows.length} at ${slotShort(k)}`));
+        tr.append(td);
+      });
+      tr.append(h("td", { class: "total" }, f2(r.s.pts)));
+      body.append(tr);
+    });
+    tbl.append(body);
+    if (anyPending) tbl.prepend(h("caption", { style: { captionSide: "bottom", textAlign: "left", paddingTop: "10px", fontSize: "12px", color: "var(--muted)" } }, "* includes a starter who hasn't played yet, counted at 0 so far"));
+  }
+
+  // ------------------------------------------------------------ draft
+  function drawDraft(M) {
+    const el = $("#draft-scatter");
+    el.textContent = "";
+    const W = Math.max(300, el.clientWidth);
+    const H = Math.round(Math.max(300, Math.min(440, W * 0.52)));
+    const m = { l: 36, r: 12, t: 16, b: 34 };
+    const picks = M.picks;
+    const perRound = D.league.teams || 12;
+    const nPick = d3.max(picks, p => p.no), rounds = d3.max(picks, p => p.round);
+    const yv = p => (p.pre ? p.proj : p.pts);
+    const x = d3.scaleLinear([0.5, nPick + 0.5], [m.l, W - m.r]);
+    const y = d3.scaleLinear([0, d3.max(picks, yv) || 1], [H - m.b, m.t]).nice();
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img")
+      .attr("aria-label", `Scatter of ${picks.length} draft picks: pick number against week ${M.week} points.`);
+
+    const bandW = x(perRound + 0.5) - x(0.5);
+    for (let r = 1; r <= rounds; r++) {
+      const x0 = x((r - 1) * perRound + 0.5);
+      if (r % 2 === 0) svg.append("rect").attr("x", x0).attr("y", m.t).attr("width", bandW).attr("height", H - m.b - m.t).style("fill", "var(--surface-2)");
+      if (bandW >= 24 || r % 2 === 1) svg.append("text").attr("class", "ax").attr("x", x0 + bandW / 2).attr("y", H - m.b + 16).attr("text-anchor", "middle").text(bandW >= 24 ? `R${r}` : r);
+    }
+    svg.append("text").attr("class", "ax").attr("x", W - m.r).attr("y", H - 4).attr("text-anchor", "end").text("DRAFT ROUND →");
+    y.ticks(5).forEach(v => {
+      svg.append("line").attr("class", "grid").attr("x1", m.l).attr("x2", W - m.r).attr("y1", y(v)).attr("y2", y(v));
+      svg.append("text").attr("class", "ax").attr("x", m.l - 6).attr("y", y(v)).attr("dy", "0.32em").attr("text-anchor", "end").text(v);
+    });
+    svg.append("text").attr("class", "ax").attr("x", m.l - 6).attr("y", m.t - 6).attr("text-anchor", "end").text("PTS");
+    svg.append("line").attr("class", "base").attr("x1", m.l).attr("x2", W - m.r).attr("y1", y(0)).attr("y2", y(0));
+
+    const exp = [...picks].sort((a, b) => a.no - b.no);
+    svg.append("path").attr("d", d3.line().x(p => x(p.no)).y(p => y(p.expected)).curve(d3.curveBasis)(exp)).style("fill", "none").style("stroke", "var(--ink-2)").style("stroke-width", 2).style("opacity", 0.55);
+
+    const scored = picks.filter(p => p.residual != null);
+    const steals = new Set([...scored].filter(p => p.round >= 5).sort((a, b) => b.residual - a.residual).slice(0, 3));
+    const misses = new Set([...scored].filter(p => p.round <= 3).sort((a, b) => a.residual - b.residual).slice(0, 2));
+    const order = [...picks].sort((a, b) => (isMe(a.rid) + steals.has(a) * 2 + misses.has(a) * 2) - (isMe(b.rid) + steals.has(b) * 2 + misses.has(b) * 2));
+    order.forEach(p => {
+      const c = svg.append("circle").attr("cx", x(p.no)).attr("cy", y(yv(p))).attr("r", isMe(p.rid) || steals.has(p) || misses.has(p) ? 5 : 4);
+      if (steals.has(p)) c.style("fill", "var(--flag)").style("stroke", "var(--surface)").style("stroke-width", 2);
+      else if (misses.has(p)) c.style("fill", "var(--surface)").style("stroke", "var(--under)").style("stroke-width", 2);
+      else if (p.pre) c.style("fill", "var(--surface)").style("stroke", "var(--muted)").style("stroke-width", 1.5).style("stroke-dasharray", "2 2");
+      else if (isMe(p.rid)) c.style("fill", "var(--ink)").style("stroke", "var(--surface)").style("stroke-width", 2);
+      else c.style("fill", "var(--dot)").style("stroke", "var(--surface)").style("stroke-width", 2);
+    });
+    [...steals, ...misses].forEach(p => {
+      const cx = x(p.no), cy = y(yv(p));
+      const right = cx < W - 150;
+      svg.append("text").attr("class", "lbl halo").attr("x", cx + (right ? 9 : -9)).attr("y", cy).attr("dy", "0.32em").attr("text-anchor", right ? "start" : "end").text(`${pn(p.pid)} ${f1(p.pts)}`);
+    });
+    const ex = exp.find(p => x(p.no) > m.l + 60) || exp[0];
+    if (ex) svg.append("text").attr("class", "ax halo").attr("x", x(ex.no)).attr("y", y(ex.expected) - 10).text("TYPICAL FOR THE SLOT");
+
+    const pts = picks.map(p => [x(p.no), y(yv(p))]);
+    const dl = d3.Delaunay.from(pts);
+    const ring = svg.append("circle").attr("r", 8).style("fill", "none").style("stroke", "var(--ink)").style("stroke-width", 2).style("display", "none");
+    svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).style("fill", "transparent")
+      .on("pointermove", e => {
+        const [px, py] = d3.pointer(e, svg.node());
+        const i = dl.find(px, py);
+        if (i == null || Math.hypot(pts[i][0] - px, pts[i][1] - py) > 30) { ring.style("display", "none"); hideTip(); return; }
+        const p = picks[i];
+        ring.attr("cx", pts[i][0]).attr("cy", pts[i][1]).style("display", null);
+        const hold = M.holder(p.pid), drafter = TEAM.get(p.rid);
+        tip(e, `Round ${p.round} · pick ${p.no} · ${drafter ? drafter.name : ""}`, [
+          { value: p.pre ? `${f1(p.proj)}p` : f1(p.pts), label: `${pn(p.pid)}, ${ppos(p.pid)} ${pnfl(p.pid)}`, key: "k-none" },
+          { value: f1(p.expected), label: "typical for this slot", key: "k-none" },
+        ], p.pre ? "Hasn't played yet, shown at projection" : `${sgn(p.residual)} versus the slot${hold ? ` · ${hold.started ? "started" : "benched"} by ${hold.s.team.name}` : " · unrostered"}`);
+      })
+      .on("pointerleave", () => { ring.style("display", "none"); hideTip(); });
+
+    const lg = $("#draft-legend");
+    lg.textContent = "";
+    const key = (cls, label) => h("span", { class: "key" }, h("i", { class: `k ${cls}` }), label);
+    lg.append(key("k-dot", "Pick"), S.follow != null ? key("k-ink", TEAM.get(S.follow).name) : null, key("k-flag", "Top late-round value"), key("k-miss", "Early-round miss"), M.picks.some(p => p.pre) ? key("k-hollow", "Not played yet, at projection") : null);
+  }
+
+  function drawDraftReturn(M) {
+    const el = $("#draft-return");
+    el.textContent = "";
+    const rows = D.teams.map(t => ({ t, v: d3.sum(M.picks.filter(p => p.rid === t.rid && p.residual != null), p => p.residual), n: M.picks.filter(p => p.rid === t.rid).length })).sort((a, b) => b.v - a.v);
+    const mx = niceMax(d3.max(rows, r => Math.abs(r.v)) || 1, 10);
+    const rc = rowChart(el, [-mx, mx], symTicks(mx));
+    rows.forEach(r => {
+      const best = M.picks.filter(p => p.rid === r.t.rid && p.residual != null).sort((a, b) => b.residual - a.residual)[0];
+      rc.add(r.t.name, null, [rc.bar(0, r.v, r.v >= 0 ? "over" : "under")], sgn(r.v), {
+        me: isMe(r.t.rid),
+        tip: e => tip(e, r.t.name, [{ value: sgn(r.v), label: `points versus slot, ${r.n} picks`, key: r.v >= 0 ? "k-over" : "k-under" }], best ? `Best value: ${pn(best.pid)}, round ${best.round} (${sgn(best.residual)})` : null),
+      });
+    });
+  }
+
+  // ------------------------------------------------------------ lineup calls
+  function drawBench(M) {
+    const el = $("#bench");
+    el.textContent = "";
+    const rows = [...M.sides].sort((a, b) => b.benchLost - a.benchLost);
+    const lo = Math.floor((d3.min(rows, s => s.expected) - 5) / 20) * 20;
+    const hi = Math.ceil((d3.max(rows, s => s.best) + 5) / 20) * 20;
+    const rc = rowChart(el, [lo, hi], d3.ticks(lo, hi, 4));
+    rows.forEach(s => {
+      const ins = [...s.bestLineup].filter(p => !s.real.includes(p)).sort((x, y) => M.val(y) - M.val(x));
+      rc.add(s.team.name, null, [rc.link(s.expected, s.best), rc.dot(s.best, "rc-ring"), rc.dot(s.expected)], s.benchLost >= 0.05 ? `−${f1(s.benchLost)}` : "0.0", {
+        me: isMe(s.rid),
+        tip: e => tip(e, s.team.name, [
+          { value: f1(s.expected), label: "lineup started", key: "k-ink" },
+          { value: f1(s.best), label: "best possible lineup", key: "k-ring" },
+        ], ins.length ? `Should have started: ${ins.map(p => `${pn(p)} (${f1(M.val(p))})`).join(", ")}` : "Started the best possible lineup"),
+      });
+    });
+  }
+
+  function drawProj(M) {
+    const el = $("#proj");
+    el.textContent = "";
+    const rows = M.sides.map(s => ({ s, v: s.expected - s.proj })).sort((a, b) => b.v - a.v);
+    const mx = niceMax(d3.max(rows, r => Math.abs(r.v)) || 1, 10);
+    const rc = rowChart(el, [-mx, mx], symTicks(mx));
+    rows.forEach(r => {
+      const pl = r.s.real.filter(p => !M.pre(p)).map(p => ({ p, d: M.pts(p) - M.proj(p) })).sort((a, b) => b.d - a.d);
+      rc.add(r.s.team.name, null, [rc.bar(0, r.v, r.v >= 0 ? "over" : "under")], sgn(r.v), {
+        me: isMe(r.s.rid),
+        tip: e => tip(e, r.s.team.name, [
+          { value: f1(r.s.expected), label: "starters scored", key: r.v >= 0 ? "k-over" : "k-under" },
+          { value: f1(r.s.proj), label: "starters projected", key: "k-none" },
+        ], pl.length ? `Best: ${pn(pl[0].p)} ${sgn(pl[0].d)} · Worst: ${pn(pl[pl.length - 1].p)} ${sgn(pl[pl.length - 1].d)}` : null),
+      });
+    });
+  }
+
+  function drawAllPlay(M) {
+    const el = $("#allplay");
+    el.textContent = "";
+    const others = M.sides.length - 1;
+    const rows = [...M.sides].sort((a, b) => b.allPlay - a.allPlay || b.pts - a.pts);
+    const rc = rowChart(el, [0, others], d3.ticks(0, others, 4));
+    rows.forEach(s => {
+      const word = !s.opp ? "Bye" : s.settled ? (s.result === "W" ? "Won" : s.result === "L" ? "Lost" : "Tied") : (s.result === "W" ? "Leads" : "Trails");
+      const name = h("span", null, h("span", { class: `chip ${s.result === "W" ? "w" : "l"}` }, word), s.team.name);
+      rc.add(name, null, [rc.bar(0, s.allPlay, "fill")], `${fg(s.allPlay)}–${fg(others - s.allPlay)}`, {
+        me: isMe(s.rid),
+        tip: e => tip(e, s.team.name, [
+          { value: f2(s.pts), label: `points, ${ord(s.rank)} in league`, key: "k-bar" },
+          { value: `${fg(s.allPlay)}–${fg(others - s.allPlay)}`, label: "against every team", key: "k-none" },
+        ], s.opp ? `${word} vs ${s.opp.team.name}, ${f2(s.pts)}–${f2(s.opp.pts)}` : null),
+      });
+    });
+  }
+
+  // ------------------------------------------------------------ standings
+  function drawStandings() {
+    const Ms = D.weeks.filter(w => w.week <= S.week).map(w => model(w.week));
+    const rows = D.teams.map(t => {
+      const r = { t, w: 0, l: 0, tie: 0, pf: 0, pa: 0, ap: 0, apl: 0, luck: 0, settled: 0, bench: 0, vp: 0, live: null };
+      Ms.forEach(M => {
+        const s = M.bySide.get(t.rid);
+        if (!s) return;
+        const others = M.sides.length - 1;
+        r.pf += s.pts; r.bench += s.benchLost; r.vp += s.expected - s.proj; r.ap += s.allPlay; r.apl += others - s.allPlay;
+        if (!s.opp) return;
+        r.pa += s.opp.pts;
+        if (s.settled) {
+          if (s.result === "W") r.w++; else if (s.result === "L") r.l++; else r.tie++;
+          r.luck += (s.result === "W" ? 1 : s.result === "T" ? 0.5 : 0) - s.allPlay / others;
+          r.settled++;
+        } else r.live = s;
+      });
+      return r;
+    }).sort((a, b) => (b.w + b.tie / 2) - (a.w + a.tie / 2) || b.pf - a.pf);
+
+    const tbl = $("#standings");
+    tbl.textContent = "";
+    tbl.append(h("thead", null, h("tr", null, ["", "Team", "Record", "Points for", "Against", "All-play", "Luck", "Bench lost", "Vs proj"].map((c, i) => h("th", { class: i < 2 ? "l" : null }, c)))));
+    const body = h("tbody");
+    rows.forEach((r, i) => body.append(h("tr", { class: isMe(r.t.rid) ? "me" : null },
+      h("td", { class: "rank" }, i + 1),
+      h("td", { class: "team" }, r.t.name, h("small", null, `@${r.t.owner}`)),
+      h("td", null, `${r.w}–${r.l}${r.tie ? `–${r.tie}` : ""}`, r.live ? h("span", { class: "chip quiet" }, `${r.live.result === "W" ? "Leads" : "Trails"} wk ${S.week}`) : null),
+      h("td", null, f2(r.pf)),
+      h("td", null, f2(r.pa)),
+      h("td", null, `${fg(r.ap)}–${fg(r.apl)}`),
+      h("td", { class: r.settled ? null : "muted" }, r.settled ? sgn(r.luck, f2) : "—"),
+      h("td", null, f1(r.bench)),
+      h("td", null, sgn(r.vp)))));
+    tbl.append(body);
+    drawArc(Ms);
+  }
+
+  function drawArc(Ms) {
+    const panel = $("#arc-panel"), el = $("#arc");
+    if (Ms.length < 2) { panel.hidden = true; return; }
+    panel.hidden = false;
+    el.textContent = "";
+    const W = Math.max(300, el.clientWidth), H = 280, m = { l: 44, r: 150, t: 12, b: 30 };
+    const series = D.teams.map(t => { let c = 0; return { t, vals: Ms.map(M => { const s = M.bySide.get(t.rid); c += s ? s.pts : 0; return { week: M.week, v: c }; }) }; });
+    const x = d3.scalePoint(Ms.map(M => M.week), [m.l, W - m.r]);
+    const y = d3.scaleLinear([0, d3.max(series, s => s.vals[s.vals.length - 1].v) || 1], [H - m.b, m.t]).nice();
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", "Cumulative points for by week, every team");
+    y.ticks(4).forEach(v => {
+      svg.append("line").attr("class", "grid").attr("x1", m.l).attr("x2", W - m.r).attr("y1", y(v)).attr("y2", y(v));
+      svg.append("text").attr("class", "ax").attr("x", m.l - 6).attr("y", y(v)).attr("dy", "0.32em").attr("text-anchor", "end").text(d3.format(",")(v));
+    });
+    Ms.forEach(M => svg.append("text").attr("class", "ax").attr("x", x(M.week)).attr("y", H - 8).attr("text-anchor", "middle").text(`WK ${M.week}`));
+    const leader = [...series].sort((a, b) => b.vals[b.vals.length - 1].v - a.vals[a.vals.length - 1].v)[0];
+    const focus = S.follow != null ? series.find(s => s.t.rid === S.follow) : leader;
+    const line = d3.line().x(d => x(d.week)).y(d => y(d.v));
+    series.filter(s => s !== focus).forEach(s => svg.append("path").attr("d", line(s.vals)).style("fill", "none").style("stroke", "var(--dot)").style("stroke-width", 1.5));
+    svg.append("path").attr("d", line(focus.vals)).style("fill", "none").style("stroke", "var(--side-a)").style("stroke-width", 2.5);
+    const end = focus.vals[focus.vals.length - 1];
+    svg.append("circle").attr("cx", x(end.week)).attr("cy", y(end.v)).attr("r", 4.5).style("fill", "var(--side-a)").style("stroke", "var(--surface)").style("stroke-width", 2);
+    svg.append("text").attr("class", "lbl").attr("x", x(end.week) + 10).attr("y", y(end.v)).attr("dy", "0.32em").text(`${focus.t.name} ${f1(end.v)}`);
+    const xs = Ms.map(M => x(M.week));
+    const cross = svg.append("line").attr("class", "cross").attr("y1", m.t).attr("y2", H - m.b).style("display", "none");
+    svg.append("rect").attr("x", m.l).attr("y", m.t).attr("width", W - m.l - m.r).attr("height", H - m.t - m.b).style("fill", "transparent")
+      .on("pointermove", e => {
+        const [px] = d3.pointer(e, svg.node());
+        const i = d3.bisectCenter(xs, px);
+        cross.attr("x1", xs[i]).attr("x2", xs[i]).style("display", null);
+        const ranked = [...series].sort((a, b) => b.vals[i].v - a.vals[i].v);
+        tip(e, `Through week ${Ms[i].week}`, ranked.map(s => ({ value: f1(s.vals[i].v), label: s.t.name, key: s === focus ? "k-a" : "k-none" })));
+      })
+      .on("pointerleave", () => { cross.style("display", "none"); hideTip(); });
+  }
+
+  // ------------------------------------------------------------ render
+  function renderCharts() {
+    const M = model(S.week);
+    drawScoreboard(M);
+    renderMomentum();
+    drawDraft(M);
+    drawArc(D.weeks.filter(w => w.week <= S.week).map(w => model(w.week)));
+  }
+
+  function renderAll() {
+    const M = model(S.week);
+    drawStatus(M);
+    drawFlags(M);
+    drawGames(M);
+    drawTeam(M);
+    drawHeat(M);
+    drawDraftReturn(M);
+    drawBench(M);
+    drawProj(M);
+    drawAllPlay(M);
+    drawStandings();
+    renderCharts();
+  }
+
+  initControls();
+  renderAll();
+
+  let lastW = $("#page").clientWidth;
+  let raf = 0;
+  new ResizeObserver(() => {
+    const w = $("#page").clientWidth;
+    if (Math.abs(w - lastW) < 4) return;
+    lastW = w;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(renderCharts);
+  }).observe($("#page"));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderCharts);
+})();
+</script>
