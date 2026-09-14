@@ -1,6 +1,7 @@
 # Most of this folder is private draft work (database, rankings, exports).
 # Only the Film Room dashboard is published, so ignore everything and opt
-# files in one at a time. league_data.js is built by the GitHub Action.
+# files in one at a time. league_data.js is rebuilt and committed by the
+# GitHub Action each week.
 /*
 !/.gitignore
 !/.github/
@@ -12,3 +13,4 @@
 !/league/
 /league/*
 !/league/film_room.html
+!/league/league_data.js

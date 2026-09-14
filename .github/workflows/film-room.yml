@@ -9,7 +9,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -29,6 +29,17 @@ jobs:
 
       - name: Pull the season from Sleeper and ESPN
         run: python3 league_insights.py
+
+      # Keeps a weekly snapshot in history, and the commit counts as repo
+      # activity: GitHub pauses schedules in public repos after 60 quiet days.
+      # Pushes made with the workflow token don't trigger another run.
+      - name: Commit this run's snapshot
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add league/league_data.js
+          git diff --cached --quiet || git commit -m "Refresh league data"
+          git push
 
       - name: Assemble the site
         run: |
