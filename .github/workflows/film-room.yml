@@ -47,6 +47,7 @@ jobs:
           mkdir -p _site
           cp league/film_room.html _site/index.html
           cp league/league_data.js _site/league_data.js
+          cp league/og.png _site/og.png
           touch _site/.nojekyll
 
       - uses: actions/upload-pages-artifact@v3

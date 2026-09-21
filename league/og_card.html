@@ -1,0 +1,44 @@
+<!-- Link-preview card for the Film Room (1200x630). Regenerate og.png with:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars \
+       --window-size=1200,630 --virtual-time-budget=8000 --screenshot=league/og.png league/og_card.html -->
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@500&family=Big+Shoulders+Display:wght@800&family=Schibsted+Grotesk:wght@500&display=block">
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #0A110E; }
+  .card { position: relative; width: 1200px; height: 630px; color: #E3EBE6; font-family: "Schibsted Grotesk", system-ui, sans-serif; }
+  .field { position: absolute; inset: 0; }
+  .eyebrow { position: absolute; left: 64px; top: 46px; font: 500 20px/1 "Azeret Mono", ui-monospace, monospace; letter-spacing: 0.16em; text-transform: uppercase; color: #8FA398; }
+  .title { position: absolute; left: 58px; top: 82px; margin: 0; font: 800 236px/0.86 "Big Shoulders Display", "Arial Narrow", Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.005em; }
+  .line { position: absolute; left: 0; right: 0; top: 318px; height: 7px; background: #F2B200; }
+  .tag { position: absolute; left: 64px; top: 372px; width: 520px; margin: 0; font: 500 31px/1.3 "Schibsted Grotesk", system-ui, sans-serif; color: #C5D0CA; }
+  .url { position: absolute; left: 64px; bottom: 50px; display: flex; align-items: center; gap: 14px; font: 500 19px/1 "Azeret Mono", ui-monospace, monospace; color: #8FA398; letter-spacing: 0.02em; }
+  .url i { width: 20px; height: 18px; background: #F2B200; clip-path: polygon(0 0, 100% 0, 72% 50%, 100% 100%, 0 100%); }
+</style>
+<div class="card">
+  <svg class="field" viewBox="0 0 1200 630" aria-hidden="true">
+    <!-- yard lines, every 5 yards with the numbers a broadcast shows -->
+    <g stroke="#E3EBE6" stroke-opacity="0.07" stroke-width="2">
+      <line x1="100" y1="0" x2="100" y2="630"/><line x1="200" y1="0" x2="200" y2="630"/><line x1="300" y1="0" x2="300" y2="630"/>
+      <line x1="400" y1="0" x2="400" y2="630"/><line x1="500" y1="0" x2="500" y2="630"/><line x1="600" y1="0" x2="600" y2="630"/>
+      <line x1="700" y1="0" x2="700" y2="630"/><line x1="800" y1="0" x2="800" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+      <line x1="1000" y1="0" x2="1000" y2="630"/><line x1="1100" y1="0" x2="1100" y2="630"/>
+    </g>
+    <g fill="#E3EBE6" fill-opacity="0.09" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="46" text-anchor="middle">
+      <text x="900" y="600">30</text><text x="1100" y="600">40</text>
+    </g>
+    <!-- a matchup race: two teams trading the lead across the week's windows -->
+    <g fill="none" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M660 540 L730 528 L760 520 L820 470 L860 462 L930 420 L990 408 L1030 356 L1070 350" stroke="#d95926"/>
+      <path d="M660 540 L730 522 L760 515 L820 488 L860 480 L930 405 L990 392 L1030 380 L1070 372" stroke="#3987e5"/>
+      <path d="M1070 350 L1130 334" stroke="#d95926" stroke-dasharray="10 10"/>
+      <path d="M1070 372 L1130 346" stroke="#3987e5" stroke-dasharray="10 10"/>
+    </g>
+    <circle cx="1070" cy="350" r="9" fill="#d95926" stroke="#0A110E" stroke-width="4"/>
+    <circle cx="1070" cy="372" r="9" fill="#3987e5" stroke="#0A110E" stroke-width="4"/>
+  </svg>
+  <div class="eyebrow">Only Fannin's · 2026 season</div>
+  <h1 class="title">Film Room</h1>
+  <div class="line"></div>
+  <p class="tag">Weekly flags, matchup momentum, Monday-night odds, injuries and waiver moves.</p>
+  <div class="url"><i></i>brendanpaige.github.io/only-fannins-film-room</div>
+</div>
