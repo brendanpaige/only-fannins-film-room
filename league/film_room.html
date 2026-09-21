@@ -383,26 +383,28 @@ tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
 .mnf { display: grid; gap: 20px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
 .mnf[data-count="1"] { grid-template-columns: minmax(0, 1fr); max-width: 780px; }
 .mnf[data-count="2"], .mnf[data-count="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-@media (max-width: 1100px) { .mnf[data-count]:not([data-count="1"]) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1100px) { .mnf[data-count="3"], .mnf[data-count="5"], .mnf[data-count="6"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .mnf[data-count] { grid-template-columns: minmax(0, 1fr); } }
 .mn-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 16px; align-items: end; }
 .mn-team { display: grid; gap: 3px; min-width: 0; }
 .mn-team.b { text-align: right; justify-items: end; }
 .mn-name { display: flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12.5px; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
 .mn-team.b .mn-name { flex-direction: row-reverse; }
-.mn-score { font: 800 36px/1 var(--f-display); }
+.mn-score { font: 800 clamp(30px, 8vw, 36px)/1 var(--f-display); white-space: nowrap; }
+.mn-tn { min-width: 0; overflow-wrap: anywhere; }
 .odds { display: flex; gap: 2px; height: 10px; margin-top: 14px; }
 .odds span { display: block; height: 100%; min-width: 2px; }
 .odds .oa { background: var(--side-a); border-radius: 4px 0 0 4px; }
 .odds .ob { background: var(--side-b); border-radius: 0 4px 4px 0; }
-.odds-l { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font: 500 10.5px/1.3 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.odds-l { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-top: 6px; font: 500 10.5px/1.3 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
 .odds-l b { color: var(--ink); font-weight: 600; }
+.odds-l span { white-space: nowrap; }
 .mn-verdict { margin: 12px 0 0; font-size: 14px; line-height: 1.45; text-wrap: pretty; }
 .mn-left { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--hair); }
-.mn-left h4 { margin: 0 0 6px; font: 500 10px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); overflow-wrap: anywhere; }
+.mn-left h4 { margin: 0 0 6px; font: 500 10px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); overflow-wrap: break-word; }
 .mn-left ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 12.5px; }
 .mn-left li { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
-.mn-left li > span:first-child { overflow-wrap: anywhere; min-width: 0; }
+.mn-left li > span:first-child { overflow-wrap: break-word; min-width: 0; }
 .mn-left li > span:last-child { font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap; }
 .mn-left li small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); margin-left: 4px; white-space: nowrap; }
 .mn-alert { margin: 12px 0 0; padding: 9px 11px; border-radius: 4px; background: var(--surface-2); font-size: 13px; line-height: 1.4; display: flex; gap: 8px; align-items: baseline; }
@@ -1266,7 +1268,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     I.open.forEach(o => {
       const mk = o.mk;
       const team = (s, k) => h("div", { class: `mn-team ${k}` },
-        h("span", { class: "mn-name" }, h("i", { class: `k k-${k}` }), tn(s), isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
+        h("span", { class: "mn-name" }, h("i", { class: `k k-${k}` }), h("span", { class: "mn-tn" }, tn(s)), isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
         h("span", { class: "mn-score" }, f2(s.pts)));
       const list = (s, r) => h("div", null, h("h4", null, `${tn(s)} to play`),
         r.who.length
@@ -1279,7 +1281,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
         h("div", { class: "odds", role: "img", "aria-label": `Rough win odds: ${tn(mk.a)} ${pct(o.pA)}, ${tn(mk.b)} ${pct(1 - o.pA)}` },
           h("span", { class: "oa", style: { width: `${o.pA * 100}%` } }),
           h("span", { class: "ob", style: { width: `${(1 - o.pA) * 100}%` } })),
-        h("div", { class: "odds-l" }, h("span", null, h("b", null, pct(o.pA)), " win odds"), h("span", null, `Proj ${f1(o.projA)}–${f1(o.projB)}`), h("span", null, h("b", null, pct(1 - o.pA)))),
+        h("div", { class: "odds-l" }, h("span", null, h("b", null, pct(o.pA))), h("span", null, `Win odds · proj ${f1(o.projA)}–${f1(o.projB)}`), h("span", null, h("b", null, pct(1 - o.pA)))),
         h("p", { class: "mn-verdict" }, verdict(o, tn)),
         h("div", { class: "mn-left" }, list(mk.a, o.ra), list(mk.b, o.rb)),
         alerts));
@@ -1453,7 +1455,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     const el = $("#feature-head");
     el.textContent = "";
     const block = (s, k) => h("div", { class: `fh-team ${k}` },
-      h("span", { class: "fh-name" }, h("i", { class: `k k-${k}` }), s.team.name, isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
+      h("span", { class: "fh-name" }, h("i", { class: `k k-${k}` }), h("span", { class: "mn-tn" }, s.team.name), isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
       h("span", { class: "fh-score" }, f2(s.pts)),
       h("span", { class: "fh-owner" }, `@${s.team.owner}${s.pending.length ? ` · ${s.pending.length} to play, ${f1(s.pendingProj)} projected` : ""}`));
     const stat = (label, v) => h("div", null, h("dt", null, label), h("dd", null, v));
