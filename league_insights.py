@@ -17,7 +17,8 @@ Sources, all public and key-free:
 
 Player points are scored here with the league's own scoring_settings, so
 free agents and projections are on the same scale as Sleeper's matchup
-points (checked against matchup players_points: identical).
+points (checked against matchup players_points: identical). Injury
+designations come from Sleeper's player file and are as of this run.
 
 Stdlib only, like server.py.
 """
@@ -154,6 +155,32 @@ def build(league_id):
         draft.append([p["pick_no"], p["round"], p["roster_id"], p["player_id"]])
         referenced.add(p["player_id"])
 
+    # Every player who has changed hands is kept in every week's points, so
+    # the dashboard can follow drops and trades after the fact.
+    tx_by_week, tx_pids = {}, set()
+    for week in range(1, last_week + 1):
+        rows = []
+        for t in _get(f"/league/{league_id}/transactions/{week}"):
+            if t.get("status") != "complete":
+                continue
+            adds, drops = t.get("adds") or {}, t.get("drops") or {}
+            rows.append({
+                "type": t["type"],
+                "rids": t.get("roster_ids") or [],
+                "adds": adds,
+                "drops": drops,
+                # [season, round, original owner, from roster, to roster]
+                "picks": [[d.get("season"), d.get("round"), d.get("roster_id"),
+                           d.get("previous_owner_id"), d.get("owner_id")]
+                          for d in t.get("draft_picks") or []],
+                "ts": t.get("status_updated") or t.get("created"),
+                "bid": (t.get("settings") or {}).get("waiver_bid"),
+            })
+            tx_pids.update(adds)
+            tx_pids.update(drops)
+        tx_by_week[week] = rows
+    referenced |= tx_pids
+
     weeks = []
     for week in range(1, last_week + 1):
         games = espn_games(season, week)
@@ -193,26 +220,12 @@ def build(league_id):
                              key=lambda p: -pts_all[p])[:FREE_AGENTS_KEPT]
         referenced.update(free_agents)
 
-        wanted = rostered | set(free_agents) | {d[3] for d in draft}
+        wanted = rostered | set(free_agents) | {d[3] for d in draft} | tx_pids
         players = {}
         for pid in wanted:
             players[pid] = [round(pts_all.get(pid, 0), 2),
                             score((proj.get(pid) or {}).get("stats"), rules),
                             game_of(pid)]
-
-        txs = []
-        for t in _get(f"/league/{league_id}/transactions/{week}"):
-            if t.get("status") != "complete":
-                continue
-            txs.append({
-                "type": t["type"],
-                "adds": t.get("adds") or {},
-                "drops": t.get("drops") or {},
-                "ts": t.get("status_updated") or t.get("created"),
-                "bid": (t.get("settings") or {}).get("waiver_bid"),
-            })
-            referenced.update((t.get("adds") or {}).keys())
-            referenced.update((t.get("drops") or {}).keys())
 
         weeks.append({
             "week": week,
@@ -222,7 +235,7 @@ def build(league_id):
                                                   key=lambda kv: (kv[0] is None, kv[0] or 0))],
             "players": players,
             "free_agents": free_agents,
-            "transactions": txs,
+            "transactions": tx_by_week.get(week, []),
         })
 
     directory = {}
@@ -231,6 +244,11 @@ def build(league_id):
         name = f"{p.get('first_name', '')} {p.get('last_name', '')}".strip() or pid
         directory[pid] = {"n": name, "p": p.get("position") or "?",
                           "t": p.get("team") or "FA"}
+        # Injury designations are as of this run, not historical.
+        if p.get("injury_status"):
+            directory[pid]["inj"] = p["injury_status"]
+            if p.get("injury_body_part"):
+                directory[pid]["body"] = p["injury_body_part"]
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),

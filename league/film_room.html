@@ -353,6 +353,79 @@ tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
 .scale { display: flex; align-items: center; gap: 8px; }
 .scale i { display: inline-block; width: 90px; height: 8px; border-radius: 2px; background: linear-gradient(90deg, var(--seq-lo), var(--seq-hi)); }
 
+.flags[data-count="9"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1040px) { .flags[data-count="9"] { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .flags[data-count="9"] { grid-template-columns: minmax(0, 1fr); } }
+.k-rise, .k-fall { width: 14px; height: 0; border-top: 2px solid var(--over); }
+.k-fall { border-top-color: var(--under); }
+.ctl-link { font: 600 13px/1 var(--f-body); color: var(--chyron-ink); text-decoration: none; padding-block: 6px; border-bottom: 2px solid var(--flag); white-space: nowrap; }
+.ctl-link:focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; }
+
+/* ---------- injury status (fixed status colors, always paired with a label) ---------- */
+.st { display: inline-block; font: 600 9.5px/1 var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 5px; border-radius: 3px; white-space: nowrap; vertical-align: 1px; margin-left: 6px; }
+.st.crit { background: #d03b3b; color: #FFFFFF; }
+.st.serious { background: #ec835a; color: #1F0E06; }
+.st.warn { background: #fab219; color: #1C1600; }
+
+/* ---------- monday night ---------- */
+.mnf { display: grid; gap: 20px; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+.mnf[data-count="1"] { grid-template-columns: minmax(0, 1fr); max-width: 780px; }
+.mnf[data-count="2"], .mnf[data-count="4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .mnf[data-count]:not([data-count="1"]) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .mnf[data-count] { grid-template-columns: minmax(0, 1fr); } }
+.mn-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4px 16px; align-items: end; }
+.mn-team { display: grid; gap: 3px; min-width: 0; }
+.mn-team.b { text-align: right; justify-items: end; }
+.mn-name { display: flex; align-items: center; gap: 7px; font-weight: 600; font-size: 13.5px; overflow-wrap: anywhere; }
+.mn-team.b .mn-name { flex-direction: row-reverse; }
+.mn-score { font: 800 36px/1 var(--f-display); }
+.odds { display: flex; gap: 2px; height: 10px; margin-top: 14px; }
+.odds span { display: block; height: 100%; min-width: 2px; }
+.odds .oa { background: var(--side-a); border-radius: 4px 0 0 4px; }
+.odds .ob { background: var(--side-b); border-radius: 0 4px 4px 0; }
+.odds-l { display: flex; justify-content: space-between; gap: 12px; margin-top: 6px; font: 500 10.5px/1.3 var(--f-mono); color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.odds-l b { color: var(--ink); font-weight: 600; }
+.mn-verdict { margin: 12px 0 0; font-size: 14px; line-height: 1.45; text-wrap: pretty; }
+.mn-left { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--hair); }
+.mn-left h4 { margin: 0 0 6px; font: 500 10px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); overflow-wrap: anywhere; }
+.mn-left ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 12.5px; }
+.mn-left li { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.mn-left li > span:first-child { overflow-wrap: anywhere; min-width: 0; }
+.mn-left li > span:last-child { font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap; }
+.mn-left li small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); margin-left: 4px; white-space: nowrap; }
+.mn-alert { margin: 12px 0 0; padding: 9px 11px; border-radius: 4px; background: var(--surface-2); font-size: 13px; line-height: 1.4; display: flex; gap: 8px; align-items: baseline; }
+.mn-alert .st { margin-left: 0; }
+
+/* ---------- recap ---------- */
+.recap-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.recap-actions { display: flex; align-items: center; gap: 12px; }
+.seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 5px; overflow: hidden; }
+.seg button { border: 0; background: transparent; padding: 8px 12px; font: 600 12.5px/1 var(--f-body); color: var(--ink-2); cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--axis); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+.btn { font: 600 13px/1 var(--f-body); padding: 10px 15px; border-radius: 5px; border: 0; background: var(--flag); color: var(--flag-ink); cursor: pointer; }
+.btn:hover { filter: brightness(1.06); }
+.copy-status { font: 500 11px/1.3 var(--f-mono); color: var(--muted); }
+.recap { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 14px/1.6 var(--f-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--hair); border-radius: 6px; padding: 16px 18px; max-height: 640px; overflow-y: auto; }
+.names { display: grid; gap: 8px; }
+.names label { display: grid; grid-template-columns: minmax(0, 1fr) minmax(90px, 150px); gap: 12px; align-items: center; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+.names label small { display: block; font: 500 10px/1.3 var(--f-mono); color: var(--muted); font-weight: 500; }
+.names input { font: 500 13px/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--axis); border-radius: 4px; padding: 7px 9px; width: 100%; }
+.names input:focus-visible { outline: 2px solid var(--flag); outline-offset: 1px; }
+
+/* ---------- form, injuries, moves ---------- */
+.mini-h { margin: 16px 0 4px; font: 500 10.5px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+.mini-h:first-child { margin-top: 0; }
+.spark { display: inline-block; vertical-align: middle; }
+.warn-txt { font-weight: 600; }
+.trade { display: grid; gap: 10px; padding-block: 10px; border-bottom: 1px solid var(--hair); }
+.trade:last-child { border-bottom: 0; }
+.trade-h { margin: 0; font: 500 10.5px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.trade-team { margin: 0 0 4px; font-weight: 600; font-size: 13px; display: flex; justify-content: space-between; gap: 8px; }
+.trade ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 12.5px; }
+.trade li { display: flex; justify-content: space-between; gap: 8px; }
+.trade li small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); margin-left: 5px; }
+
 /* ---------- tooltip ---------- */
 .tip { position: fixed; z-index: 60; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; font-size: 12.5px; line-height: 1.4; box-shadow: var(--shadow); max-width: 280px; }
 .tip-title { font: 500 10px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 5px; }
@@ -377,6 +450,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     <div class="controls">
       <label class="ctl" for="week"><span>Week</span><select id="week"></select></label>
       <label class="ctl" for="follow"><span>Follow</span><select id="follow"><option value="">No team</option></select></label>
+      <a class="ctl-link" href="#chat">Group chat recap</a>
     </div>
   </div>
 </header>
@@ -389,6 +463,43 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
       <p class="dek">What stood out this week, pulled from every lineup, the draft board, the waiver wire, and the NFL box scores.</p>
     </div>
     <ol class="flags" id="flags"></ol>
+  </section>
+
+  <section aria-labelledby="h-mnf" id="mnf-section" hidden>
+    <div class="sec-head">
+      <p class="eyebrow">Matchups · <span data-week>Week 1</span> · Still undecided</p>
+      <h2 id="h-mnf">Monday night</h2>
+      <p class="dek" id="mnf-dek"></p>
+    </div>
+    <div class="mnf" id="mnf"></div>
+    <p class="note">Win odds are rough: each remaining starter's Sleeper projection, with a typical game-to-game spread around it. Starters listed Out count for nothing and Doubtful ones for a quarter of their projection.</p>
+  </section>
+
+  <section aria-labelledby="h-chat" id="chat">
+    <div class="sec-head">
+      <p class="eyebrow">League · <span data-week>Week 1</span></p>
+      <h2 id="h-chat">Group chat recap</h2>
+      <p class="dek">The week's highlights and lowlights, written up to paste into the league chat. It follows the week picker.</p>
+    </div>
+    <div class="split-7-5">
+      <div class="panel">
+        <div class="recap-bar">
+          <div class="seg" role="group" aria-label="Refer to teams by">
+            <button type="button" id="nm-team" aria-pressed="true">Team names</button>
+            <button type="button" id="nm-first" aria-pressed="false">First names</button>
+          </div>
+          <div class="recap-actions">
+            <span class="copy-status" id="copy-status" role="status"></span>
+            <button type="button" class="btn" id="copy">Copy recap</button>
+          </div>
+        </div>
+        <pre class="recap" id="recap"></pre>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>First names</h3><p class="sub">Sleeper doesn't share real names, so add them here for the recap. They're saved in this browser only and never published. Blank ones fall back to the Sleeper username.</p></div></div>
+        <div class="names" id="names"></div>
+      </div>
+    </div>
   </section>
 
   <section aria-labelledby="h-board">
@@ -414,6 +525,30 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     </div>
   </section>
 
+  <section aria-labelledby="h-form">
+    <div class="sec-head">
+      <p class="eyebrow">Teams · Week over week</p>
+      <h2 id="h-form">Form</h2>
+      <p class="dek">Who bounced back, who fell off, and which players swung the most from one week to the next.</p>
+    </div>
+    <div class="split-7-5">
+      <div class="panel">
+        <div class="panel-head">
+          <div><h3 id="slope-title">Last week to this week</h3><p class="sub">Every team's score in both weeks. The two biggest risers and fallers are labeled.</p></div>
+          <p class="legend"><span class="key"><i class="k k-rise"></i>Rose most</span><span class="key"><i class="k k-fall"></i>Fell most</span></p>
+        </div>
+        <div class="chart" id="slope"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">
+          <div><h3>Biggest player swings</h3><p class="sub">Rostered players who played both weeks</p></div>
+          <p class="legend"><span class="key"><i class="k k-ring"></i>Last week</span><span class="key"><i class="k k-ink"></i>This week</span></p>
+        </div>
+        <div id="movers"></div>
+      </div>
+    </div>
+  </section>
+
   <section aria-labelledby="h-momentum">
     <div class="sec-head">
       <p class="eyebrow">Matchups · <span data-week>Week 1</span></p>
@@ -431,6 +566,37 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
         <div class="panel-head"><div><h3>Slot by slot</h3><p class="sub" id="duel-sub"></p></div></div>
         <div class="duel" id="duel"></div>
       </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-inj">
+    <div class="sec-head">
+      <p class="eyebrow">League · Latest snapshot</p>
+      <h2 id="h-inj">Injury report</h2>
+      <p class="dek" id="inj-dek"></p>
+    </div>
+    <div class="split-7-5">
+      <div class="panel">
+        <div class="panel-head"><div><h3>Notable injuries</h3><p class="sub">Rostered players with a designation, highest-scoring first</p></div></div>
+        <div class="table-scroll"><table id="inj-table"></table></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div><h3>Points on the shelf</h3><p class="sub">Per-game averages of each team's players listed Out, IR or Doubtful, added up</p></div></div>
+        <div id="inj-teams"></div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-moves">
+    <div class="sec-head">
+      <p class="eyebrow">League · Season through <span data-week>Week 1</span></p>
+      <h2 id="h-moves">Waiver wire &amp; trades</h2>
+      <p class="dek">Every add, drop and trade this season, and what the players did afterward. Points count every game after the move, whoever had the player.</p>
+    </div>
+    <div class="three">
+      <div class="panel"><div class="panel-head"><div><h3>Regret drops</h3><p class="sub">Dropped players, by points scored since</p></div></div><div id="drops"></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Best pickups</h3><p class="sub">Added players, by points scored since</p></div></div><div id="adds"></div></div>
+      <div class="panel"><div class="panel-head"><div><h3>Trades</h3><p class="sub">Each side's haul, in points scored since the deal</p></div></div><div id="trades"></div></div>
     </div>
   </section>
 
@@ -808,108 +974,423 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     document.querySelectorAll("[data-week]").forEach(n => { n.textContent = `Week ${M.week}`; });
   }
 
-  // ------------------------------------------------------------ flags
-  function buildFlags(M) {
-    const out = [];
-    const others = M.sides.length - 1;
+  // ------------------------------------------------------------ insights
+  const INJ = { Out: "crit", IR: "crit", Sus: "crit", PUP: "crit", NA: "crit", COV: "crit", Doubtful: "serious", Questionable: "warn" };
+  const GONE = new Set(["Out", "IR", "Sus", "PUP", "NA", "COV"]);
+  const injOf = pid => (PL[pid] && PL[pid].inj) || null;
+  const injText = pid => { const s = injOf(pid); if (!s) return ""; const b = PL[pid].body; return b ? `${s}, ${b.toLowerCase()}` : s; };
+  const injChip = pid => { const s = injOf(pid); return s ? h("span", { class: `st ${INJ[s] || "warn"}`, title: injText(pid) }, { Questionable: "Q", Doubtful: "D" }[s] || s) : null; };
+  const isSerious = pid => GONE.has(injOf(pid)) || injOf(pid) === "Doubtful";
+  const tname = rid => (TEAM.get(rid) || { name: `Team ${rid}` }).name;
+  const latestWeek = () => D.weeks[D.weeks.length - 1].week;
+  const prevModel = M => { const i = D.weeks.findIndex(w => w.week === M.week); return i > 0 ? model(D.weeks[i - 1].week) : null; };
+  const playedIn = (M, pid) => !!M.W.players[pid] && !!M.game(pid) && !M.pre(pid);
+  const nameList = arr => (arr.length <= 1 ? arr.join("") : `${arr.slice(0, -1).join(", ")} and ${arr[arr.length - 1]}`);
+  const pct = p => (p < 0.01 ? "<1%" : p > 0.99 ? ">99%" : `${Math.round(p * 100)}%`);
+  const onlyMNF = M => { const left = M.games.filter(g => g.state !== "post"); return left.length > 0 && left.every(g => slotName(g.t0) === "MNF"); };
+
+  function seasonAvg(pid, upto) {
+    const vals = D.weeks.filter(w => w.week <= upto).map(w => model(w.week)).filter(M => playedIn(M, pid) && M.pts(pid) !== 0).map(M => M.pts(pid));
+    return vals.length ? d3.mean(vals) : null;
+  }
+
+  function Phi(z) {
+    const x = Math.abs(z) / Math.SQRT2, t = 1 / (1 + 0.3275911 * x);
+    const erf = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return 0.5 * (1 + (z < 0 ? -erf : erf));
+  }
+
+  // What a side's unfinished starters should still add, discounted for
+  // injury designations, with a rough spread for the win odds.
+  function remaining(M, s) {
+    let mean = 0, varc = 0;
+    const who = [];
+    s.real.forEach(pid => {
+      const g = M.game(pid);
+      if (!g || g.state === "post") return;
+      const share = g.state === "pre" ? 1 : 1 - g.progress;
+      const avail = GONE.has(injOf(pid)) ? 0 : injOf(pid) === "Doubtful" ? 0.25 : 1;
+      const left = Math.max(0, M.proj(pid)) * share * avail;
+      const sd = avail ? 0.45 * left + 2 * share : 0;
+      mean += left;
+      varc += sd * sd;
+      who.push({ pid, left, g });
+    });
+    return { mean, varc, who };
+  }
+
+  function openMatchups(M) {
+    return M.matchups.filter(mk => !mk.settled).map(mk => {
+      const ra = remaining(M, mk.a), rb = remaining(M, mk.b);
+      const mean = (mk.a.pts + ra.mean) - (mk.b.pts + rb.mean);
+      const sd = Math.sqrt(ra.varc + rb.varc);
+      const pA = sd > 0 ? Phi(mean / sd) : mean > 0 ? 1 : mean < 0 ? 0 : 0.5;
+      const lead = mk.a.pts >= mk.b.pts ? mk.a : mk.b, trail = lead.opp;
+      return {
+        mk, ra, rb, pA, lead, trail,
+        rl: lead === mk.a ? ra : rb, rt: lead === mk.a ? rb : ra,
+        gap: lead.pts - trail.pts, projA: mk.a.pts + ra.mean, projB: mk.b.pts + rb.mean,
+      };
+    }).sort((x, y) => Math.abs(x.pA - 0.5) - Math.abs(y.pA - 0.5));
+  }
+
+  function verdict(o, T) {
+    const lp = o.rl.who.filter(w => w.left > 0), tp = o.rt.who.filter(w => w.left > 0);
+    const listOf = ws => nameList(ws.map(w => `${pn(w.pid)} (${f1(w.left)} proj)`));
+    if (!tp.length) return `${T(o.trail)} has nobody left who's expected to score, so ${T(o.lead)} should hold on.`;
+    if (!lp.length) return `${T(o.trail)} needs ${f1(o.gap)} from ${listOf(tp)}.`;
+    return `${T(o.trail)} needs to outscore ${T(o.lead)}'s remaining starters by ${f1(o.gap)}: ${listOf(tp)} against ${listOf(lp)}.`;
+  }
+
+  const ledgers = new Map();
+  function moveLedger(upto) {
+    if (ledgers.has(upto)) return ledgers.get(upto);
+    const Ms = D.weeks.filter(w => w.week <= upto).map(w => model(w.week));
+    const last = Ms[Ms.length - 1];
+    const after = (pid, ts) => Ms.filter(M => playedIn(M, pid) && M.game(pid).t0 > ts);
+    const moves = [], trades = [];
+    Ms.forEach(M => (M.W.transactions || []).forEach(t => {
+      if (t.type === "trade") {
+        trades.push({
+          t, week: M.week,
+          sides: (t.rids || []).map(rid => ({
+            rid,
+            got: Object.entries(t.adds).filter(([, r]) => r === rid).map(([pid]) => ({ pid, pts: d3.sum(after(pid, t.ts), W2 => W2.pts(pid)) })),
+            picks: (t.picks || []).filter(p => p[4] === rid),
+          })),
+        });
+        return;
+      }
+      const row = (kind, pid, rid) => { const ws = after(pid, t.ts); return { kind, pid, rid, t, week: M.week, pts: d3.sum(ws, W2 => W2.pts(pid)), games: ws.length, now: last.holder(pid) }; };
+      Object.entries(t.adds).forEach(([pid, rid]) => moves.push(row("add", pid, rid)));
+      Object.entries(t.drops).forEach(([pid, rid]) => moves.push(row("drop", pid, rid)));
+    }));
+    const out = {
+      moves, trades,
+      drops: moves.filter(m => m.kind === "drop").sort((a, b) => b.pts - a.pts),
+      adds: moves.filter(m => m.kind === "add").sort((a, b) => b.pts - a.pts),
+    };
+    ledgers.set(upto, out);
+    return out;
+  }
+
+  // Injury designations are only known as of the latest snapshot.
+  function injuryReport() {
+    const L = model(latestWeek());
+    const rows = [];
+    L.sides.forEach(s => s.real.concat(s.bench).forEach(pid => {
+      const st = injOf(pid);
+      if (!st) return;
+      const pick = D.draft.find(d => d[3] === pid);
+      rows.push({ pid, s, st, avg: seasonAvg(pid, L.week), starter: s.real.includes(pid), round: pick ? pick[1] : null, pending: L.pre(pid), pts: L.pts(pid) });
+    }));
+    return { L, rows: rows.sort((a, b) => (b.avg || 0) - (a.avg || 0)) };
+  }
+
+  const insightCache = new Map();
+  function insights(M) {
+    if (insightCache.has(M.week)) return insightCache.get(M.week);
+    const I = { others: M.sides.length - 1 };
+    const P = prevModel(M);
+    I.prev = P;
+    I.starts = M.sides.flatMap(s => s.real.filter(p => playedIn(M, p)).map(pid => ({ pid, s, d: M.pts(pid) - M.proj(pid) })));
 
     const r1 = M.picks.filter(p => p.round === 1 && !p.pre);
     const r1med = d3.median(r1, p => p.pts) || 0;
     const likeFirst = M.picks.filter(p => !p.pre && p.round > 1 && p.pts >= r1med).sort((a, b) => b.no - a.no)[0];
     const steal = likeFirst || M.picks.filter(p => !p.pre && p.round >= 8).sort((a, b) => b.pts - a.pts)[0];
-    if (steal) {
-      const beat = r1.filter(p => p.pts < steal.pts).length;
-      const drafter = TEAM.get(steal.rid);
-      const hold = M.holder(steal.pid);
-      let tail = "";
-      if (!hold) tail = " Now unrostered.";
-      else if (hold.s.rid !== steal.rid) tail = ` Now on ${hold.s.team.name}${hold.started ? "" : "'s bench"}.`;
-      else if (!hold.started) tail = ` Sat on ${hold.s.team.name}'s bench.`;
-      out.push({
-        kind: "Steal of the draft",
-        stat: f1(steal.pts), unit: "pts",
-        head: likeFirst ? `Pick ${steal.no}, **${pn(steal.pid)}**, scored like a first-rounder` : `**${pn(steal.pid)}** was the best pick after round 7`,
-        detail: `${drafter ? drafter.name : "Taken"} in round ${steal.round}. Outscored ${beat} of ${r1.length} first-round picks.${tail}`,
-      });
-    }
+    if (steal) I.steal = { p: steal, likeFirst: !!likeFirst, beat: r1.filter(p => p.pts < steal.pts).length, r1n: r1.length, hold: M.holder(steal.pid) };
 
     const cb = [...M.matchups].sort((a, b) => b.deficit - a.deficit)[0];
-    if (cb && cb.deficit >= 8) {
-      const lead = cb[cb.leader], trail = cb[cb.leader === "a" ? "b" : "a"];
-      const w = cb.deficitTime != null ? M.windowAt(cb.deficitTime) : null;
-      out.push({
-        kind: cb.settled ? "Comeback" : "Comeback in progress",
-        stat: f1(cb.deficit), unit: "pt hole",
-        head: `**${lead.team.name}** trailed ${trail.team.name} by ${f1(cb.deficit)}${w ? ` in the ${w.name} window` : ""}`,
-        detail: cb.settled ? `Came back to win by ${f2(Math.abs(cb.margin))}.` : `Now leads by ${f2(Math.abs(cb.margin))} with ${lead.pending.length + trail.pending.length} starters still to play.`,
-      });
-    }
+    if (cb && cb.deficit >= 8) I.comeback = { mk: cb, lead: cb[cb.leader], trail: cb[cb.leader === "a" ? "b" : "a"], w: cb.deficitTime != null ? M.windowAt(cb.deficitTime) : null };
 
-    const hb = M.sides.filter(s => s.result === "L").sort((a, b) => b.pts - a.pts)[0];
-    if (hb) {
-      out.push({
-        kind: hb.settled ? "Tough beat" : "Tough beat, so far",
-        stat: `${fg(hb.allPlay)}–${fg(others - hb.allPlay)}`, unit: "all-play",
-        head: `**${hb.team.name}** scored ${f2(hb.pts)}, ${ord(hb.rank)}-most in the league, and ${hb.settled ? "lost" : "trails"}`,
-        detail: `That score beats ${fg(hb.allPlay)} of ${others} teams. ${hb.opp.team.name} put up ${f2(hb.opp.pts)}.`,
-      });
-    }
+    I.tough = M.sides.filter(s => s.result === "L").sort((a, b) => b.pts - a.pts)[0] || null;
 
     const bb = [...M.sides].sort((a, b) => b.benchLost - a.benchLost)[0];
     if (bb && bb.benchLost >= 3) {
       const ins = [...bb.bestLineup].filter(p => !bb.real.includes(p)).sort((x, y) => M.val(y) - M.val(x));
       const outs = bb.real.filter(p => !bb.bestLineup.has(p)).sort((x, y) => M.val(x) - M.val(y));
-      let detail = ins.length && outs.length ? `Biggest miss: ${pn(ins[0])} (${f1(M.val(ins[0]))}) sat while ${pn(outs[0])} started (${f1(M.val(outs[0]))}).` : "";
-      if (bb.opp && bb.result === "L" && bb.best > bb.opp.pts) detail += ` The best lineup would have beaten ${bb.opp.team.name}.`;
-      out.push({ kind: "Bench blunder", stat: f1(bb.benchLost), unit: "pts sat", head: `**${bb.team.name}** left ${f1(bb.benchLost)} points on the bench`, detail });
+      I.bench = { s: bb, inP: ins[0], outP: outs[0], flip: !!(bb.opp && bb.result === "L" && bb.best > bb.opp.pts) };
     }
 
-    const starts = M.sides.flatMap(s => s.real.filter(p => !M.pre(p) && M.game(p)).map(pid => ({ pid, s, d: M.pts(pid) - M.proj(pid) })));
-    const boom = [...starts].sort((a, b) => b.d - a.d)[0];
-    if (boom && boom.d > 0) {
-      out.push({ kind: "Boom", stat: sgn(boom.d), unit: "vs proj", head: `**${pn(boom.pid)}** beat the projection by ${f1(boom.d)}`, detail: `${f1(M.pts(boom.pid))} points on a ${f1(M.proj(boom.pid))} projection, started by ${boom.s.team.name}.` });
-    }
-
+    const boom = [...I.starts].sort((a, b) => b.d - a.d)[0];
+    if (boom && boom.d > 0) I.boom = boom;
     const bust = M.picks.filter(p => p.round <= 2 && !p.pre && p.hasGame).sort((a, b) => (a.pts - a.proj) - (b.pts - b.proj))[0];
-    if (bust && bust.pts < bust.proj) {
-      const hold = M.holder(bust.pid);
-      out.push({
-        kind: "Early-round dud", stat: sgn(bust.pts - bust.proj), unit: "vs proj",
-        head: `**${pn(bust.pid)}**, pick ${bust.no}, managed ${f1(bust.pts)}`,
-        detail: `Projected for ${f1(bust.proj)}.${hold ? ` ${hold.started ? "Started" : "Benched"} by ${hold.s.team.name}.` : ""}`,
-      });
-    }
+    if (bust && bust.pts < bust.proj) I.dud = { p: bust, hold: M.holder(bust.pid) };
 
     const fa = (M.W.free_agents || []).filter(p => !M.pre(p))[0];
-    if (fa && M.pts(fa) > 0) {
-      const outscored = starts.filter(x => M.pts(x.pid) < M.pts(fa)).length;
-      out.push({ kind: "On the waiver wire", stat: f1(M.pts(fa)), unit: "pts", head: `Nobody rosters **${pn(fa)}**`, detail: `${ppos(fa)}, ${pnfl(fa)}. Outscored ${outscored} of the ${starts.length} players in starting lineups.` });
-    }
+    if (fa && M.pts(fa) > 0) I.fa = { pid: fa, outscored: I.starts.filter(x => M.pts(x.pid) < M.pts(fa)).length };
 
     const gm = M.gameRows.filter(r => r.g.state !== "pre" && r.starters.length).sort((a, b) => b.pts - a.pts)[0];
-    if (gm) {
-      const top = [...gm.starters].sort((a, b) => M.pts(b.pid) - M.pts(a.pid))[0];
-      out.push({
-        kind: "Game of the week", stat: f1(gm.pts), unit: "pts",
-        head: `**${gm.g.away} ${gm.g.as} @ ${gm.g.home} ${gm.g.hs}** paid out the most`,
-        detail: `${gm.starters.length} starters across ${new Set(gm.starters.map(x => x.s.rid)).size} teams. Top scorer: ${pn(top.pid)}, ${f1(M.pts(top.pid))}.`,
-      });
+    if (gm) I.game = { r: gm, top: [...gm.starters].sort((a, b) => M.pts(b.pid) - M.pts(a.pid))[0] };
+
+    if (P) {
+      I.swings = M.sides.map(s => { const p = P.bySide.get(s.rid); return p ? { s, prev: p, d: s.pts - p.pts } : null; }).filter(Boolean);
+      const half = Math.ceil(P.sides.length / 2);
+      const rise = [...I.swings].sort((a, b) => b.d - a.d);
+      I.bounce = rise.find(r => r.prev.rank > half && r.d > 0) || (rise[0] && rise[0].d > 0 ? rise[0] : null);
+      const fall = [...I.swings].sort((a, b) => a.d - b.d);
+      I.collapse = fall.find(r => r.prev.rank <= half && r.d < 0) || (fall[0] && fall[0].d < 0 ? fall[0] : null);
+      const roster = new Map();
+      M.sides.forEach(s => s.real.concat(s.bench).forEach(pid => roster.set(pid, s)));
+      I.movers = [...roster].filter(([pid]) => playedIn(M, pid) && playedIn(P, pid)).map(([pid, s]) => ({ pid, s, now: M.pts(pid), was: P.pts(pid), d: M.pts(pid) - P.pts(pid) }));
+    }
+
+    const led = moveLedger(M.week);
+    I.ledger = led;
+    const thisWeek = m => (playedIn(M, m.pid) && M.game(m.pid).t0 > m.t.ts ? M.pts(m.pid) : 0);
+    const drops = led.drops.map(m => Object.assign({}, m, { wk: thisWeek(m) })).filter(m => !(m.now && m.now.s.rid === m.rid)).sort((a, b) => b.wk - a.wk);
+    I.regret = drops[0] && drops[0].wk >= 12 ? drops[0] : null;
+    const adds = led.adds.map(m => Object.assign({}, m, { wk: thisWeek(m) })).filter(m => m.now && m.now.s.rid === m.rid).sort((a, b) => b.wk - a.wk);
+    I.pickup = adds[0] && adds[0].wk >= 12 ? adds[0] : null;
+    I.weekTrades = led.trades.filter(x => x.week === M.week);
+
+    if (M.week === latestWeek()) {
+      I.injuries = injuryReport().rows;
+      I.injuryBlow = I.injuries.find(r => isSerious(r.pid) && r.avg != null) || null;
+      I.alerts = M.sides.flatMap(s => s.real.filter(pid => M.pre(pid) && isSerious(pid)).map(pid => {
+        const st = s.starters.find(x => x.pid === pid);
+        const ok = FLEX[st.slot] || [st.slot];
+        const swap = s.bench.filter(b => M.pre(b) && !isSerious(b) && ok.includes(ppos(b)) && M.proj(b) > 0).sort((x, y) => M.proj(y) - M.proj(x))[0];
+        return { s, pid, swap };
+      }));
+    } else {
+      I.injuries = [];
+      I.injuryBlow = null;
+      I.alerts = [];
+    }
+    I.open = openMatchups(M);
+    insightCache.set(M.week, I);
+    return I;
+  }
+
+  // ------------------------------------------------------------ flags
+  function buildFlags(M, I) {
+    const out = [];
+    const tn = s => s.team.name;
+
+    if (I.open.length) {
+      const o = I.open[0];
+      const pL = o.lead === o.mk.a ? o.pA : 1 - o.pA;
+      out.push({ kind: onlyMNF(M) ? "Down to Monday night" : "Still undecided", stat: pct(pL), unit: "win odds", head: `**${tn(o.lead)}** leads ${tn(o.trail)} by ${f1(o.gap)}`, detail: verdict(o, tn) });
+    }
+    I.alerts.slice(0, 1).forEach(a => {
+      out.push({ kind: "Lineup alert", stat: injOf(a.pid), unit: PL[a.pid].body || "", head: `**${tn(a.s)}** still has **${pn(a.pid)}** in the lineup for ${slotName(M.game(a.pid).t0)}`, detail: `Listed ${injText(a.pid)}.${a.swap ? ` ${pn(a.swap)} (${f1(M.proj(a.swap))} proj) is on the bench and hasn't played yet.` : " No healthy bench option is left to swap in."}` });
+    });
+    I.weekTrades.slice(0, 1).forEach(x => out.push({
+      kind: "Trade", stat: String(d3.sum(x.sides, sd => sd.got.length + sd.picks.length)), unit: "pieces moved",
+      head: `**${nameList(x.sides.map(sd => tname(sd.rid)))}** made a trade`,
+      detail: x.sides.map(sd => `${tname(sd.rid)} got ${nameList(sd.got.map(g => pn(g.pid)).concat(sd.picks.map(p => `a ${p[0]} round-${p[1]} pick`))) || "nothing"}`).join(". ") + ".",
+    }));
+    if (I.bounce) {
+      const b = I.bounce;
+      const tm = (I.movers || []).filter(x => x.s === b.s && x.d > 0).sort((x, y) => y.d - x.d)[0];
+      out.push({ kind: "Bounce-back", stat: sgn(b.d), unit: "vs last week", head: `**${tn(b.s)}** went from ${ord(b.prev.rank)} in scoring last week to ${ord(b.s.rank)}`, detail: `${f2(b.prev.pts)} → ${f2(b.s.pts)}${M.final ? "" : " so far"}.${tm ? ` ${pn(tm.pid)} went ${f1(tm.was)} → ${f1(tm.now)}.` : ""}` });
+    }
+    if (I.steal) {
+      const st = I.steal, hold = st.hold;
+      let tail = "";
+      if (!hold) tail = " Now unrostered.";
+      else if (hold.s.rid !== st.p.rid) tail = ` Now on ${hold.s.team.name}${hold.started ? "" : "'s bench"}.`;
+      else if (!hold.started) tail = ` Sat on ${hold.s.team.name}'s bench.`;
+      out.push({ kind: "Steal of the draft", stat: f1(st.p.pts), unit: "pts", head: st.likeFirst ? `Pick ${st.p.no}, **${pn(st.p.pid)}**, scored like a first-rounder` : `**${pn(st.p.pid)}** was the best pick after round 7`, detail: `${tname(st.p.rid)} in round ${st.p.round}. Outscored ${st.beat} of ${st.r1n} first-round picks.${tail}` });
+    }
+    if (I.regret) {
+      const r = I.regret;
+      out.push({ kind: "Regret drop", stat: f1(r.wk), unit: "pts this week", head: `**${tname(r.rid)}** dropped **${pn(r.pid)}** in week ${r.week}`, detail: `${r.now ? `Now ${r.now.started ? "starting" : "benched"} on ${r.now.s.team.name}` : "Still a free agent"}. ${f1(r.pts)} points since the drop.` });
+    }
+    if (I.bench) {
+      const b = I.bench;
+      let detail = b.inP && b.outP ? `Biggest miss: ${pn(b.inP)} (${f1(M.val(b.inP))}) sat while ${pn(b.outP)} started (${f1(M.val(b.outP))}).` : "";
+      if (b.flip) detail += ` The best lineup would have beaten ${b.s.opp.team.name}.`;
+      out.push({ kind: "Bench blunder", stat: f1(b.s.benchLost), unit: "pts sat", head: `**${tn(b.s)}** left ${f1(b.s.benchLost)} points on the bench`, detail });
+    }
+    if (I.boom) out.push({ kind: "Boom", stat: sgn(I.boom.d), unit: "vs proj", head: `**${pn(I.boom.pid)}** beat the projection by ${f1(I.boom.d)}`, detail: `${f1(M.pts(I.boom.pid))} points on a ${f1(M.proj(I.boom.pid))} projection, started by ${tn(I.boom.s)}.` });
+    if (I.tough) {
+      const t = I.tough;
+      out.push({ kind: t.settled ? "Tough beat" : "Tough beat, so far", stat: `${fg(t.allPlay)}–${fg(I.others - t.allPlay)}`, unit: "all-play", head: `**${tn(t)}** scored ${f2(t.pts)}, ${ord(t.rank)}-most in the league, and ${t.settled ? "lost" : "trails"}`, detail: `That score beats ${fg(t.allPlay)} of ${I.others} teams. ${tn(t.opp)} put up ${f2(t.opp.pts)}.` });
+    }
+    if (I.injuryBlow) {
+      const r = I.injuryBlow;
+      out.push({ kind: "Injury report", stat: f1(r.avg), unit: "pts a game", head: `**${tn(r.s)}** is ${injOf(r.pid) === "Doubtful" ? "likely " : ""}without **${pn(r.pid)}**`, detail: `Listed ${injText(r.pid)}. ${r.round ? `A round-${r.round} pick` : "Undrafted"}, averaging ${f1(r.avg)} a game.` });
+    }
+    if (I.pickup) {
+      const p = I.pickup;
+      out.push({ kind: "Waiver win", stat: f1(p.wk), unit: "pts this week", head: `**${tname(p.rid)}** picked up **${pn(p.pid)}** in week ${p.week}`, detail: `${p.t.type === "waiver" ? "Waiver claim" : "Free-agent add"}${p.t.bid != null ? ` for $${p.t.bid}` : ""}. ${f1(p.pts)} points since the pickup${p.now && !p.now.started ? ", though this week's sat on the bench" : ""}.` });
+    }
+    if (I.collapse) {
+      const c = I.collapse;
+      const tm = (I.movers || []).filter(x => x.s === c.s && x.d < 0).sort((x, y) => x.d - y.d)[0];
+      out.push({ kind: "Fell off", stat: sgn(c.d), unit: "vs last week", head: `**${tn(c.s)}** went from ${ord(c.prev.rank)} in scoring last week to ${ord(c.s.rank)}`, detail: `${f2(c.prev.pts)} → ${f2(c.s.pts)}${M.final ? "" : " so far"}.${tm ? ` ${pn(tm.pid)} went ${f1(tm.was)} → ${f1(tm.now)}.` : ""}` });
+    }
+    if (I.comeback) {
+      const c = I.comeback;
+      out.push({ kind: c.mk.settled ? "Comeback" : "Comeback in progress", stat: f1(c.mk.deficit), unit: "pt hole", head: `**${tn(c.lead)}** trailed ${tn(c.trail)} by ${f1(c.mk.deficit)}${c.w ? ` in the ${c.w.name} window` : ""}`, detail: c.mk.settled ? `Came back to win by ${f2(Math.abs(c.mk.margin))}.` : `Now leads by ${f2(Math.abs(c.mk.margin))} with ${c.lead.pending.length + c.trail.pending.length} starters still to play.` });
+    }
+    if (I.dud) {
+      const d = I.dud;
+      out.push({ kind: "Early-round dud", stat: sgn(d.p.pts - d.p.proj), unit: "vs proj", head: `**${pn(d.p.pid)}**, pick ${d.p.no}, managed ${f1(d.p.pts)}`, detail: `Projected for ${f1(d.p.proj)}.${d.hold ? ` ${d.hold.started ? "Started" : "Benched"} by ${tn(d.hold.s)}.` : ""}` });
+    }
+    if (I.fa) out.push({ kind: "On the waiver wire", stat: f1(M.pts(I.fa.pid)), unit: "pts", head: `Nobody rosters **${pn(I.fa.pid)}**`, detail: `${ppos(I.fa.pid)}, ${pnfl(I.fa.pid)}. Outscored ${I.fa.outscored} of the ${I.starts.length} players in starting lineups.` });
+    if (I.game) {
+      const g = I.game.r.g;
+      out.push({ kind: "Game of the week", stat: f1(I.game.r.pts), unit: "pts", head: `**${g.away} ${g.as} @ ${g.home} ${g.hs}** paid out the most`, detail: `${I.game.r.starters.length} starters across ${new Set(I.game.r.starters.map(x => x.s.rid)).size} teams. Top scorer: ${pn(I.game.top.pid)}, ${f1(M.pts(I.game.top.pid))}.` });
     }
     return out;
   }
 
-  function drawFlags(M) {
+  function drawFlags(M, I) {
     const list = $("#flags");
     list.textContent = "";
-    let fl = buildFlags(M);
-    const n = fl.length >= 8 ? 8 : fl.length >= 6 ? 6 : fl.length >= 4 ? 4 : fl.length;
+    let fl = buildFlags(M, I);
+    const n = [12, 9, 8, 6, 4].find(k => fl.length >= k) || fl.length;
     fl = fl.slice(0, n);
     list.dataset.count = n;
     fl.forEach(f => list.append(h("li", { class: "flag" },
       h("p", { class: "flag-kind" }, f.kind),
-      h("p", { class: "flag-stat" }, f.stat, h("span", null, f.unit)),
+      h("p", { class: "flag-stat" }, f.stat, f.unit ? h("span", null, f.unit) : null),
       h("p", { class: "flag-head" }, rich(f.head)),
       f.detail ? h("p", { class: "flag-detail" }, f.detail) : null)));
+  }
+
+  // ------------------------------------------------------------ monday night
+  function drawMNF(M, I) {
+    const sec = $("#mnf-section"), el = $("#mnf");
+    el.textContent = "";
+    if (!I.open.length) { sec.hidden = true; return; }
+    sec.hidden = false;
+    el.dataset.count = Math.min(I.open.length, 6);
+    const left = M.games.filter(g => g.state !== "post");
+    $("#h-mnf").textContent = onlyMNF(M) ? "Monday night" : "Still to play";
+    $("#mnf-dek").textContent = `${nameList(left.map(g => g.state === "in" ? `${g.away} @ ${g.home} (${g.detail})` : `${g.away} @ ${g.home} (${clock(g.t0)} ET)`))} still ${left.length === 1 ? "decides" : "decide"} ${I.open.length} matchup${I.open.length === 1 ? "" : "s"}. Closest first.`;
+    const tn = s => s.team.name;
+    I.open.forEach(o => {
+      const mk = o.mk;
+      const team = (s, k) => h("div", { class: `mn-team ${k}` },
+        h("span", { class: "mn-name" }, h("i", { class: `k k-${k}` }), tn(s), isMe(s.rid) ? h("span", { class: "chip" }, "Following") : null),
+        h("span", { class: "mn-score" }, f2(s.pts)));
+      const list = (s, r) => h("div", null, h("h4", null, `${tn(s)} to play`),
+        r.who.length
+          ? h("ul", null, r.who.map(w => h("li", null, h("span", null, pn(w.pid), h("small", null, `${ppos(w.pid)} ${pnfl(w.pid)}`), injChip(w.pid)), h("span", null, `${f1(w.left)}p`))))
+          : h("p", { class: "sub" }, "Nobody left"));
+      const alerts = I.alerts.filter(a => a.s === mk.a || a.s === mk.b).map(a => h("p", { class: "mn-alert" }, injChip(a.pid),
+        h("span", null, `${tn(a.s)} is starting ${pn(a.pid)} (${injText(a.pid)}).${a.swap ? ` ${pn(a.swap)} (${f1(M.proj(a.swap))} proj) is still available on the bench.` : ""}`)));
+      el.append(h("div", { class: "panel" },
+        h("div", { class: "mn-head" }, team(mk.a, "a"), team(mk.b, "b")),
+        h("div", { class: "odds", role: "img", "aria-label": `Rough win odds: ${tn(mk.a)} ${pct(o.pA)}, ${tn(mk.b)} ${pct(1 - o.pA)}` },
+          h("span", { class: "oa", style: { width: `${o.pA * 100}%` } }),
+          h("span", { class: "ob", style: { width: `${(1 - o.pA) * 100}%` } })),
+        h("div", { class: "odds-l" }, h("span", null, h("b", null, pct(o.pA)), " win odds"), h("span", null, `Proj ${f1(o.projA)}–${f1(o.projB)}`), h("span", null, h("b", null, pct(1 - o.pA)))),
+        h("p", { class: "mn-verdict" }, verdict(o, tn)),
+        h("div", { class: "mn-left" }, list(mk.a, o.ra), list(mk.b, o.rb)),
+        alerts));
+    });
+  }
+
+  // ------------------------------------------------------------ group chat recap
+  function loadNames() { try { return JSON.parse(localStorage.getItem("filmroom.firstNames") || "{}") || {}; } catch (e) { return {}; } }
+  const NAMES = loadNames();
+  S.nameMode = (() => { try { return localStorage.getItem("filmroom.nameMode") === "first" ? "first" : "team"; } catch (e) { return "team"; } })();
+  function nameOf(x) {
+    const rid = typeof x === "object" ? x.rid : x;
+    const t = TEAM.get(rid) || { name: `Team ${rid}`, owner: "" };
+    if (S.nameMode !== "first") return t.name;
+    return (NAMES[rid] || "").trim() || t.owner || t.name;
+  }
+
+  function recapText(M, I) {
+    const T = nameOf;
+    const L = [];
+    const left = M.games.filter(g => g.state !== "post");
+    const mnf = onlyMNF(M);
+    L.push(`🏈 ${D.league.name} Film Room · Week ${M.week}`);
+    if (left.length) L.push(`Written before ${nameList(left.map(g => `${g.away} @ ${g.home}`))}${mnf ? " on Monday night" : " finishes"}.`);
+
+    L.push("", M.final ? "FINAL SCORES" : "SCORES SO FAR");
+    [...M.matchups].sort((a, b) => Math.abs(b.margin) - Math.abs(a.margin)).forEach(mk => {
+      const w = mk.a.pts >= mk.b.pts ? mk.a : mk.b, l = w.opp;
+      L.push(mk.settled ? `• ${T(w)} ${f2(w.pts)} def. ${T(l)} ${f2(l.pts)}` : `• ${T(w)} ${f2(w.pts)} leads ${T(l)} ${f2(l.pts)}, still playing`);
+    });
+
+    if (I.open.length) {
+      L.push("", mnf ? "🌙 MONDAY NIGHT" : "⏳ STILL TO PLAY");
+      I.open.forEach(o => {
+        const pL = o.lead === o.mk.a ? o.pA : 1 - o.pA;
+        L.push(`• ${T(o.lead)} leads ${T(o.trail)} by ${f1(o.gap)}. ${verdict(o, T)} Rough odds: ${pct(pL)} ${T(o.lead)}.`);
+      });
+      I.alerts.forEach(a => L.push(`• Heads up, ${T(a.s)}: ${pn(a.pid)} is listed ${injText(a.pid)} and still in your lineup.${a.swap ? ` ${pn(a.swap)} is on your bench.` : ""}`));
+    }
+
+    const hi = [], lo = [];
+    const top = M.ranked[0], bottom = M.ranked[M.ranked.length - 1];
+    I.weekTrades.forEach(x => hi.push(`Trade: ${x.sides.map(sd => `${T(sd.rid)} got ${nameList(sd.got.map(g => pn(g.pid)).concat(sd.picks.map(p => `a ${p[0]} round-${p[1]} pick`))) || "nothing"}`).join("; ")}.`));
+    hi.push(`Top score: ${T(top)} with ${f2(top.pts)}${M.final ? "" : " so far"}.`);
+    if (I.bounce) hi.push(`Bounce-back: ${T(I.bounce.s)} went from ${ord(I.bounce.prev.rank)} in scoring last week to ${ord(I.bounce.s.rank)} (${f1(I.bounce.prev.pts)} → ${f1(I.bounce.s.pts)}).`);
+    if (I.boom) hi.push(`Boom: ${pn(I.boom.pid)} put up ${f1(M.pts(I.boom.pid))} for ${T(I.boom.s)}, ${f1(I.boom.d)} over projection.`);
+    if (I.pickup) hi.push(`Waiver win: ${T(I.pickup.rid)} picked up ${pn(I.pickup.pid)} in week ${I.pickup.week} and got ${f1(I.pickup.wk)} this week.`);
+    if (I.steal) hi.push(`Draft steal: ${pn(I.steal.p.pid)}, pick ${I.steal.p.no}, scored ${f1(I.steal.p.pts)}.`);
+    if (I.comeback && I.comeback.mk.settled) hi.push(`Comeback: ${T(I.comeback.lead)} erased a ${f1(I.comeback.mk.deficit)}-point hole against ${T(I.comeback.trail)}.`);
+
+    if (I.bench) lo.push(`Bench blunder: ${T(I.bench.s)} left ${f1(I.bench.s.benchLost)} on the bench${I.bench.inP && I.bench.outP ? ` (${pn(I.bench.inP)} sat with ${f1(M.val(I.bench.inP))} while ${pn(I.bench.outP)} started with ${f1(M.val(I.bench.outP))})` : ""}.${I.bench.flip ? " The best lineup would have won." : ""}`);
+    if (I.regret) lo.push(`Regret drop: ${T(I.regret.rid)} cut ${pn(I.regret.pid)} in week ${I.regret.week}. This week: ${f1(I.regret.wk)} points${I.regret.now ? ` for ${T(I.regret.now.s)}` : " on the waiver wire"}.`);
+    if (I.collapse) lo.push(`Fell off: ${T(I.collapse.s)} went from ${ord(I.collapse.prev.rank)} in scoring last week to ${ord(I.collapse.s.rank)} (${f1(I.collapse.prev.pts)} → ${f1(I.collapse.s.pts)}).`);
+    if (I.tough) lo.push(`Tough beat: ${T(I.tough)} scored ${f2(I.tough.pts)}, ${ord(I.tough.rank)}-most in the league, and ${I.tough.settled ? "lost" : "is trailing"}.`);
+    if (I.dud) lo.push(`Early-round dud: ${pn(I.dud.p.pid)} (pick ${I.dud.p.no}) managed ${f1(I.dud.p.pts)} on a ${f1(I.dud.p.proj)} projection.`);
+    lo.push(`Basement: ${T(bottom)} with ${f2(bottom.pts)}${M.final ? "" : " so far"}.`);
+
+    L.push("", "🔥 HIGHLIGHTS", ...hi.slice(0, 5).map(x => `• ${x}`));
+    L.push("", "🧊 LOWLIGHTS", ...lo.slice(0, 5).map(x => `• ${x}`));
+    const inj = I.injuries.filter(r => isSerious(r.pid) && r.avg != null).slice(0, 3);
+    if (inj.length) {
+      L.push("", "🏥 INJURY REPORT");
+      inj.forEach(r => L.push(`• ${pn(r.pid)} (${T(r.s)}): ${injText(r.pid)}, averaging ${f1(r.avg)} a game.`));
+    }
+    if (/^https?:$/.test(location.protocol)) L.push("", `Full Film Room: ${location.origin}${location.pathname}`);
+    return L.join("\n");
+  }
+
+  function drawRecap(M, I) {
+    $("#recap").textContent = recapText(M, I);
+    $("#copy-status").textContent = "";
+    $("#nm-team").setAttribute("aria-pressed", String(S.nameMode !== "first"));
+    $("#nm-first").setAttribute("aria-pressed", String(S.nameMode === "first"));
+  }
+
+  function initRecap() {
+    const box = $("#names");
+    const redraw = () => { const M = model(S.week); drawRecap(M, insights(M)); };
+    [...D.teams].sort((a, b) => a.name.localeCompare(b.name)).forEach(t => {
+      const input = h("input", { id: `fn-${t.rid}`, type: "text", autocomplete: "off", placeholder: "First name", value: NAMES[t.rid] || "" });
+      input.addEventListener("input", () => {
+        NAMES[t.rid] = input.value;
+        try { localStorage.setItem("filmroom.firstNames", JSON.stringify(NAMES)); } catch (e) { /* storage unavailable */ }
+        if (S.nameMode === "first") redraw();
+      });
+      box.append(h("label", { for: `fn-${t.rid}` }, h("span", null, t.name, h("small", null, `@${t.owner}`)), input));
+    });
+    const setMode = mode => {
+      S.nameMode = mode;
+      try { localStorage.setItem("filmroom.nameMode", mode); } catch (e) { /* storage unavailable */ }
+      redraw();
+    };
+    $("#nm-team").addEventListener("click", () => setMode("team"));
+    $("#nm-first").addEventListener("click", () => setMode("first"));
+    $("#copy").addEventListener("click", async () => {
+      const pre = $("#recap"), status = $("#copy-status");
+      try {
+        await navigator.clipboard.writeText(pre.textContent);
+        status.textContent = "Copied";
+      } catch (e) {
+        const range = document.createRange();
+        range.selectNodeContents(pre);
+        const sel = getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
+        status.textContent = ok ? "Copied" : "Selected. Press Ctrl+C or ⌘C to copy.";
+      }
+    });
   }
 
   // ------------------------------------------------------------ scoreboard
@@ -1527,14 +2008,16 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     }).sort((a, b) => (b.w + b.tie / 2) - (a.w + a.tie / 2) || b.pf - a.pf);
 
     const tbl = $("#standings");
+    const [lo, hi] = d3.extent(Ms.flatMap(M2 => M2.sides.map(s2 => s2.pts)));
     tbl.textContent = "";
-    tbl.append(h("thead", null, h("tr", null, ["", "Team", "Record", "Points for", "Against", "All-play", "Luck", "Bench lost", "Vs proj"].map((c, i) => h("th", { class: i < 2 ? "l" : null }, c)))));
+    tbl.append(h("thead", null, h("tr", null, ["", "Team", "Record", "Points for", "Weekly", "Against", "All-play", "Luck", "Bench lost", "Vs proj"].map((c, i) => h("th", { class: i < 2 ? "l" : null }, c)))));
     const body = h("tbody");
     rows.forEach((r, i) => body.append(h("tr", { class: isMe(r.t.rid) ? "me" : null },
       h("td", { class: "rank" }, i + 1),
       h("td", { class: "team" }, r.t.name, h("small", null, `@${r.t.owner}`)),
       h("td", null, `${r.w}–${r.l}${r.tie ? `–${r.tie}` : ""}`, r.live ? h("span", { class: "chip quiet" }, `${r.live.result === "W" ? "Leads" : "Trails"} wk ${S.week}`) : null),
       h("td", null, f2(r.pf)),
+      h("td", null, spark(Ms.map(M2 => { const s2 = M2.bySide.get(r.t.rid); return s2 ? s2.pts : 0; }), lo, hi)),
       h("td", null, f2(r.pa)),
       h("td", null, `${fg(r.ap)}–${fg(r.apl)}`),
       h("td", { class: r.settled ? null : "muted" }, r.settled ? sgn(r.luck, f2) : "—"),
@@ -1580,20 +2063,202 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
       .on("pointerleave", () => { cross.style("display", "none"); hideTip(); });
   }
 
+  // ------------------------------------------------------------ form
+  function drawSlope(M, I) {
+    const el = $("#slope");
+    el.textContent = "";
+    const P = I.prev;
+    if (!P || !I.swings) { el.append(h("p", { class: "sub" }, "Form starts once there are two weeks to compare.")); return; }
+    $("#slope-title").textContent = `Week ${P.week} to week ${M.week}`;
+    const W = Math.max(300, el.clientWidth), H = 340;
+    const font = "600 12px 'Schibsted Grotesk', system-ui, sans-serif";
+    const rows = I.swings;
+    const color = new Map();
+    [...rows].filter(r => r.d > 0).sort((a, b) => b.d - a.d).slice(0, 2).forEach(r => color.set(r, "var(--over)"));
+    [...rows].filter(r => r.d < 0).sort((a, b) => a.d - b.d).slice(0, 2).forEach(r => color.set(r, "var(--under)"));
+    rows.forEach(r => { if (isMe(r.s.rid) && !color.has(r)) color.set(r, "var(--ink)"); });
+    const hl = [...color.keys()];
+    const narrow = W < 560;
+    const labW = Math.min(W * 0.32, (d3.max(hl, r => textW(`${r.s.team.name} 000.0`, font)) || 60) + 14);
+    const m = { l: narrow ? 50 : labW, r: labW, t: 28, b: 10 };
+    const x0 = m.l, x1 = W - m.r;
+    const y = d3.scaleLinear(d3.extent(rows.flatMap(r => [r.prev.pts, r.s.pts]))).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img")
+      .attr("aria-label", `Team scores, week ${P.week} to week ${M.week}. ` + hl.map(r => `${r.s.team.name} ${f1(r.prev.pts)} to ${f1(r.s.pts)}`).join("; "));
+    y.ticks(4).forEach(v => svg.append("line").attr("class", "grid").attr("x1", x0).attr("x2", x1).attr("y1", y(v)).attr("y2", y(v)));
+    [x0, x1].forEach(x => svg.append("line").attr("class", "base").attr("x1", x).attr("x2", x).attr("y1", m.t - 6).attr("y2", H - m.b));
+    svg.append("text").attr("class", "ax").attr("x", x0).attr("y", 12).attr("text-anchor", "middle").text(`WEEK ${P.week}`);
+    svg.append("text").attr("class", "ax").attr("x", x1).attr("y", 12).attr("text-anchor", "middle").text(`WEEK ${M.week}${M.final ? "" : " SO FAR"}`);
+
+    const draw = (r, c) => {
+      const g = svg.append("g");
+      g.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(r.prev.pts)).attr("y2", y(r.s.pts)).style("stroke", c || "var(--dot)").style("stroke-width", c ? 2.5 : 1.5).style("stroke-linecap", "round");
+      [[x0, r.prev.pts], [x1, r.s.pts]].forEach(([x, v]) => g.append("circle").attr("cx", x).attr("cy", y(v)).attr("r", c ? 4.5 : 3.5).style("fill", c || "var(--dot)").style("stroke", "var(--surface)").style("stroke-width", 2));
+      const hit = g.append("line").attr("x1", x0).attr("x2", x1).attr("y1", y(r.prev.pts)).attr("y2", y(r.s.pts))
+        .style("stroke", "transparent").style("stroke-width", 14).style("pointer-events", "stroke")
+        .attr("tabindex", 0).attr("aria-label", `${r.s.team.name}: ${f1(r.prev.pts)} to ${f1(r.s.pts)}`);
+      const show = e => tip(e, r.s.team.name, [
+        { value: f2(r.prev.pts), label: `week ${P.week}, ${ord(r.prev.rank)} in league`, key: "k-none" },
+        { value: f2(r.s.pts), label: `week ${M.week}, ${ord(r.s.rank)} in league`, key: "k-none" },
+      ], `${sgn(r.d)} week over week`);
+      hit.on("pointermove", show).on("pointerleave", hideTip).on("focus", show).on("blur", hideTip);
+    };
+    rows.filter(r => !color.has(r)).forEach(r => draw(r));
+    hl.forEach(r => draw(r, color.get(r)));
+
+    // Direct labels for the highlighted teams, spaced so they never overlap.
+    const place = side => {
+      const items = hl.map(r => ({ r, y: y(side === "l" ? r.prev.pts : r.s.pts) })).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < items.length; i++) if (items[i].y - items[i - 1].y < 15) items[i].y = items[i - 1].y + 15;
+      items.forEach(it => svg.append("text").attr("class", "lbl halo")
+        .attr("x", side === "l" ? x0 - 10 : x1 + 10).attr("y", it.y).attr("dy", "0.32em").attr("text-anchor", side === "l" ? "end" : "start")
+        .text(side === "l" ? (narrow ? f1(it.r.prev.pts) : `${it.r.s.team.name} ${f1(it.r.prev.pts)}`) : `${f1(it.r.s.pts)} ${it.r.s.team.name}`));
+    };
+    place("l");
+    place("r");
+  }
+
+  function drawMovers(M, I) {
+    const el = $("#movers");
+    el.textContent = "";
+    if (!I.prev || !I.movers) { el.append(h("p", { class: "sub" }, "Player swings start once there are two weeks to compare.")); return; }
+    const up = I.movers.filter(r => r.d > 0).sort((a, b) => b.d - a.d).slice(0, 5);
+    const down = I.movers.filter(r => r.d < 0).sort((a, b) => a.d - b.d).slice(0, 5);
+    const max = niceMax(d3.max(up.concat(down), r => Math.max(r.now, r.was)) || 1, 10);
+    [["Heating up", up], ["Cooling off", down]].forEach(([title, rows]) => {
+      if (!rows.length) return;
+      el.append(h("h4", { class: "mini-h" }, title));
+      const box = h("div");
+      el.append(box);
+      const rc = rowChart(box, [0, max], d3.ticks(0, max, 4));
+      rows.forEach(r => rc.add(pn(r.pid), `${ppos(r.pid)} · ${r.s.team.name}`, [rc.link(r.was, r.now), rc.dot(r.was, "rc-ring"), rc.dot(r.now)], sgn(r.d), {
+        me: isMe(r.s.rid),
+        tip: e => tip(e, `${pn(r.pid)} · ${ppos(r.pid)} ${pnfl(r.pid)}`, [
+          { value: f1(r.was), label: `week ${I.prev.week}`, key: "k-ring" },
+          { value: f1(r.now), label: `week ${M.week}`, key: "k-ink" },
+        ], `${r.s.real.includes(r.pid) ? "Started" : "Benched"} by ${r.s.team.name} this week`),
+      }));
+    });
+  }
+
+  // ------------------------------------------------------------ injuries
+  function drawInjuries() {
+    const { L, rows } = injuryReport();
+    $("#inj-dek").textContent = `Rostered players with an injury designation as of ${stamp(D.generated_at)}, with what each has averaged in games played. This section always shows the latest snapshot, whatever week is picked.`;
+    const tbl = $("#inj-table");
+    tbl.textContent = "";
+    if (!rows.length) {
+      tbl.append(h("tbody", null, h("tr", null, h("td", { class: "l" }, "No injury designations on any roster."))));
+    } else {
+      tbl.append(h("thead", null, h("tr", null, h("th", { class: "l" }, "Player"), h("th", { class: "l" }, "Status"), h("th", { class: "l" }, "Fantasy team"), h("th", null, "Avg pts"), h("th", { class: "l" }, `Week ${L.week}`))));
+      const body = h("tbody");
+      rows.slice(0, 14).forEach(r => {
+        const g = L.game(r.pid);
+        const now = !g ? "Bye" : r.pending ? `${r.starter ? "Starting" : "Bench"}, plays ${slotName(g.t0)}` : `${r.starter ? "Started" : "Bench"}, ${f1(r.pts)} pts`;
+        body.append(h("tr", { class: isMe(r.s.rid) ? "me" : null },
+          h("td", { class: "team" }, pn(r.pid), h("small", null, `${ppos(r.pid)} · ${pnfl(r.pid)} · ${r.round ? `round ${r.round}` : "undrafted"}`)),
+          h("td", { class: "l" }, h("span", { class: `st ${INJ[r.st] || "warn"}`, style: { marginLeft: "0" } }, r.st), PL[r.pid].body ? ` ${PL[r.pid].body}` : ""),
+          h("td", { class: "l" }, r.s.team.name),
+          h("td", null, r.avg == null ? "—" : f1(r.avg)),
+          h("td", { class: `l${r.pending && r.starter && isSerious(r.pid) ? " warn-txt" : ""}` }, now)));
+      });
+      tbl.append(body);
+    }
+    const el = $("#inj-teams");
+    el.textContent = "";
+    const load = L.sides.map(s => {
+      const list = rows.filter(r => r.s === s);
+      const out = list.filter(r => isSerious(r.pid));
+      return { s, v: d3.sum(out, r => r.avg || 0), out, q: list.filter(r => !isSerious(r.pid)) };
+    }).sort((a, b) => b.v - a.v);
+    const mx = niceMax(d3.max(load, r => r.v) || 1, 10);
+    const rc = rowChart(el, [0, mx], d3.ticks(0, mx, 4));
+    load.forEach(r => rc.add(r.s.team.name, `${r.out.length} out or doubtful${r.q.length ? ` · ${r.q.length} questionable` : ""}`, r.v ? [rc.bar(0, r.v, "fill")] : [], f1(r.v), {
+      me: isMe(r.s.rid),
+      tip: e => tip(e, r.s.team.name, r.out.concat(r.q).map(x => ({ value: x.avg == null ? "—" : f1(x.avg), label: `${pn(x.pid)} · ${x.st}`, key: "k-none" })), r.out.length + r.q.length ? "Average points per game played" : "No injury designations"),
+    }));
+  }
+
+  // ------------------------------------------------------------ waiver wire & trades
+  function drawMoves(M, I) {
+    const led = I.ledger;
+    const nowTxt = m => (!m.now ? "free agent" : m.now.s.rid === m.rid ? "still with them" : `now ${m.now.started ? "starting" : "benched"} on ${m.now.s.team.name}`);
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    const panel = (sel, list, subFn, empty) => {
+      const el = $(sel);
+      el.textContent = "";
+      const rows = list.filter(m => m.pts > 0).slice(0, 8);
+      if (!rows.length) { el.append(h("p", { class: "sub" }, empty)); return; }
+      const mx = niceMax(d3.max(rows, m => m.pts), 10);
+      const rc = rowChart(el, [0, mx], d3.ticks(0, mx, 4));
+      rows.forEach(m => rc.add(pn(m.pid), subFn(m), [rc.bar(0, m.pts, "fill")], f1(m.pts), {
+        me: isMe(m.rid),
+        tip: e => tip(e, `${pn(m.pid)} · ${ppos(m.pid)} ${pnfl(m.pid)}`, [
+          { value: f1(m.pts), label: `points in ${m.games} game${m.games === 1 ? "" : "s"} since`, key: "k-bar" },
+        ], `${m.kind === "drop" ? "Dropped" : "Added"} by ${tname(m.rid)} in week ${m.week} (${m.t.type === "waiver" ? "waivers" : "free agency"}${m.t.bid != null ? `, $${m.t.bid}` : ""}). ${cap(nowTxt(m))}.`),
+      }));
+    };
+    panel("#drops", led.drops, m => `${tname(m.rid)} · wk ${m.week} · ${nowTxt(m)}`, "No dropped player has scored since being let go.");
+    panel("#adds", led.adds, m => `${tname(m.rid)} · wk ${m.week}${m.now && m.now.s.rid === m.rid ? "" : " · since let go"}`, "No pickup has scored yet.");
+
+    const tr = $("#trades");
+    tr.textContent = "";
+    if (!led.trades.length) { tr.append(h("p", { class: "sub" }, "No trades yet this season. When one goes through, it lands here with what each side has scored since.")); return; }
+    [...led.trades].reverse().forEach(x => tr.append(h("div", { class: "trade" },
+      h("p", { class: "trade-h" }, `Week ${x.week} · ${nameList(x.sides.map(sd => tname(sd.rid)))}`),
+      x.sides.map(sd => h("div", null,
+        h("p", { class: "trade-team" }, h("span", null, `${tname(sd.rid)} received`), h("span", null, `${f1(d3.sum(sd.got, g => g.pts))} pts since`)),
+        h("ul", null,
+          sd.got.map(g => h("li", null, h("span", null, pn(g.pid), h("small", null, `${ppos(g.pid)} ${pnfl(g.pid)}`)), h("span", null, f1(g.pts)))),
+          sd.picks.map(p => h("li", null, h("span", null, `${p[0]} round ${p[1]} pick`), h("span", { class: "muted" }, "pick")))))))));
+  }
+
+  const SVGNS = "http://www.w3.org/2000/svg";
+  function spark(vals, lo, hi) {
+    const W = 64, H = 20;
+    const svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    svg.setAttribute("width", W);
+    svg.setAttribute("height", H);
+    svg.setAttribute("class", "spark");
+    svg.setAttribute("aria-hidden", "true");
+    const x = i => (vals.length === 1 ? W / 2 : 3 + i * (W - 6) / (vals.length - 1));
+    const y = v => H - 3 - (hi > lo ? (v - lo) / (hi - lo) : 0.5) * (H - 6);
+    if (vals.length > 1) {
+      const pl = document.createElementNS(SVGNS, "polyline");
+      pl.setAttribute("points", vals.map((v, i) => `${x(i)},${y(v)}`).join(" "));
+      pl.setAttribute("style", "fill:none;stroke:var(--bar);stroke-width:1.5;stroke-linejoin:round;stroke-linecap:round");
+      svg.append(pl);
+    }
+    const c = document.createElementNS(SVGNS, "circle");
+    c.setAttribute("cx", x(vals.length - 1));
+    c.setAttribute("cy", y(vals[vals.length - 1]));
+    c.setAttribute("r", 2.5);
+    c.setAttribute("style", "fill:var(--bar)");
+    svg.append(c);
+    return svg;
+  }
+
   // ------------------------------------------------------------ render
   function renderCharts() {
     const M = model(S.week);
     drawScoreboard(M);
+    drawSlope(M, insights(M));
     renderMomentum();
     drawDraft(M);
     drawArc(D.weeks.filter(w => w.week <= S.week).map(w => model(w.week)));
   }
 
   function renderAll() {
-    const M = model(S.week);
+    const M = model(S.week), I = insights(M);
     drawStatus(M);
-    drawFlags(M);
+    drawFlags(M, I);
+    drawMNF(M, I);
+    drawRecap(M, I);
     drawGames(M);
+    drawMovers(M, I);
+    drawInjuries();
+    drawMoves(M, I);
     drawTeam(M);
     drawHeat(M);
     drawDraftReturn(M);
@@ -1605,6 +2270,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
   }
 
   initControls();
+  initRecap();
   renderAll();
 
   let lastW = $("#page").clientWidth;

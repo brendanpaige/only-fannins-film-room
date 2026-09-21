@@ -2,8 +2,9 @@ name: Film Room
 
 on:
   schedule:
-    # Tuesdays 13:00 UTC: 9 AM Eastern during daylight time, 8 AM in winter.
-    - cron: "0 13 * * 2"
+    # Mondays 13:00 UTC, ahead of Monday Night Football: 9 AM Eastern
+    # during daylight time, 8 AM in winter.
+    - cron: "0 13 * * 1"
   workflow_dispatch:
   push:
     branches: [main]
