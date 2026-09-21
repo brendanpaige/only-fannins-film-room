@@ -297,7 +297,7 @@ svg .brk { stroke: var(--axis); stroke-width: 1.5; fill: none; }
 .statline { display: flex; flex-wrap: wrap; gap: 10px 28px; margin: 0; }
 .statline div { display: grid; gap: 3px; }
 .statline dt { font: 500 10px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
-.statline dd { margin: 0; font: 800 28px/1 var(--f-display); white-space: nowrap; }
+.statline dd { margin: 0; font: 800 28px/1 var(--f-display); }
 .statline dd small { font: 500 11px/1 var(--f-body); color: var(--ink-2); margin-left: 4px; }
 .sheet-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 32px; }
 @media (max-width: 980px) { .sheet-grid { grid-template-columns: minmax(0, 1fr); } }
@@ -358,8 +358,6 @@ tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
 @media (max-width: 560px) { .flags[data-count="9"] { grid-template-columns: minmax(0, 1fr); } }
 .k-rise, .k-fall { width: 14px; height: 0; border-top: 2px solid var(--over); }
 .k-fall { border-top-color: var(--under); }
-.ctl-link { font: 600 13px/1 var(--f-body); color: var(--chyron-ink); text-decoration: none; padding-block: 6px; border-bottom: 2px solid var(--flag); white-space: nowrap; }
-.ctl-link:focus-visible { outline: 2px solid var(--flag); outline-offset: 3px; }
 
 /* ---------- injury status (fixed status colors, always paired with a label) ---------- */
 .st { display: inline-block; font: 600 9.5px/1 var(--f-mono); letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 5px; border-radius: 3px; white-space: nowrap; vertical-align: 1px; margin-left: 6px; }
@@ -396,23 +394,6 @@ tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
 .mn-alert { margin: 12px 0 0; padding: 9px 11px; border-radius: 4px; background: var(--surface-2); font-size: 13px; line-height: 1.4; display: flex; gap: 8px; align-items: baseline; }
 .mn-alert .st { margin-left: 0; }
 
-/* ---------- recap ---------- */
-.recap-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-.recap-actions { display: flex; align-items: center; gap: 12px; }
-.seg { display: inline-flex; border: 1px solid var(--axis); border-radius: 5px; overflow: hidden; }
-.seg button { border: 0; background: transparent; padding: 8px 12px; font: 600 12.5px/1 var(--f-body); color: var(--ink-2); cursor: pointer; }
-.seg button + button { border-left: 1px solid var(--axis); }
-.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
-.btn { font: 600 13px/1 var(--f-body); padding: 10px 15px; border-radius: 5px; border: 0; background: var(--flag); color: var(--flag-ink); cursor: pointer; }
-.btn:hover { filter: brightness(1.06); }
-.copy-status { font: 500 11px/1.3 var(--f-mono); color: var(--muted); }
-.recap { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; font: 400 14px/1.6 var(--f-body); color: var(--ink); background: var(--surface-2); border: 1px solid var(--hair); border-radius: 6px; padding: 16px 18px; max-height: 640px; overflow-y: auto; }
-.names { display: grid; gap: 8px; }
-.names label { display: grid; grid-template-columns: minmax(0, 1fr) minmax(90px, 150px); gap: 12px; align-items: center; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
-.names label small { display: block; font: 500 10px/1.3 var(--f-mono); color: var(--muted); font-weight: 500; }
-.names input { font: 500 13px/1.2 var(--f-body); color: var(--ink); background: var(--surface); border: 1px solid var(--axis); border-radius: 4px; padding: 7px 9px; width: 100%; }
-.names input:focus-visible { outline: 2px solid var(--flag); outline-offset: 1px; }
-
 /* ---------- form, injuries, moves ---------- */
 .mini-h { margin: 16px 0 4px; font: 500 10.5px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
 .mini-h:first-child { margin-top: 0; }
@@ -425,6 +406,20 @@ tr.me td { background: color-mix(in oklab, var(--flag) 16%, transparent); }
 .trade ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: 12.5px; }
 .trade li { display: flex; justify-content: space-between; gap: 8px; }
 .trade li small { font: 500 9.5px/1 var(--f-mono); color: var(--muted); margin-left: 5px; }
+
+/* ---------- section nav ---------- */
+.secnav { position: sticky; top: var(--nav-top, 0px); z-index: 25; background: color-mix(in oklab, var(--ground) 94%, transparent); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--hair); }
+.secnav-in { position: relative; display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; padding-block: 6px; }
+.secnav-in::-webkit-scrollbar { display: none; }
+.secnav a { flex: none; font: 600 12.5px/1 var(--f-body); color: var(--ink-2); text-decoration: none; padding: 9px 10px; border-radius: 4px; white-space: nowrap; }
+.secnav a:hover { color: var(--ink); background: var(--surface-2); }
+.secnav a[aria-current] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--flag); border-radius: 4px 4px 0 0; }
+.secnav a:focus-visible { outline: 2px solid var(--flag); outline-offset: -2px; }
+@media (max-width: 760px) {
+  .secnav { top: 0; }
+  .secnav-in { -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+}
+h2[id] { scroll-margin-top: calc(var(--stick, 110px) + 34px); }
 
 /* ---------- tooltip ---------- */
 .tip { position: fixed; z-index: 60; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; font-size: 12.5px; line-height: 1.4; box-shadow: var(--shadow); max-width: 280px; }
@@ -450,10 +445,25 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     <div class="controls">
       <label class="ctl" for="week"><span>Week</span><select id="week"></select></label>
       <label class="ctl" for="follow"><span>Follow</span><select id="follow"><option value="">No team</option></select></label>
-      <a class="ctl-link" href="#chat">Group chat recap</a>
     </div>
   </div>
 </header>
+
+<nav class="secnav" id="secnav" aria-label="Sections">
+  <div class="wrap secnav-in">
+    <a href="#h-flags">Flags</a>
+    <a href="#h-mnf" id="nav-mnf" hidden>Monday night</a>
+    <a href="#h-board">Scoreboard</a>
+    <a href="#h-form">Form</a>
+    <a href="#h-momentum">Momentum</a>
+    <a href="#h-inj">Injuries</a>
+    <a href="#h-moves">Wire &amp; trades</a>
+    <a href="#h-team">Team sheet</a>
+    <a href="#h-draft">Draft</a>
+    <a href="#h-film">Lineup calls</a>
+    <a href="#h-standings">Standings</a>
+  </div>
+</nav>
 
 <main class="wrap page" id="page">
   <section aria-labelledby="h-flags">
@@ -473,33 +483,6 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     </div>
     <div class="mnf" id="mnf"></div>
     <p class="note">Win odds are rough: each remaining starter's Sleeper projection, with a typical game-to-game spread around it. Starters listed Out count for nothing and Doubtful ones for a quarter of their projection.</p>
-  </section>
-
-  <section aria-labelledby="h-chat" id="chat">
-    <div class="sec-head">
-      <p class="eyebrow">League · <span data-week>Week 1</span></p>
-      <h2 id="h-chat">Group chat recap</h2>
-      <p class="dek">The week's highlights and lowlights, written up to paste into the league chat. It follows the week picker.</p>
-    </div>
-    <div class="split-7-5">
-      <div class="panel">
-        <div class="recap-bar">
-          <div class="seg" role="group" aria-label="Refer to teams by">
-            <button type="button" id="nm-team" aria-pressed="true">Team names</button>
-            <button type="button" id="nm-first" aria-pressed="false">First names</button>
-          </div>
-          <div class="recap-actions">
-            <span class="copy-status" id="copy-status" role="status"></span>
-            <button type="button" class="btn" id="copy">Copy recap</button>
-          </div>
-        </div>
-        <pre class="recap" id="recap"></pre>
-      </div>
-      <div class="panel">
-        <div class="panel-head"><div><h3>First names</h3><p class="sub">Sleeper doesn't share real names, so add them here for the recap. They're saved in this browser only and never published. Blank ones fall back to the Sleeper username.</p></div></div>
-        <div class="names" id="names"></div>
-      </div>
-    </div>
   </section>
 
   <section aria-labelledby="h-board">
@@ -1257,11 +1240,13 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
   function drawMNF(M, I) {
     const sec = $("#mnf-section"), el = $("#mnf");
     el.textContent = "";
+    $("#nav-mnf").hidden = !I.open.length;
     if (!I.open.length) { sec.hidden = true; return; }
     sec.hidden = false;
     el.dataset.count = Math.min(I.open.length, 6);
     const left = M.games.filter(g => g.state !== "post");
     $("#h-mnf").textContent = onlyMNF(M) ? "Monday night" : "Still to play";
+    $("#nav-mnf").textContent = $("#h-mnf").textContent;
     $("#mnf-dek").textContent = `${nameList(left.map(g => g.state === "in" ? `${g.away} @ ${g.home} (${g.detail})` : `${g.away} @ ${g.home} (${clock(g.t0)} ET)`))} still ${left.length === 1 ? "decides" : "decide"} ${I.open.length} matchup${I.open.length === 1 ? "" : "s"}. Closest first.`;
     const tn = s => s.team.name;
     I.open.forEach(o => {
@@ -1284,112 +1269,6 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
         h("p", { class: "mn-verdict" }, verdict(o, tn)),
         h("div", { class: "mn-left" }, list(mk.a, o.ra), list(mk.b, o.rb)),
         alerts));
-    });
-  }
-
-  // ------------------------------------------------------------ group chat recap
-  function loadNames() { try { return JSON.parse(localStorage.getItem("filmroom.firstNames") || "{}") || {}; } catch (e) { return {}; } }
-  const NAMES = loadNames();
-  S.nameMode = (() => { try { return localStorage.getItem("filmroom.nameMode") === "first" ? "first" : "team"; } catch (e) { return "team"; } })();
-  function nameOf(x) {
-    const rid = typeof x === "object" ? x.rid : x;
-    const t = TEAM.get(rid) || { name: `Team ${rid}`, owner: "" };
-    if (S.nameMode !== "first") return t.name;
-    return (NAMES[rid] || "").trim() || t.owner || t.name;
-  }
-
-  function recapText(M, I) {
-    const T = nameOf;
-    const L = [];
-    const left = M.games.filter(g => g.state !== "post");
-    const mnf = onlyMNF(M);
-    L.push(`🏈 ${D.league.name} Film Room · Week ${M.week}`);
-    if (left.length) L.push(`Written before ${nameList(left.map(g => `${g.away} @ ${g.home}`))}${mnf ? " on Monday night" : " finishes"}.`);
-
-    L.push("", M.final ? "FINAL SCORES" : "SCORES SO FAR");
-    [...M.matchups].sort((a, b) => Math.abs(b.margin) - Math.abs(a.margin)).forEach(mk => {
-      const w = mk.a.pts >= mk.b.pts ? mk.a : mk.b, l = w.opp;
-      L.push(mk.settled ? `• ${T(w)} ${f2(w.pts)} def. ${T(l)} ${f2(l.pts)}` : `• ${T(w)} ${f2(w.pts)} leads ${T(l)} ${f2(l.pts)}, still playing`);
-    });
-
-    if (I.open.length) {
-      L.push("", mnf ? "🌙 MONDAY NIGHT" : "⏳ STILL TO PLAY");
-      I.open.forEach(o => {
-        const pL = o.lead === o.mk.a ? o.pA : 1 - o.pA;
-        L.push(`• ${T(o.lead)} leads ${T(o.trail)} by ${f1(o.gap)}. ${verdict(o, T)} Rough odds: ${pct(pL)} ${T(o.lead)}.`);
-      });
-      I.alerts.forEach(a => L.push(`• Heads up, ${T(a.s)}: ${pn(a.pid)} is listed ${injText(a.pid)} and still in your lineup.${a.swap ? ` ${pn(a.swap)} is on your bench.` : ""}`));
-    }
-
-    const hi = [], lo = [];
-    const top = M.ranked[0], bottom = M.ranked[M.ranked.length - 1];
-    I.weekTrades.forEach(x => hi.push(`Trade: ${x.sides.map(sd => `${T(sd.rid)} got ${nameList(sd.got.map(g => pn(g.pid)).concat(sd.picks.map(p => `a ${p[0]} round-${p[1]} pick`))) || "nothing"}`).join("; ")}.`));
-    hi.push(`Top score: ${T(top)} with ${f2(top.pts)}${M.final ? "" : " so far"}.`);
-    if (I.bounce) hi.push(`Bounce-back: ${T(I.bounce.s)} went from ${ord(I.bounce.prev.rank)} in scoring last week to ${ord(I.bounce.s.rank)} (${f1(I.bounce.prev.pts)} → ${f1(I.bounce.s.pts)}).`);
-    if (I.boom) hi.push(`Boom: ${pn(I.boom.pid)} put up ${f1(M.pts(I.boom.pid))} for ${T(I.boom.s)}, ${f1(I.boom.d)} over projection.`);
-    if (I.pickup) hi.push(`Waiver win: ${T(I.pickup.rid)} picked up ${pn(I.pickup.pid)} in week ${I.pickup.week} and got ${f1(I.pickup.wk)} this week.`);
-    if (I.steal) hi.push(`Draft steal: ${pn(I.steal.p.pid)}, pick ${I.steal.p.no}, scored ${f1(I.steal.p.pts)}.`);
-    if (I.comeback && I.comeback.mk.settled) hi.push(`Comeback: ${T(I.comeback.lead)} erased a ${f1(I.comeback.mk.deficit)}-point hole against ${T(I.comeback.trail)}.`);
-
-    if (I.bench) lo.push(`Bench blunder: ${T(I.bench.s)} left ${f1(I.bench.s.benchLost)} on the bench${I.bench.inP && I.bench.outP ? ` (${pn(I.bench.inP)} sat with ${f1(M.val(I.bench.inP))} while ${pn(I.bench.outP)} started with ${f1(M.val(I.bench.outP))})` : ""}.${I.bench.flip ? " The best lineup would have won." : ""}`);
-    if (I.regret) lo.push(`Regret drop: ${T(I.regret.rid)} cut ${pn(I.regret.pid)} in week ${I.regret.week}. This week: ${f1(I.regret.wk)} points${I.regret.now ? ` for ${T(I.regret.now.s)}` : " on the waiver wire"}.`);
-    if (I.collapse) lo.push(`Fell off: ${T(I.collapse.s)} went from ${ord(I.collapse.prev.rank)} in scoring last week to ${ord(I.collapse.s.rank)} (${f1(I.collapse.prev.pts)} → ${f1(I.collapse.s.pts)}).`);
-    if (I.tough) lo.push(`Tough beat: ${T(I.tough)} scored ${f2(I.tough.pts)}, ${ord(I.tough.rank)}-most in the league, and ${I.tough.settled ? "lost" : "is trailing"}.`);
-    if (I.dud) lo.push(`Early-round dud: ${pn(I.dud.p.pid)} (pick ${I.dud.p.no}) managed ${f1(I.dud.p.pts)} on a ${f1(I.dud.p.proj)} projection.`);
-    lo.push(`Basement: ${T(bottom)} with ${f2(bottom.pts)}${M.final ? "" : " so far"}.`);
-
-    L.push("", "🔥 HIGHLIGHTS", ...hi.slice(0, 5).map(x => `• ${x}`));
-    L.push("", "🧊 LOWLIGHTS", ...lo.slice(0, 5).map(x => `• ${x}`));
-    const inj = I.injuries.filter(r => isSerious(r.pid) && r.avg != null).slice(0, 3);
-    if (inj.length) {
-      L.push("", "🏥 INJURY REPORT");
-      inj.forEach(r => L.push(`• ${pn(r.pid)} (${T(r.s)}): ${injText(r.pid)}, averaging ${f1(r.avg)} a game.`));
-    }
-    if (/^https?:$/.test(location.protocol)) L.push("", `Full Film Room: ${location.origin}${location.pathname}`);
-    return L.join("\n");
-  }
-
-  function drawRecap(M, I) {
-    $("#recap").textContent = recapText(M, I);
-    $("#copy-status").textContent = "";
-    $("#nm-team").setAttribute("aria-pressed", String(S.nameMode !== "first"));
-    $("#nm-first").setAttribute("aria-pressed", String(S.nameMode === "first"));
-  }
-
-  function initRecap() {
-    const box = $("#names");
-    const redraw = () => { const M = model(S.week); drawRecap(M, insights(M)); };
-    [...D.teams].sort((a, b) => a.name.localeCompare(b.name)).forEach(t => {
-      const input = h("input", { id: `fn-${t.rid}`, type: "text", autocomplete: "off", placeholder: "First name", value: NAMES[t.rid] || "" });
-      input.addEventListener("input", () => {
-        NAMES[t.rid] = input.value;
-        try { localStorage.setItem("filmroom.firstNames", JSON.stringify(NAMES)); } catch (e) { /* storage unavailable */ }
-        if (S.nameMode === "first") redraw();
-      });
-      box.append(h("label", { for: `fn-${t.rid}` }, h("span", null, t.name, h("small", null, `@${t.owner}`)), input));
-    });
-    const setMode = mode => {
-      S.nameMode = mode;
-      try { localStorage.setItem("filmroom.nameMode", mode); } catch (e) { /* storage unavailable */ }
-      redraw();
-    };
-    $("#nm-team").addEventListener("click", () => setMode("team"));
-    $("#nm-first").addEventListener("click", () => setMode("first"));
-    $("#copy").addEventListener("click", async () => {
-      const pre = $("#recap"), status = $("#copy-status");
-      try {
-        await navigator.clipboard.writeText(pre.textContent);
-        status.textContent = "Copied";
-      } catch (e) {
-        const range = document.createRange();
-        range.selectNodeContents(pre);
-        const sel = getSelection();
-        sel.removeAllRanges();
-        sel.addRange(range);
-        let ok = false;
-        try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
-        status.textContent = ok ? "Copied" : "Selected. Press Ctrl+C or ⌘C to copy.";
-      }
     });
   }
 
@@ -1430,7 +1309,6 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
       g.append("circle").attr("cx", x(lo.pts)).attr("cy", cy).attr("r", 5).style("fill", "var(--surface)").style("stroke", "var(--ink)").style("stroke-width", 2);
       g.append("circle").attr("cx", x(hi.pts)).attr("cy", cy).attr("r", 6).style("fill", "var(--ink)").style("stroke", "var(--surface)").style("stroke-width", 2);
       const pending = mk.a.pending.length + mk.b.pending.length + mk.a.liveCount + mk.b.liveCount;
-      const marginText = `+${f2(Math.abs(mk.margin))}${pending ? ` · ${pending} to play` : ""}`;
       if (narrow) {
         const t1 = g.append("text").attr("x", 0).attr("y", y0 + 16);
         t1.append("tspan").attr("class", "lbl").text(hi.team.name + " ");
@@ -1438,7 +1316,8 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
         const t2 = g.append("text").attr("x", 0).attr("y", y0 + 34);
         t2.append("tspan").attr("class", "lbl-2").text(lo.team.name + " ");
         t2.append("tspan").attr("class", "num").style("font-size", "16px").style("fill", "var(--ink-2)").text(f2(lo.pts));
-        g.append("text").attr("class", "ax").attr("x", W).attr("y", y0 + 16).attr("text-anchor", "end").text(marginText);
+        g.append("text").attr("class", "lbl").attr("x", W).attr("y", y0 + 16).attr("text-anchor", "end").style("font-variant-numeric", "tabular-nums").text(`+${f2(Math.abs(mk.margin))}`);
+        g.append("text").attr("class", "ax").attr("x", W).attr("y", y0 + 34).attr("text-anchor", "end").text(pending ? `${pending} TO PLAY` : "FINAL");
       } else {
         const lt = g.append("text").attr("text-anchor", "end");
         lt.append("tspan").attr("class", "lbl-2").attr("x", x(lo.pts) - 12).attr("y", cy - 4).text(lo.team.name);
@@ -2082,7 +1961,7 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     const labW = Math.min(W * 0.32, (d3.max(hl, r => textW(`${r.s.team.name} 000.0`, font)) || 60) + 14);
     const m = { l: narrow ? 50 : labW, r: labW, t: 28, b: 10 };
     const x0 = m.l, x1 = W - m.r;
-    const y = d3.scaleLinear(d3.extent(rows.flatMap(r => [r.prev.pts, r.s.pts]))).nice().range([H - m.b, m.t]);
+    const y = d3.scaleLinear().domain(d3.extent(rows.flatMap(r => [r.prev.pts, r.s.pts]))).nice().range([H - m.b, m.t]);
     const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img")
       .attr("aria-label", `Team scores, week ${P.week} to week ${M.week}. ` + hl.map(r => `${r.s.team.name} ${f1(r.prev.pts)} to ${f1(r.s.pts)}`).join("; "));
     y.ticks(4).forEach(v => svg.append("line").attr("class", "grid").attr("x1", x0).attr("x2", x1).attr("y1", y(v)).attr("y2", y(v)));
@@ -2239,6 +2118,43 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     return svg;
   }
 
+  // ------------------------------------------------------------ section nav
+  function initNav() {
+    const hdr = $(".chyron"), nav = $("#secnav"), strip = $(".secnav-in");
+    const links = [...nav.querySelectorAll("a")];
+    const root = document.documentElement;
+    // The chyron only pins on wider screens; the nav pins under it, or to the top.
+    const measure = () => {
+      const top = getComputedStyle(hdr).position === "sticky" ? hdr.offsetHeight : 0;
+      root.style.setProperty("--nav-top", `${top}px`);
+      root.style.setProperty("--stick", `${top + nav.offsetHeight}px`);
+      return top + nav.offsetHeight;
+    };
+    let stick = measure();
+    addEventListener("resize", () => { stick = measure(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { stick = measure(); });
+    let current = null, queued = false;
+    const update = () => {
+      queued = false;
+      let id = null;
+      links.forEach(a => {
+        if (a.hidden) return;
+        const el = document.getElementById(a.getAttribute("href").slice(1));
+        if (el && el.getBoundingClientRect().top <= stick + 60) id = a.getAttribute("href");
+      });
+      if (id === current) return;
+      current = id;
+      links.forEach(a => { if (a.getAttribute("href") === id) a.setAttribute("aria-current", "location"); else a.removeAttribute("aria-current"); });
+      const act = links.find(a => a.getAttribute("href") === id);
+      if (act) {
+        const l = act.offsetLeft, r = l + act.offsetWidth;
+        if (l < strip.scrollLeft || r > strip.scrollLeft + strip.clientWidth) strip.scrollTo({ left: Math.max(0, l - 16) });
+      }
+    };
+    addEventListener("scroll", () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+
   // ------------------------------------------------------------ render
   function renderCharts() {
     const M = model(S.week);
@@ -2254,7 +2170,6 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
     drawStatus(M);
     drawFlags(M, I);
     drawMNF(M, I);
-    drawRecap(M, I);
     drawGames(M);
     drawMovers(M, I);
     drawInjuries();
@@ -2270,8 +2185,8 @@ footer { padding-top: 12px; border-top: 1px solid var(--hair); font-size: 12px; 
   }
 
   initControls();
-  initRecap();
   renderAll();
+  initNav();
 
   let lastW = $("#page").clientWidth;
   let raf = 0;
