@@ -2,9 +2,11 @@ name: Film Room
 
 on:
   schedule:
-    # Mondays 13:00 UTC, ahead of Monday Night Football: 9 AM Eastern
-    # during daylight time, 8 AM in winter.
-    - cron: "0 13 * * 1"
+    # Mondays 10:23 UTC (6:23 AM Eastern in daylight time, 5:23 AM in winter).
+    # GitHub often starts scheduled runs hours late -- in 2026 they landed
+    # 6-10 hours after a 13:00 slot -- so aim early and off the top of the
+    # hour to stay well ahead of Monday Night Football.
+    - cron: "23 10 * * 1"
   workflow_dispatch:
   push:
     branches: [main]
